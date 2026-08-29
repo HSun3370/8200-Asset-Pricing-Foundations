@@ -1,0 +1,25 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: a4fe69cf-e8ab-4bd0-8d67-9efbccd53cad
+  title:  Answer Sheet
+  # description:
+  # keywords: []
+  authors: Haoyang Sun
+  github: https://github.com/HSun3370/8200-Asset-Pricing-Foundations
+  # To autogenerate a Table of Contents, run "jupyter book init --write-toc"
+  exports:
+    - format: pdf
+      template: lapreprint-typst
+      # template:  plain_latex
+      output: HW1.pdf
+      kind: "Homework Solution"   
+      open_access: false  
+      date: null
+      articles:
+        - file: Pset 1\answers.md
+site:
+  template: book-theme
+  # options:
+  #   favicon: favicon.ico
+  #   logo: site_logo.png
