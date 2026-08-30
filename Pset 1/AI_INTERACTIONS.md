@@ -1,7 +1,8 @@
-# AI Interactions Log — BUSFIN 8200 Problem Sets
+# AI Interactions Log — BUSFIN 8200 Problem Set 1
 
 This file is the contemporaneous, auditable record of **substantive** AI interactions for
-this repository's problem-set work, as required by `AI_POLICY.md` §2(c).
+**Problem Set 1**, as required by `AI_POLICY.md` §2(c). (`AI_POLICY.md`, `CLAUDE.md`, and the
+`@TP` skill stay at the repo root; the AI records live in each problem set's own folder.)
 
 **Rules (`AI_POLICY.md` §2(d)):**
 

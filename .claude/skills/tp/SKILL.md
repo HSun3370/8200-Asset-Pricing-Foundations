@@ -4,8 +4,9 @@ description: >-
   Traceable Prompt (@TP). Run at the START of EVERY substantive AI request for BUSFIN 8200
   problem-set work (math checking, economic-reasoning critique, empirical coding/debugging,
   formatting). Identifies the problem-set item, makes a Git commit before the work, enforces
-  the course AI policy during the work, appends an entry to AI_INTERACTIONS.md, and makes a
-  Git commit after. Invoke as /tp. Do not use for purely administrative requests.
+  the course AI policy during the work, appends an entry to that problem set's
+  AI_INTERACTIONS.md (e.g. Pset 1/AI_INTERACTIONS.md), and makes a Git commit after.
+  Invoke as /tp. Do not use for purely administrative requests.
 ---
 
 # @TP — Traceable Prompt
@@ -15,6 +16,13 @@ Invoke at the beginning of **every substantive** AI interaction related to a pro
 Do not bypass it for substantive work. This skill creates a contemporaneous, auditable
 record. **It does not weaken or replace any requirement in `AI_POLICY.md`** — if anything
 here appears to conflict with `AI_POLICY.md`, `AI_POLICY.md` governs.
+
+## Where the record lives
+
+Governance files stay at the repo root (`AI_POLICY.md`, `CLAUDE.md`, this skill). The
+**records are per problem set**: each problem set's folder holds its own
+`AI_INTERACTIONS.md` (running) and, at the end, its own `AI_USAGE.md` — e.g.
+`Pset 1/AI_INTERACTIONS.md`, `Pset 1/AI_USAGE.md`.
 
 ## Is the request substantive?
 
@@ -67,10 +75,12 @@ here appears to conflict with `AI_POLICY.md`, `AI_POLICY.md` governs.
    would require you to make a substantive mathematical, economic, or empirical-design
    decision the student has not specified, **stop, name the ambiguity, and ask the student
    to decide** before implementing.
-4. **Append a new entry to `AI_INTERACTIONS.md`** using the template at the top of that
-   file. **Do not modify, delete, combine, reorder, or rewrite any previous entry.** If a
-   previous entry was wrong, leave it and record the correction in the new entry. The entry
-   must include:
+4. **Append a new entry to the problem set's own `AI_INTERACTIONS.md`** — the copy inside
+   that problem set's folder (e.g. `Pset 1/AI_INTERACTIONS.md`), not the repo root. If that
+   file does not exist yet, create it first with the same header + entry-template structure
+   as an existing one. Use the entry template at the top of that file. **Do not modify,
+   delete, combine, reorder, or rewrite any previous entry.** If a previous entry was wrong,
+   leave it and record the correction in the new entry. The entry must include:
    - Problem-set item
    - The student's substantive prompt (verbatim or closely paraphrased)
    - Purpose of the request
@@ -86,7 +96,7 @@ here appears to conflict with `AI_POLICY.md`, `AI_POLICY.md` governs.
    - Whether any minor subsequent debugging or formatting requests were grouped into this
      entry
 5. **Post-work Git commit.** Commit the state after the interaction, including the
-   `AI_INTERACTIONS.md` update: `git add -A` then
+   `AI_INTERACTIONS.md` update (in the problem set's folder): `git add -A` then
    `git commit -m "TP: after <item> — <short purpose>"`. If nothing changed, use
    `git commit --allow-empty`. Record the resulting commit hash.
 6. **Report back** to the student: the problem-set item, both commit hashes, and the new
