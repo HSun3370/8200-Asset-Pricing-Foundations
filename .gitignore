@@ -1,2 +1,6 @@
 # MyST build outputs
 _build
+
+# Python bytecode cache
+__pycache__/
+*.pyc
