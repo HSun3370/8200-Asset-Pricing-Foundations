@@ -74,9 +74,17 @@ $$
 
 
 ### 
+ 
+:::{figure} output/q1b_slopes.png
+:label: fig-q1b
+:width: 90%
+
+Equation 1.4 variance-decomposition slopes vs. horizon $H$ (EQ Dataset,
+1928–2021; overlapping monthly starts; $\kappa = 1/(1+e^{\overline{dp}}) = 0.9642$).
+:::
 
 
-
+We can infer from the figure that, valuation ratio $dp_t$ can predict log run return, and the volatility of price mainly comes from the volatility of discount rate. 
 
 
 ###
