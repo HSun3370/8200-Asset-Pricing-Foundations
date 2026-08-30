@@ -90,7 +90,14 @@ We can infer from the figure that, valuation ratio $dp_t$ can predict log run re
 ### VAR
 
 
+:::{figure} output/q1c_slopes.png
+:label: fig-q1c
+:width: 90%
 
+VAR-implied Equation 1.4 variance-decomposition terms vs. horizon $H$. Overlapping-annual
+VAR(1) on $Z_t = [\Delta d_t,\ r_{e,t},\ dp_t]'$ estimated by OLS (EQ Dataset, 1928–2021;
+$\kappa = 0.9642$, as in 1(b)). $b_{dp}^{(H)}$ is imposed as $1 - b_{re}^{(H)} - b_{\Delta d}^{(H)}$.
+:::
 
 
 
