@@ -87,10 +87,16 @@ Equation 1.4 variance-decomposition slopes vs. horizon $H$ (EQ Dataset,
 We can infer from the figure that, valuation ratio $dp_t$ can predict log run return, and the volatility of price mainly comes from the volatility of discount rate. 
 
 
-###
+### VAR
 
 
 
+
+
+
+
+
+### 
 
 ### Alternative log-linear present-value identity
 Using the same trick,  
