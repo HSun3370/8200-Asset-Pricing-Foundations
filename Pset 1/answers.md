@@ -20,7 +20,7 @@ r_{e,t+1} = \log (1 + \exp(\bar{dp})) + \frac{\exp (\bar{dp})}{1 + \exp (\bar{dp
 \end{aligned}
 $$
 
-Denote $\kappa  = 1/(1+ \exp{(\bar{dp}}))$, and $\kappa _0 = \log (1 + \exp(\bar{dp})) - \bar{dp}/(1+ \exp{(\bar{dp}})) = -\log \kappa - (1-\kappa) \log (1/\kappa -1)$. The log-linearization becomes
+Denote $\kappa  = 1/(1+ \exp{(\bar{dp}}))$, and $\kappa _0 = \log (1 + \exp(\bar{dp})) - \bar{dp}\exp (\bar{dp})/(1+ \exp{(\bar{dp}})) = -\log \kappa - (1-\kappa) \log (1/\kappa -1)$. The log-linearization becomes
 
 $$\begin{aligned}
 r_{e,t+1} = \kappa_0 + (1-\kappa)  dp_{t+1}   + p_{t+1} - p_t .
@@ -33,7 +33,7 @@ $$\begin{aligned}
 &= \kappa_0 + (1-\kappa)  d_{t+1}   - r_{e,t+1} + \kappa ~ [\kappa_0 + (1-\kappa)  d_{t+2}   - r_{e,t+2}  + \kappa ~ p_{t+2} ] \\ 
 &= \kappa_0 (1 + \kappa + ... + \kappa^{H-1})  \\
  &~~~~~~~~~~~~+(1-\kappa) (d_{t+1}  + \kappa~ d_{t+2} + ... + \kappa^{H-1} d_{t+H})  \\
-& ~~~~~~~~~~~~ -  [r_{e,t+1} +\kappa~r_{e,t+1} + ... + \kappa^{H-1}  r_{e,t+H} ] \\ 
+& ~~~~~~~~~~~~ -  [r_{e,t+1} +\kappa~r_{e,t+2} + ... + \kappa^{H-1}  r_{e,t+H} ] \\ 
 &~~~~~~~~~~~~+ \kappa^H p_{t+H} 
 % \\
 % p_t& = \kappa_0 \frac{1- \kappa^H}{1- \kappa} + \sum_{h=1}^H \kappa^{h-1} d_{t+h} - \sum_{h=1}^H \kappa^{h-1} r_{e,t+h} + \kappa^H p_{t+H}
@@ -101,14 +101,14 @@ Applying a Taylor expansion of $\log (1 - e^{-dy_t})$ in $dy_t$ around its mean 
 $$
 \begin{aligned}
 \log (1 - e^{-dy_t}) = \log (1 - e^{-\bar {dy}}) + \frac{e^{-\bar {dy}}}{1 - e^{-\bar {dy}}} ( dy_t -\bar {dy})
-+O(dy_t^2)
++O((dy_t-\bar{dy})^2)
 \end{aligned}
 $$
 Letting $\kappa = e^{-\bar{dy}}$ to simplify the expression, 
 $$
 \begin{aligned}
 \log (1 - e^{-dy_t}) = \log (1 - \kappa) + \frac{\kappa}{1 - \kappa } ( dy_t -\bar {dy})
-+O(dy_t^2)
++O((dy_t-\bar{dy})^2)
 \end{aligned}
 $$
 Then the return is log-linearized as
@@ -141,6 +141,6 @@ $$
 \end{aligned}
 $$
 Imposing the no-bubble assumption, the last term vanishes as $h\to \infty$,
-$$ \lim_{h\to \infty} \kappa^H E_t \log (\frac{P_t + D_t}{P_t}) < \kappa^H E_t [1+ \log (\frac{  D_t}{P_t})] \to 0 $$
+$$ \lim_{H \to \infty} \kappa^H E_t \log (\frac{P_t + D_t}{P_t})  \to 0 $$
 
 ## Question 2
