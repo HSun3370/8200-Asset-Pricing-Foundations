@@ -9,26 +9,26 @@ This is my abstract!
 ## Question 1
 
 ### Proof
-Start from taking logarithm on both sides of return expression:
+Start by taking logs on both sides of the return expression:
 $$ \log R_{e,t+1} = \log (1 + \exp(\log D_{t+1} - \log P_{t+1})) + \log P_{t+1} - \log P_t$$
-for simplicity, I denote $r_{e,t+1} = \log R_{e,t+1}$, $p_{t+1} = \log P_{t+1}$, $d_{t+1} = \log D_{t+1}$, and $dp_{t+1} =\log D_{t+1} -\log P_{t+1}$, 
-then by taylor expansion on $dp_{t+1}$ as it is stationary with mean $\bar{dp}$, we get 
+For simplicity, I denote $r_{e,t+1} = \log R_{e,t+1}$, $p_{t+1} = \log P_{t+1}$, $d_{t+1} = \log D_{t+1}$, and $dp_{t+1} =\log D_{t+1} -\log P_{t+1}$, 
+then, by a Taylor expansion in $dp_{t+1}$ (which is stationary with mean $\bar{dp}$), we get 
 
 $$
-\begin{align}
+\begin{aligned}
 r_{e,t+1} = \log (1 + \exp(\bar{dp})) + \frac{\exp (\bar{dp})}{1 + \exp (\bar{dp})} (dp_{t+1} - \bar{dp})  + p_{t+1} - p_t .
-\end{align}
+\end{aligned}
 $$
 
-Denote $\kappa  = 1/(1+ \exp{(\bar{dp}}))$, and $\kappa _0 = \log (1 + \exp(\bar{dp})) - \bar{dp}/(1+ \exp{(\bar{dp}})) = -\log \kappa - (1-\kappa) \log (1/\kappa -1)$. The log linearization turns to be
+Denote $\kappa  = 1/(1+ \exp{(\bar{dp}}))$, and $\kappa _0 = \log (1 + \exp(\bar{dp})) - \bar{dp}/(1+ \exp{(\bar{dp}})) = -\log \kappa - (1-\kappa) \log (1/\kappa -1)$. The log-linearization becomes
 
-$$\begin{align}
+$$\begin{aligned}
 r_{e,t+1} = \kappa_0 + (1-\kappa)  dp_{t+1}   + p_{t+1} - p_t .
-\end{align}$$
+\end{aligned}$$
 
-Move $p_t$ to LHS and other terms to RHS, we get
+Moving $p_t$ to the left-hand side and the other terms to the right-hand side, we get
 
-$$\begin{align}
+$$\begin{aligned}
  p_t&= \kappa_0 + (1-\kappa)  d_{t+1}   - r_{e,t+1}  + \kappa ~ p_{t+1} \\
 &= \kappa_0 + (1-\kappa)  d_{t+1}   - r_{e,t+1} + \kappa ~ [\kappa_0 + (1-\kappa)  d_{t+2}   - r_{e,t+2}  + \kappa ~ p_{t+2} ] \\ 
 &= \kappa_0 (1 + \kappa + ... + \kappa^{H-1})  \\
@@ -37,12 +37,12 @@ $$\begin{align}
 &~~~~~~~~~~~~+ \kappa^H p_{t+H} 
 % \\
 % p_t& = \kappa_0 \frac{1- \kappa^H}{1- \kappa} + \sum_{h=1}^H \kappa^{h-1} d_{t+h} - \sum_{h=1}^H \kappa^{h-1} r_{e,t+h} + \kappa^H p_{t+H}
-\end{align}$$
+\end{aligned}$$
 
-The log dividend price ratio $dp_t$ then can be written as
+The log dividend-price ratio $dp_t$ can then be written as
  
 $$
-\begin{align}
+\begin{aligned}
 dp_t &= -\kappa_0 (1 + \kappa + ... + \kappa^{H-1})  \\
 & ~~~~~~~~~~~~ +  [r_{e,t+1} +\kappa~r_{e,t+1} + ... + \kappa^{H-1}  r_{e,t+H} ] \\ 
  &~~~~~~~~~~~~d_t-(1-\kappa) (d_{t+1}  + \kappa~ d_{t+2} + ... + \kappa^{H-1} d_{t+H})  \\ 
@@ -52,24 +52,24 @@ dp_t &= -\kappa_0 (1 + \kappa + ... + \kappa^{H-1})  \\
  &~~~~~~~~~~~~d_t - d_{t+1} + \kappa ~ (d_{t+1} - d_{t+2}) +  ... + \kappa^{H-1} (d_{t+H-1} -  d_{t+H}  ) \\ 
 &~~~~~~~~~~~~ +  \kappa^{H } d_{t+H} - \kappa^H p_{t+H}  \\
 &= \kappa_0 \frac{ \kappa^H-1}{1- \kappa} + \sum_{h=1}^H \kappa^{h-1} r_{e,t+h} - \sum_{h=1}^H  \kappa^{h-1} \Delta d_{t+h} + \kappa^H dp_{t+H}
-\end{align}
+\end{aligned}
 $$ 
-where $\Delta d_{t+1} := d_{t+1} - d_t$. Notice that above identity holds ex post, and it should also hold when taking conditional expectation at time t. Then we get the equation
+where $\Delta d_{t+1} := d_{t+1} - d_t$. Notice that the identity above holds ex post (state by state), so it also holds in conditional expectation at time $t$, giving
 
 $$
-\begin{align}
+\begin{aligned}
 dp_t  = \kappa_0 \frac{ \kappa^H-1}{1- \kappa} + \sum_{h=1}^H \kappa^{h-1} \mathbb E_t r_{e,t+h} - \sum_{h=1}^H  \kappa^{h-1} \mathbb E_t \Delta  d_{t+h} + \kappa^H \mathbb E_t dp_{t+H}
-\end{align}
+\end{aligned}
 $$ 
 
-Imposing no-bubble condition and let $H \to \infty $, where
+Letting $H \to \infty$ and imposing the no-bubble (transversality) condition
 $$ \lim_{H\to \infty} \kappa^H \mathbb E_t dp_{t+H} = 0$$
-, then we have equation (1.3)
+we obtain equation (1.3):
 
 $$
-\begin{align}
+\begin{aligned}
 dp_t  = \kappa_0 \frac{  -\kappa_0}{1- \kappa} + \sum_{h=1}^\infty \kappa^{h-1} \mathbb E_t r_{e,t+h} - \sum_{h=1}^\infty  \kappa^{h-1} \mathbb E_t \Delta  d_{t+h} 
-\end{align}
+\end{aligned}
 $$ 
 
 
@@ -84,63 +84,63 @@ $$
 
 
 
-### Alternative log linear present value identity:
-Use same trick  
+### Alternative log-linear present-value identity
+Using the same trick,  
 $$ 
 R_{e,t+1} =  \frac{P_{t+1}+D_{t+1}}{ D_{t+1}  } \frac{D_{t+1} }{D_{t }   }  \frac {D_{t }   } {P_t + D_t} \frac  {P_t + D_t} {P_t} 
 $$
-, log one period return can be written as 
+, the log one-period return can be written as 
 $$
-\begin{align}
+\begin{aligned}
 r_{e,t+1} =  -\log (1 - e^{-dy_{t+1}}) + \Delta d_{t+1} + \log (1 - e^{-dy_t}) + dy_t
-\end{align}
+\end{aligned}
 $$
-, where $dy_t := \log (1+\frac{D_t}{P_t})$, $\log (1 - e^{-dy_t})  =  \log \frac {D_{t }   } {P_t + D_t}$.
+where $dy_t := \log (1+\frac{D_t}{P_t})$ and $\log (1 - e^{-dy_t})  =  \log \frac {D_{t }   } {P_t + D_t}$.
 
-Apply Taylor expansion on $\log (1 - e^{-dy_t})$ over $dy_t$ with mean $\bar {dy}$, we have 
+Applying a Taylor expansion of $\log (1 - e^{-dy_t})$ in $dy_t$ around its mean $\bar {dy}$, we have 
 $$
-\begin{align}
+\begin{aligned}
 \log (1 - e^{-dy_t}) = \log (1 - e^{-\bar {dy}}) + \frac{e^{-\bar {dy}}}{1 - e^{-\bar {dy}}} ( dy_t -\bar {dy})
 +O(dy_t^2)
-\end{align}
+\end{aligned}
 $$
-Let $\kappa = e^{-\bar{dy}}$ to simplify the expression, 
+Letting $\kappa = e^{-\bar{dy}}$ to simplify the expression, 
 $$
-\begin{align}
+\begin{aligned}
 \log (1 - e^{-dy_t}) = \log (1 - \kappa) + \frac{\kappa}{1 - \kappa } ( dy_t -\bar {dy})
 +O(dy_t^2)
-\end{align}
+\end{aligned}
 $$
-Then the return is log linearized as
+Then the return is log-linearized as
 $$
-\begin{align}
+\begin{aligned}
 r_{e,t+1} =  -\frac{\kappa}{1 - \kappa } ( dy_{t+1} -\bar {dy}) + \Delta d_{t+1} + \frac{\kappa}{1 - \kappa } ( dy_t -\bar {dy}) + dy_t
-\end{align}
+\end{aligned}
 $$
 and 
 $$
-\begin{align}
+\begin{aligned}
   \frac{dy_t}{1 - \kappa }   &=     r_{e,t+1} - \Delta d_{t+1}  +  \kappa  ~ \frac{ dy_{t+1}}{1 - \kappa } \\
    &=    r_{e,t+1} - \Delta d_{t+1}  \\
    &~~~~~~~~~~+  \kappa ~  [   r_{e,t+2} - \Delta d_{t+2}  +  \kappa ~ \frac{ dy_{t+2}}{1 - \kappa } ] \\
    &=    r_{e,t+1} - \Delta d_{t+1} + \kappa ~  [   r_{e,t+2} - \Delta d_{t+2} ] \\
    &~~~~~~~~~~ + ...+  \kappa^{H-1} ~  [   r_{e,t+H} - \Delta d_{t+H} ] + \kappa^H \frac{dy_{t+H}}{1 - \kappa } \\
    &=\sum^H_{h=1} \kappa^{h-1} r_{e,t+h} - \sum^H_{h=1} \kappa^{h-1} \Delta d_{t+h} + \kappa^H \frac{dy_{t+H}}{1 - \kappa }
-\end{align}
+\end{aligned}
 $$
-Thus, the log linearization identity is 
+Thus, the log-linearization identity is 
 $$
-\begin{align}
+\begin{aligned}
   dy_t    =(1 - \kappa)(\sum^H_{h=1} \kappa^{h-1} r_{e,t+h} - \sum^H_{h=1} \kappa^{h-1} \Delta d_{t+h}) + \kappa^H  dy_{t+H}  
-\end{align}
+\end{aligned}
 $$
-Take conditional expectaion at time $t$, identity also holds
+Taking the conditional expectation at time $t$, the identity also holds
 $$
-\begin{align}
+\begin{aligned}
   dy_t    =(1 - \kappa)(\sum^H_{h=1} \kappa^{h-1} \mathbb E_t r_{e,t+h} - \sum^H_{h=1} \kappa^{h-1}\mathbb E_t\Delta d_{t+h}) + \kappa^H \mathbb E_t dy_{t+H}  
-\end{align}
+\end{aligned}
 $$
-When imposing no-bubble assumption, the last term vanishes with $h\to \infty$,
+Imposing the no-bubble assumption, the last term vanishes as $h\to \infty$,
 $$ \lim_{h\to \infty} \kappa^H E_t \log (\frac{P_t + D_t}{P_t}) < \kappa^H E_t [1+ \log (\frac{  D_t}{P_t})] \to 0 $$
 
 ## Question 2
