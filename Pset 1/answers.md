@@ -88,7 +88,12 @@ We can infer from the figure that, valuation ratio $dp_t$ can predict log run re
 
 
 ### VAR
+Using equation 
+$$b_{re}^{(H)} = \mathbb{1}_{re} (\Gamma + \kappa^H  \Gamma^{H+1}) (I-\kappa \Gamma)^{-1} \frac{Cov (z_t,dp_t)}{Var(dp_t)}$$
 
+$$b_{\Delta d}^{(H)} = -\mathbb{1}_{\Delta d} (\Gamma + \kappa^H  \Gamma^{H+1}) (I-\kappa \Gamma)^{-1} \frac{Cov (z_t,dp_t)}{Var(dp_t)}$$
+
+and $b_{dp}^{(H)}=1-b_{re}^{(H)}-b_{\Delta d}^{(H)}$. 
 
 :::{figure} output/q1c_slopes.png
 :label: fig-q1c
@@ -99,11 +104,19 @@ VAR(1) on $Z_t = [\Delta d_t,\ r_{e,t},\ dp_t]'$ estimated by OLS (EQ Dataset, 1
 $\kappa = 0.9642$, as in 1(b)). $b_{dp}^{(H)}$ is imposed as $1 - b_{re}^{(H)} - b_{\Delta d}^{(H)}$.
 :::
 
-
-
-
+ 
 
 ### 
+
+As $H\to\infty$, the 
+$$b_{re}^{(\infty)} = \mathbb{1}_{re}  \Gamma    (I-\kappa \Gamma)^{-1} \frac{Cov (z_t,dp_t)}{Var(dp_t)}$$
+
+$$b_{\Delta d}^{(\infty)} = -\mathbb{1}_{\Delta d} \Gamma    (I-\kappa \Gamma)^{-1} \frac{Cov (z_t,dp_t)}{Var(dp_t)}$$
+
+The calculated numbers are 
+$b_{re}^{(\infty)} = 0.4892$, 
+$b_{\Delta d}^{(\infty)}=0.5096$, and 
+$b_{dp}^{(\infty)} = 	0.0012 $. These numbers show that valuation ratio $dp$ can both predict divdend growth and returns, and half of price volatility is attribute to divdiden growth variance, half is attribute to  discount rate variance. This result is not aligned with Cochrane(2011). 
 
 ### Alternative log-linear present-value identity
 Using the same trick,  
@@ -165,3 +178,6 @@ Imposing the no-bubble assumption, the last term vanishes as $h\to \infty$,
 $$ \lim_{H \to \infty} \kappa^H E_t \log (\frac{P_t + D_t}{P_t})  \to 0 $$
 
 ## Question 2
+
+### 
+
