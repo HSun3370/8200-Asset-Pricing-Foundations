@@ -181,3 +181,14 @@ $$ \lim_{H \to \infty} \kappa^H E_t \log (\frac{P_t + D_t}{P_t})  \to 0 $$
 
 ### 
 
+:::{figure} output/q2a_r2adj.png
+:label: fig-q2a
+:width: 90%
+
+Adjusted $R^2$ of the Equation 2.1 regressions of the average future excess equity
+return $\frac{1}{H}\sum_{h=1}^{H} xR_{e,t+h}$ on $D_t/P_t$, plotted against the
+horizon $H = 1,\dots,15$ years (EQ Dataset, 1927:12--2021:12; overlapping monthly
+start dates, with year $h$ taken 12h months ahead, so horizon $H$ uses $N-12H$
+observations).
+:::
+

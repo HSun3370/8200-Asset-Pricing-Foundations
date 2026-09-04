@@ -128,3 +128,45 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** empirical coding.
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q1(d)`).
+
+---
+
+### Entry 5 - 2026-09-04 - Pset 1, Q2(a)
+
+- **Problem-set item:** Pset 1, Question 2(a) - OLS regressions of the average future excess equity return on the level dividend-price ratio for horizons `H = 1, ..., 15` years, and a plot of `R^2_adj` against `H`.
+- **Student\'s substantive prompt:** `/tp` "lets work on question 2. first, compute the variables xR_t = exp(re_t)-exp(rf_t), D/P_t = exp(dp_t). For H = 1, 2, 3,...,15, first sum the future return by 1/H \sum_{h=1}^H xR_{t+h}, then run the simple regression, 1/H \sum_{h=1}^H xR_{t+h} = a + b D/P_t + e_t. For each regression, there should be n-H sample size to run the regression as you need the future H period return. After run each regression, collect R square adjusted by sample size. plot R square on Y axis, and H on X axis, and insert the figure in ...\Pset 1\answers.md"
+- **Purpose:** Implement the student-specified Q2(a) empirical design, produce the `R^2_adj` vs. `H` figure, and insert it into `Pset 1/answers.md`.
+- **Git commit before interaction:** `001cee0f49ad281f75073410c5aedee5ac33cb89`
+- **Assistance provided:**
+  - **Flagged one ambiguity before implementing (see below) and stopped for the student to decide.** After the student chose the timing convention, wrote `Pset 1/code/q2a.py` implementing the specification exactly: `xR_t = exp(re_t) - exp(rf_t)`; `D/P_t = exp(dp_t)`; for each `H = 1..15`, `y_t^(H) = (1/H) * sum_{h=1..H} xR_{t+h}`; OLS of `y_t^(H)` on a constant and `D/P_t`; `R^2_adj = 1 - (1 - R^2) * (n - 1) / (n - 2)` (`k = 1` regressor, the sample-size adjustment the student asked for).
+  - Reused the data-loading conventions already established by the student in `Pset 1/code/q1b.py` (date index built from `YEAR`/`MONTH`, sorted monthly `PeriodIndex`, assertion that the monthly index is gap-free so row shifts are valid timing shifts). Purely mechanical code reuse; no design change.
+  - Ran the script (no debugging required). Results (`N = 1129` monthly rows, 1927:12-2021:12):
+
+    | H | n_obs | a | b | R^2 | R^2_adj |
+    |---|-------|---|---|-----|---------|
+    | 1 | 1117 | -0.0314 | 2.8038 | 0.0465 | 0.0457 |
+    | 2 | 1105 | -0.0298 | 2.6858 | 0.0917 | 0.0909 |
+    | 3 | 1093 | -0.0181 | 2.3903 | 0.1202 | 0.1194 |
+    | 4 | 1081 | -0.0182 | 2.4173 | 0.1796 | 0.1789 |
+    | 5 | 1069 | -0.0158 | 2.4006 | 0.2549 | 0.2542 |
+    | 6 | 1057 | -0.0042 | 2.1229 | 0.2820 | 0.2813 |
+    | 7 | 1045 | 0.0016 | 1.9776 | 0.3115 | 0.3109 |
+    | 8 | 1033 | 0.0020 | 1.9597 | 0.3495 | 0.3489 |
+    | 9 | 1021 | 0.0030 | 1.9109 | 0.3589 | 0.3583 |
+    | 10 | 1009 | 0.0051 | 1.8381 | 0.3621 | 0.3615 |
+    | 11 | 997 | 0.0035 | 1.8618 | 0.3875 | 0.3869 |
+    | 12 | 985 | 0.0019 | 1.8823 | 0.4194 | 0.4188 |
+    | 13 | 973 | 0.0035 | 1.8406 | 0.4346 | 0.4340 |
+    | 14 | 961 | 0.0065 | 1.7710 | 0.4438 | 0.4432 |
+    | 15 | 949 | 0.0120 | 1.6447 | 0.4219 | 0.4213 |
+
+  - Wrote `Pset 1/output/q2a_r2adj.csv` and `Pset 1/output/q2a_r2adj.png`, and inserted the figure into `Pset 1/answers.md` under the existing `## Question 2` heading as a MyST `:::{figure}` block (`:label: fig-q2a`), matching the `fig-q1b` / `fig-q1c` blocks the student already had. The caption states only the construction and the timing convention. **No description or interpretation of the results was written** - Question 2(a) asks the student to "describe the results you observe", which is economic reasoning reserved to the student under `AI_POLICY.md` s1(b).
+- **Files inspected:** `Pset 1/problem_set_1.md`; `Pset 1/answers.md`; `Pset 1/code/q1b.py`; `Pset 1/EQ Dataset.csv` (head/tail only); `Pset 1/AI_INTERACTIONS.md`; `AI_POLICY.md`; `CLAUDE.md`; `.claude/skills/tp/SKILL.md`.
+- **Files directly modified by AI:** created `Pset 1/code/q2a.py`, `Pset 1/output/q2a_r2adj.csv`, `Pset 1/output/q2a_r2adj.png`; appended a figure block to `Pset 1/answers.md` (addition only - no existing text altered); `Pset 1/AI_INTERACTIONS.md` (this entry). `HW1.pdf` also differs from the pre-interaction commit; that change was produced by the project build, not written by AI.
+- **Errors / omissions / ambiguities identified:**
+  1. **Timing-convention ambiguity (flagged, student decided).** The specification said "there should be n-H sample size", but the EQ Dataset holds monthly observations of *annual* variables while Question 2(a) defines `H` in *years*. Reading `t+h` as `h` rows ahead gives `n - H` but makes the horizon 15 months, not 15 years; reading `t+h` as `12h` rows ahead (the convention the student had specified for Q1(b)) gives `n - 12H`. Under `AI_POLICY.md` s1(c) timing conventions are a substantive empirical choice, so AI stopped and asked. **The student chose the `12h`-month shift (`n - 12H`)**, i.e. `n` runs from 1117 at `H = 1` to 949 at `H = 15`. The `n - H` wording in the original prompt is therefore superseded by the student\'s decision and should be read as `n - 12H`.
+  2. No other omission was found: the adjusted-`R^2` formula, the regressor, the intercept, and the excess-return and `D/P` definitions were all fully specified.
+- **Substantive math / economic / econometric suggestions made:** none. AI made no substantive choice; the one substantive decision required (the timing convention) was identified and referred to the student, who decided it. All other choices were mechanical: pandas/numpy data structures, `np.polyfit` for the univariate OLS fit, dropping rows with any missing required future observation (a mechanical consequence of the student\'s stated "you need the future H period return" requirement, not a separate missing-data rule), CSV/PNG output paths, and matplotlib styling matched to the existing Q1(b)/Q1(c) figures.
+- **Type(s) of assistance:** empirical coding; formatting/translation (inserting the MyST figure block).
+- **Grouped minor follow-ups:** one - repairing a shell-escaping corruption introduced by AI while appending the caption to `answers.md` (a `\f` in `\frac` was consumed as a form-feed byte by `printf`), fixed in the same interaction. Purely mechanical; no content change.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q2(a)`).
