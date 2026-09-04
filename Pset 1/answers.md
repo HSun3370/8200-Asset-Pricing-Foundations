@@ -195,3 +195,21 @@ Valuation ratio $\frac{D}{P}$ predicts returns in the long run better than in th
 
 
 ### 
+Estimating $xR_{e,t+1} = a + b \cdot D_t/P_t + \varepsilon_t$ (the $H = 1$ case of
+Equation 2.1) by OLS on $T = 1117$ monthly start dates (1927:12--2020:12) gives
+$\hat{a} = -0.0314$ and $\hat{b} = 2.8038$. The five standard errors for $\hat{b}$,
+all built from $\widehat{\mathrm{Var}}[\hat\theta] = \frac{1}{T} Q^{-1} \hat{S} Q^{-1}$
+with $Q = \frac{1}{T}\sum_\tau x_\tau x_\tau'$, are:
+
+| Standard error method | $\hat{b}$ | s.e.$(\hat{b})$ | $t$-statistic |
+|---|---|---|---|
+| (i) OLS | 2.8038 | 0.3798 | 7.38 |
+| (ii) White (1980) | 2.8038 | 0.6587 | 4.26 |
+| (iii) Newey-West (1987), 11 lags | 2.8038 | 1.2990 | 2.16 |
+| (iv) Hansen-Hodrick (1980), 11 lags | 2.8038 | 1.4537 | 1.93 |
+| (v) Newey-West (1987, 1994), $L = 24$ | 2.8038 | 1.2304 | 2.28 |
+
+The lag length in (v) is data-driven: the Newey and West (1994, Eq. 2.2) rule gives
+$L = a \cdot T^{1/3}$ with $a = 2.31$, hence $L = 24$. The Hansen-Hodrick estimate in
+(iv) is positive definite in this sample, so no truncation was needed.
+
