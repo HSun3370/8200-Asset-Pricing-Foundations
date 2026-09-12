@@ -195,8 +195,7 @@ Valuation ratio $\frac{D}{P}$ predicts returns in the long run better than in th
 
 
 ### 
-Estimating $xR_{e,t+1} = a + b \cdot D_t/P_t + \varepsilon_t$ (the $H = 1$ case of
-Equation 2.1) by OLS on $T = 1117$ monthly start dates (1927:12--2020:12) gives
+Estimating $xR_{e,t+1} = a + b \cdot D_t/P_t + \varepsilon_t$  by OLS on $T = 1117$ monthly start dates (1927:12--2020:12) gives
 $\hat{a} = -0.0314$ and $\hat{b} = 2.8038$. The five standard errors for $\hat{b}$,
 all built from $\widehat{\mathrm{Var}}[\hat\theta] = \frac{1}{T} Q^{-1} \hat{S} Q^{-1}$
 with $Q = \frac{1}{T}\sum_\tau x_\tau x_\tau'$, are:
