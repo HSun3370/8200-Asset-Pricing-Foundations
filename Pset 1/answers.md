@@ -268,3 +268,37 @@ window's last month from December 1990 to December 2021 (first window: January 1
 expanding-window estimates above; SST uses the sample mean of $xR_{e,t+1}$ within each window.
 :::
 
+
+### 
+
+:::{figure} output/q2e_forecasts.png
+:label: fig-q2e-forecasts
+:width: 90%
+
+Forecasts of the one-year-ahead excess return for $t+1$ from December 1940 to December 2021: the restricted out-of-sample
+forecast $\hat{E}^{OS}_t[xR_e] = (\bar{G}_t - 1) + \bar{G}_t\,D_t/P_t$, the in-sample forecast
+$\hat{E}^{IS}_t[xR_e] = \hat a + \hat b\,D_t/P_t$ from Equation 2.2, and the expanding-window historical mean
+$\overline{xR}_{e,t}$.
+:::
+
+The sample, forecast dates, expanding windows, $\hat{E}^{IS}_t[xR_e]$ and $\overline{xR}_{e,t}$ are those of
+Question 2(d). $\bar{G}_t$ averages $e^{\Delta d}$ over the same expanding window; for the first forecast it uses
+$\Delta d$ from December 1927 to November 1939 (144 months), so $\bar{G}_t = 1.0000$. Over the 973 forecasts with $t+1$ from
+December 1940 to December 2021,
+
+$$
+R^2_{OS} = 1 - \frac{\sum_t \left(xR_{e,t+1} - \hat{E}^{OS}_t[xR_e]\right)^2}{\sum_t \left(xR_{e,t+1} - \mu_{xR}\right)^2} = 1 - \frac{26.7797}{26.8327} = 0.0020
+$$
+
+where, as in Question 2(d), $\mu_{xR}$ is the sample mean of $xR_{e,t+1}$ over the same 973 months and no
+degrees-of-freedom adjustment is applied.
+
+:::{figure} output/q2e_rolling_r2os.png
+:label: fig-q2e-rolling
+:width: 90%
+
+$R^2_{OS}$ of the restricted forecast over 600-month (50-year) rolling windows of the out-of-sample forecast
+errors, plotted at each window's last month from December 1990 to December 2021 (first window: January 1941 to December 1990). SST uses the
+sample mean of $xR_{e,t+1}$ within each window.
+:::
+
