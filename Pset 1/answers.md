@@ -212,3 +212,24 @@ The lag length in (v) is data-driven: the Newey and West (1994, Eq. 2.2) rule gi
 $L = a \cdot T^{1/3}$ with $a = 2.31$, hence $L = 24$. The Hansen-Hodrick estimate in
 (iv) is positive definite in this sample, so no truncation was needed.
 
+###
+
+Amihud and Hurvich (2004) estimation, with $t+1$ one year after $t$ (overlapping
+monthly observations, e.g. October 1991 on October 1990; $N = 1117$, 1927:12--2020:12).
+
+$$
+\frac{D_{t+1}}{P_{t+1}} = \underset{0.0111}{\hat\theta} + \underset{0.7197}{\hat\phi}\,\frac{D_t}{P_t} + \hat\varepsilon_{t+1}
+$$
+
+$$
+\hat\phi^c = \hat\phi + \frac{1}{T}\left(1+3\hat\phi\right) + \frac{3}{T^2}\left(1+3\hat\phi\right) = 0.7540, \qquad T = 95
+$$
+
+$$
+\hat u^c_{t+1} = \frac{D_{t+1}}{P_{t+1}} - \left(\hat\theta + \hat\phi^c\,\frac{D_t}{P_t}\right)
+$$
+
+$$
+xR_{e,t+1} = \underset{-0.0314}{\hat a} + \underset{2.3412}{\hat b}\,\frac{D_t}{P_t} + \underset{-13.4837}{\hat b_u}\,\hat u^c_{t+1} + \hat\varepsilon_{t+1}
+$$
+
