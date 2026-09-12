@@ -213,9 +213,7 @@ $L = a \cdot T^{1/3}$ with $a = 2.31$, hence $L = 24$. The Hansen-Hodrick estima
 (iv) is positive definite in this sample, so no truncation was needed.
 
 ###
-
-Amihud and Hurvich (2004) estimation, with $t+1$ one year after $t$ (overlapping
-monthly observations, e.g. October 1991 on October 1990; $N = 1117$, 1927:12--2020:12).
+I report Amihud and Hurvich (2004) estimation.
 
 $$
 \frac{D_{t+1}}{P_{t+1}} = \underset{0.0111}{\hat\theta} + \underset{0.7197}{\hat\phi}\,\frac{D_t}{P_t} + \hat\varepsilon_{t+1}
@@ -232,4 +230,9 @@ $$
 $$
 xR_{e,t+1} = \underset{-0.0314}{\hat a} + \underset{2.3412}{\hat b}\,\frac{D_t}{P_t} + \underset{-13.4837}{\hat b_u}\,\hat u^c_{t+1} + \hat\varepsilon_{t+1}
 $$
+
+Amihud and Hurvich estimation gives a smaller value than OLS estimation. This is because OLS estimation is upper biased in small sample as innovations of dividend-price ratio and excess return are positive correlated, and the AR(1) estimation is lower biased. 
+
+
+### 
 
