@@ -253,7 +253,7 @@ $\overline{xR}_{e,t}$ averages $xR_{e,t+1}$ over the same window. Over the 973 f
 from December 1940 to December 2021,
 
 $$
-R^2_{OS} = 1 - \frac{SSE}{SST} = 1 - \frac{\sum_t \left(xR_{e,t+1} - \hat{E}^{OS}_t[xR_e]\right)^2}{\sum_t \left(xR_{e,t+1} - \mu_{xR}\right)^2} = 1 - \frac{26.7838}{26.8327} = 0.0018
+R^2_{OS} =  1 - \frac{\sum_t \left(xR_{e,t+1} - \hat{E}^{OS}_t[xR_e]\right)^2}{\sum_t \left(xR_{e,t+1} - \mu_{xR}\right)^2} = 1 - \frac{26.7838}{26.8327} = 0.0018
 $$
 
 where $\mu_{xR}$ is the sample mean of $xR_{e,t+1}$ over the same 973 months; no degrees-of-freedom
