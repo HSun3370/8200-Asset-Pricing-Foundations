@@ -353,3 +353,21 @@ Log forward rates $f^{(H)}_{b,t}$ for $H = 2,\dots,5$, June 1952 to December 202
 Log annual returns $r^{(H)}_{b,t}$ for $H = 2,\dots,5$, June 1953 to December 2024 (shown $\times 100$).
 :::
 
+
+### 
+
+Regressions of the average annual hold-to-maturity excess return on the excess log yield,
+
+$$
+\frac{1}{H}\, xr^{(H)}_{b,t:t+H} = a^{(H)} + b^{(H)}\, xy^{(H)}_{b,t} + \varepsilon^{(H)}_t, \qquad xr^{(H)}_{b,t:t+H} = \sum_{h=1}^{H} xr^{(H-h+1)}_{b,t+h},
+$$
+
+estimated by OLS on overlapping monthly observations, where $t+h$ is the same month $h$ years later and $xr^{(1)}_{b,t} = 0$. The $t$-statistics use Hansen and Hodrick (1980) standard errors with $L = 12H - 1$ monthly lags, the number of months by which consecutive $H$-year dependent variables overlap; each regression uses every month $t$ for which its variables are available.
+
+| $H$ | $b^{(H)}$ | $t$-statistic (Hansen-Hodrick) |
+|---|---|---|
+| 2 | 0.6774 | 3.57 | 
+| 3 | 0.5316 | 3.21 | 
+| 4 | 0.4141 | 2.52 | 
+| 5 | 0.3453 | 2.30 |
+
