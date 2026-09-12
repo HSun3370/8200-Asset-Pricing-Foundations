@@ -236,3 +236,35 @@ Amihud and Hurvich estimation gives a smaller value than OLS estimation. This is
 
 ### 
 
+
+:::{figure} output/q2d_forecasts.png
+:label: fig-q2d-forecasts
+:width: 90%
+
+Forecasts of the one-year-ahead excess return for $t+1$ from December 1940 to December 2021: the out-of-sample
+forecast $\hat{E}^{OS}_t[xR_e] = a_t + b_t\,D_t/P_t$ with $a_t, b_t$ estimated on an expanding window,
+the in-sample forecast $\hat{E}^{IS}_t[xR_e] = \hat a + \hat b\,D_t/P_t$ from Equation 2.2, and the
+expanding-window historical mean $\overline{xR}_{e,t}$.
+:::
+
+Each expanding window runs from the pair $(t, t+1) =$ (December 1927, December 1928) through the pair
+one month before the forecast pair (for the first forecast, through (November 1939, November 1940), 144 pairs), and
+$\overline{xR}_{e,t}$ averages $xR_{e,t+1}$ over the same window. Over the 973 forecasts with $t+1$
+from December 1940 to December 2021,
+
+$$
+R^2_{OS} = 1 - \frac{SSE}{SST} = 1 - \frac{\sum_t \left(xR_{e,t+1} - \hat{E}^{OS}_t[xR_e]\right)^2}{\sum_t \left(xR_{e,t+1} - \mu_{xR}\right)^2} = 1 - \frac{26.7838}{26.8327} = 0.0018
+$$
+
+where $\mu_{xR}$ is the sample mean of $xR_{e,t+1}$ over the same 973 months; no degrees-of-freedom
+adjustment is applied.
+
+:::{figure} output/q2d_rolling_r2os.png
+:label: fig-q2d-rolling
+:width: 90%
+
+$R^2_{OS}$ over 600-month (50-year) rolling windows of the out-of-sample forecast errors, plotted at each
+window's last month from December 1990 to December 2021 (first window: January 1941 to December 1990). $a_t$ and $b_t$ are the
+expanding-window estimates above; SST uses the sample mean of $xR_{e,t+1}$ within each window.
+:::
+
