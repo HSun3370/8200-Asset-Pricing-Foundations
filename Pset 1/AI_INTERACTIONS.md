@@ -422,3 +422,103 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** empirical coding; formatting/translation (figures and equation in `answers.md`).
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q2(e)`). It is staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` and `Research Ideas/CreativeDestruction.md` stay out.
+
+---
+
+### Entry 10 — 2026-09-12 — Pset 1, Q4(a)
+
+- **Problem-set item:** Pset 1, Question 4(a) — from the Bond Dataset, build log yields, log forward rates and log annual returns for the Fama–Bliss discount bonds, and report the average `xy`, `xf` and `xr` for `H = 2, 3, 4, 5`.
+- **Student's substantive prompt:** `/tp` "lets work on question 4 a. load data Bond Dataset.csv there are bonds with 1,2...5 maturity. i want to see the data before starting to work, so start from plotting time series. 1. for each bond type(1year or 2 year), plot the log yield time series. MCALDT is the time indicator, TMYTM is yield in percentage Y^{(H)}_{b,t}*100 %. . then compute log yields for each bond by y_{b,t}^{(H)} = log (1 + Y^{(H)}_{b,t}). H stands for the duration, which your can read from TTERMLBL or TTERMTYPE. save the data and plot 3. Compute forward rates by f^{(H)}_{b,t} = H y^{(H)}_{b,t} - (H-1) y^{(H-1)}_{b,t} at each date, for H = 2,3,4,5 and you need to pair the bonds. save the data, then plot forwards rate time series. 4. compute log annual returns. r^{(H)}_{b,t} = H y^{(H)}_{b,t-1} - (H-1) y^{(H-1)}_{b,t} this is realized holding return. H be 2,3,4,5. you need to use month and year from MCALDT to pair the bond yields. plot log annual returns and store the data. 5. for H = 2,3,4,5, report tables of average values of xy^{(H)}_{b,t} = y^{(H)}_{b,t} - y^{(1)}_{b,t} xf^{(H)}_{b,t} = f^{(H)}_{b,t} - y^{(1)}_{b,t} xr^{(H)}_{b,t} = r^{(H)}_{b,t} - y^{(1)}_{b,t}"
+- **Purpose:** Plot the data first, as the student asked. Then build and save the log yields, forward rates and annual log returns, and report a table of average excess measures in `Pset 1/answers.md`.
+- **Git commit before interaction:** `3eae00193ca1c8a84781e684d74f930b5eaa07fa`. AI first confirmed there were no untracked files inside `Pset 1/`, then staged tracked changes only (`git add -u`). The snapshot holds three student changes made since Entry 9, checked against `ad7dd61`:
+  - **`Pset 1/Bond Dataset.csv`:** 83 rows removed (4,438 → 4,355). Each removed row was an empty placeholder, with no `MCALDT` and no `TMYTM`, for some other CRSP series: risk-free rates, fixed-term indices, Fama T-bill term structures, Fama maturity portfolios, commercial paper, CDs, federal funds rates and CPI. All 4,355 remaining rows are the five Fama–Bliss series, with the same columns and identical `TMYTM` values.
+  - **`Pset 1/answers.md`:** new `## Question 3` and `##  Question 4` headings, with blank lines.
+  - **`HW1.pdf`:** rebuilt.
+
+  `Pset 2/` and `Research Ideas/CreativeDestruction.md` were again left untracked.
+- **Assistance provided:**
+  - **Inspection before producing any output (read-only).**
+    - AI read Question 4 in `Pset 1/problem_set_1.md`.
+    - `Bond Dataset.csv` holds 5 series (`TTERMTYPE` 5001–5005, labelled "Fama Bliss Discount Bonds - H-Year (Nominal)") × 871 months, 1952-06 to 2024-12.
+    - There are no duplicate maturity-month pairs, no missing months, and no missing or non-positive yields.
+    - `MCALDT` is the last trading day of the month, and that day varies, so bonds must be matched by year-month.
+    - AI compared the student's formulas with the problem set (see ambiguities).
+  - **Read-only averages under the open choices** (in percent), shown to the student before asking:
+
+    | H | xy (all 871 months) | xy (859 months, same as xr) | xf (871) | xf (859) | xr = r − y⁽¹⁾ₜ | xr = r − r⁽¹⁾ₜ |
+    |---|---|---|---|---|---|---|
+    | 2 | 0.1686 | 0.1693 | 0.3372 | 0.3387 | 0.2810 | 0.3154 |
+    | 3 | 0.3278 | 0.3308 | 0.6461 | 0.6536 | 0.5725 | 0.6069 |
+    | 4 | 0.4660 | 0.4710 | 0.8805 | 0.8916 | 0.7854 | 0.8198 |
+    | 5 | 0.5639 | 0.5681 | 0.9557 | 0.9564 | 0.8374 | 0.8719 |
+
+  - **While the questions were pending,** AI wrote `Pset 1/code/q4a.py` with both choices unset; the script raises an error until they are set. AI also wrote two helper scripts in the session scratchpad, outside the repository. No results were produced before the student answered.
+  - **Script run after the decisions.** AI set `XR_BENCHMARK = "r1_t"` and `AVG_SAMPLE = "own"` with `sed`, checked with `grep` that each was set exactly once, and ran `q4a.py`. It works in five steps:
+    1. It reshapes `TMYTM` into a month × maturity table keyed on the year-month of `MCALDT`, with `H = TTERMTYPE − 5000` checked against `TTERMLBL`. It stops if there are duplicate maturity-months, missing months or missing yields, instead of handling them in some unspecified way.
+    2. `y^(H) = log(1 + TMYTM/100)` for `H = 1..5`.
+    3. `f^(H) = H y^(H) − (H−1) y^(H−1)` for `H = 2..5`, within the same month.
+    4. `r^(H)_t = H y^(H)_{t−1} − (H−1) y^(H−1)_t` for `H = 2..5`. Here `t−1` is the same month one year earlier, matched on year-month, so returns start in 1953-06.
+    5. `xy = y^(H) − y^(1)`, `xf = f^(H) − y^(1)`, and `xr = r^(H) − r^(1)` with `r^(1)_t = y^(1)_{t−1}`. Each is averaged over its own months.
+  - **Results** (percent). They match the read-only values for the chosen options. No debugging was needed.
+
+    | H | average xy | average xf | average xr |
+    |---|---|---|---|
+    | 2 | 0.1686 | 0.3372 | 0.3154 |
+    | 3 | 0.3278 | 0.6461 | 0.6069 |
+    | 4 | 0.4660 | 0.8805 | 0.8198 |
+    | 5 | 0.5639 | 0.9557 | 0.8719 |
+
+    `xy` and `xf` are averaged over 871 months (June 1952–December 2024) and `xr` over 859 months (June 1953–December 2024).
+  - **Plots.** There is one figure per variable, with one line per maturity, and values shown ×100:
+    - `output/q4a_log_yields.png` (H = 1..5);
+    - `output/q4a_forward_rates.png` (H = 2..5);
+    - `output/q4a_log_returns.png` (H = 2..5).
+
+    AI opened all three to confirm the series, date ranges and labels. They were saved to `output/` only, not added to `answers.md`: the student asked to plot the data in order to look at it, and the problem set asks only for a table.
+  - **Data saved** (decimal log units):
+    - `output/q4a_log_yields.csv`, `q4a_forward_rates.csv` and `q4a_log_returns.csv` (the first 12 months of returns are blank, because `r` needs `t−1`);
+    - `q4a_excess_series.csv`, the monthly `xy`, `xf` and `xr` series behind the table;
+    - `q4a_average_excess.csv` and `q4a_summary.csv` (the choices made and the sample for each measure).
+  - **Added the table to `answers.md`.** A scratchpad helper read the numbers, dates and choices from the CSVs. It would write only if the file still ended with the `##  Question 4` heading. There was no `###` under Question 4, so the helper added `### `. It appended 17 lines:
+    - a blank separator line and the heading;
+    - one sentence stating the sample for each measure;
+    - the table, in percent to 4 decimals;
+    - the definitions of `xy`, `xf`, `xr`, `y`, `f` and `r` as used.
+
+    AI then replaced the en dash in "Fama–Bliss" in that sentence with an ASCII hyphen, to match the hyphens used elsewhere in `answers.md` (one guarded occurrence). The console had shown the dash as "�", but the file was valid UTF-8 throughout.
+  - **Not written by AI:** no description or interpretation of the plots or the averages.
+- **Files inspected:**
+  - `Pset 1/problem_set_1.md` (Question 4);
+  - `Pset 1/Bond Dataset.csv`, both the current file and the version at `ad7dd61` via `git show`;
+  - `Pset 1/answers.md`: its headings, end and modification time, `git diff ad7dd61 3eae001`, and a byte and UTF-8 check;
+  - `Pset 1/AI_INTERACTIONS.md`;
+  - the three `q4a` PNGs.
+- **Files directly modified by AI:**
+  - created `Pset 1/code/q4a.py`, then set its two decision constants after the student decided;
+  - created `Pset 1/output/q4a_log_yields.csv`/`.png`, `q4a_forward_rates.csv`/`.png`, `q4a_log_returns.csv`/`.png`, `q4a_excess_series.csv`, `q4a_average_excess.csv` and `q4a_summary.csv`;
+  - appended 17 lines, including a `### ` heading, to `Pset 1/answers.md`, then changed one character inside that appended text (en dash → hyphen); no line that existed before this interaction was changed;
+  - `Pset 1/AI_INTERACTIONS.md` (this entry).
+
+  The helper scripts are in the session scratchpad, outside the repository, and are not committed.
+- **Errors / omissions / ambiguities identified:**
+  1. **Which 1-year term `xr` subtracts (flagged; the student decided).**
+     - The specification has `xr = r^(H)_t − y^(1)_t`, the 1-year yield when the holding year ends.
+     - The problem set has `xr = r^(H)_t − r^(1)_t`. Setting `H = 1` in the return formula gives `r^(1)_t = y^(1)_{t−1}`, the 1-year yield a year earlier, when the holding year starts.
+
+     AI showed both options with their averages. It noted that the averages differ by about 0.034 percentage points at every `H`, but the time series differ and are used again in 4(b)–(e). It did not recommend either. **The student chose the problem set's `r^(1)_t`.**
+  2. **Averaging sample (flagged; the student decided).** `xr` exists only from 1953-06 (859 months), while `xy` and `xf` exist for all 871. The options were each measure's own months, or the 859 months common to all three. AI did not recommend either. **The student chose each measure's own months.**
+  3. **`xf` benchmark (checked; no conflict).** The problem set defines `xf = f^(H) − f^(1)`, while the student subtracts `y^(1)`. Setting `H = 1` in the forward formula gives `f^(1) = y^(1)`, so the two coincide. AI told the student this and did not ask.
+  4. **Numbering of the student's items.** The items are numbered 1, 3, 4, 5, and their content covers everything in the problem set's Q4(a). AI treated the gap as a numbering slip and did not raise it.
+  5. **Changed data file (observed).** The pre-work snapshot includes the student's removal of 83 empty placeholder rows from `Bond Dataset.csv`. This does not affect the five Fama–Bliss series. AI told the student.
+- **Substantive math / economic / econometric suggestions made:** none. The formulas, the year-month matching and the requested outputs came from the student and the problem set. The two open points (`xr` benchmark and averaging sample) were put to the student, who decided them. AI's mechanical and formatting choices:
+  - reshaping the data by year-month in pandas, with `H` taken from `TTERMTYPE` and checked against `TTERMLBL`;
+  - checks that stop the script on duplicates, gaps or missing yields;
+  - one figure per variable, with a line per maturity and values shown ×100;
+  - saving the monthly excess series;
+  - reporting the table in percent to 4 decimals, with the CSVs in decimals;
+  - adding the `### ` heading;
+  - leaving the plots out of `answers.md`;
+  - the en dash → hyphen change.
+- **Type(s) of assistance:** empirical coding; formatting/translation (table in `answers.md`).
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q4(a)`). It is staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` and `Research Ideas/CreativeDestruction.md` stay out.

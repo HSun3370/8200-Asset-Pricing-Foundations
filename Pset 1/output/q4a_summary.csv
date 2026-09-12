@@ -1,0 +1,17 @@
+parameter,value
+xr_benchmark,r1_t
+avg_sample,own
+first_month,1952-06
+last_month,2024-12
+n_months,871
+r_first_month,1953-06
+r_n_months,859
+xy_n_months,871
+xy_first_month,1952-06
+xy_last_month,2024-12
+xf_n_months,871
+xf_first_month,1952-06
+xf_last_month,2024-12
+xr_n_months,859
+xr_first_month,1953-06
+xr_last_month,2024-12

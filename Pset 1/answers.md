@@ -315,3 +315,20 @@ sample mean of $xR_{e,t+1}$ within each window.
 
 ##  Question 4
 
+
+### 
+
+Average excess log yields, log forward rates and log annual returns (Fama-Bliss discount bonds; $xy$ averaged over 871 months from June 1952 to December 2024, $xf$ over 871 months from June 1952 to December 2024, and $xr$ over 859 months from June 1953 to December 2024), in percent:
+
+| $H$ | average $xy^{(H)}_{b,t}$ | average $xf^{(H)}_{b,t}$ | average $xr^{(H)}_{b,t}$ |
+|---|---|---|---|
+| 2 | 0.1686 | 0.3372 | 0.3154 |
+| 3 | 0.3278 | 0.6461 | 0.6069 |
+| 4 | 0.4660 | 0.8805 | 0.8198 |
+| 5 | 0.5639 | 0.9557 | 0.8719 |
+
+where $xy^{(H)}_{b,t} = y^{(H)}_{b,t} - y^{(1)}_{b,t}$, $xf^{(H)}_{b,t} = f^{(H)}_{b,t} - y^{(1)}_{b,t}$ and
+$xr^{(H)}_{b,t} = r^{(H)}_{b,t} - r^{(1)}_{b,t}$, with $y^{(H)}_{b,t} = \log(1 + Y^{(H)}_{b,t})$,
+$f^{(H)}_{b,t} = H\,y^{(H)}_{b,t} - (H-1)\,y^{(H-1)}_{b,t}$ and $r^{(H)}_{b,t} = H\,y^{(H)}_{b,t-1} - (H-1)\,y^{(H-1)}_{b,t}$,
+where $t-1$ is the same month one year earlier.
+
