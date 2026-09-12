@@ -332,3 +332,24 @@ $xr^{(H)}_{b,t} = r^{(H)}_{b,t} - r^{(1)}_{b,t}$, with $y^{(H)}_{b,t} = \log(1 +
 $f^{(H)}_{b,t} = H\,y^{(H)}_{b,t} - (H-1)\,y^{(H-1)}_{b,t}$ and $r^{(H)}_{b,t} = H\,y^{(H)}_{b,t-1} - (H-1)\,y^{(H-1)}_{b,t}$,
 where $t-1$ is the same month one year earlier.
 
+:::{figure} output/q4a_log_yields.png
+:label: fig-q4a-yields
+:width: 90%
+
+Log yields $y^{(H)}_{b,t}$ of the Fama-Bliss discount bonds for $H = 1,\dots,5$, June 1952 to December 2024 (shown $\times 100$).
+:::
+
+:::{figure} output/q4a_forward_rates.png
+:label: fig-q4a-forwards
+:width: 90%
+
+Log forward rates $f^{(H)}_{b,t}$ for $H = 2,\dots,5$, June 1952 to December 2024 (shown $\times 100$).
+:::
+
+:::{figure} output/q4a_log_returns.png
+:label: fig-q4a-returns
+:width: 90%
+
+Log annual returns $r^{(H)}_{b,t}$ for $H = 2,\dots,5$, June 1953 to December 2024 (shown $\times 100$).
+:::
+

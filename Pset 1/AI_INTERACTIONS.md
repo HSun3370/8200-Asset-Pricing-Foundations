@@ -522,3 +522,30 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** empirical coding; formatting/translation (table in `answers.md`).
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q4(a)`). It is staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` and `Research Ideas/CreativeDestruction.md` stay out.
+
+---
+
+### Entry 11 — 2026-09-12 — Pset 1, Q4(a)
+
+- **Problem-set item:** Pset 1, Question 4(a) — adding the three Q4(a) figures produced in Entry 10 to `Pset 1/answers.md`.
+- **Student's substantive prompt:** "add figures you plotted into answer.md file, for curiosity,"
+  - The student did not type `/tp`. Adding figures to an answer file is formatting help on problem-set content, which `AI_POLICY.md` §2(c) and `CLAUDE.md` treat as substantive. AI therefore ran the @TP workflow itself by invoking the `tp` skill, and told the student so.
+  - This request is not folded into Entry 10. That entry was already committed (`81064d9`), entries may not be edited, and the student did not ask for the requests to be grouped.
+- **Purpose:** Show the Q4(a) plots of log yields, forward rates and log annual returns in `answers.md`.
+- **Git commit before interaction:** `4dc4cf4dc64982dd1e343157eca177f5b35a18d4`. AI first confirmed there were no untracked files inside `Pset 1/`, then staged tracked changes only (`git add -u`). The snapshot holds `HW1.pdf`, rebuilt after Entry 10's commit. `Pset 1/answers.md` had not changed since `81064d9`. `Pset 2/` and `Research Ideas/CreativeDestruction.md` were again left untracked.
+- **Assistance provided:**
+  - **Checked the file first.** AI confirmed that `answers.md` had not changed since `81064d9` and still ended with the Q4(a) block, so the figures could go at the end of the Q4(a) section.
+  - **Added the figures.** A helper script in the session scratchpad appended three MyST figure blocks after the Q4(a) definitions paragraph.
+    - Each block has a label (`fig-q4a-yields`, `fig-q4a-forwards`, `fig-q4a-returns`) and a 90% width, as used for the earlier figures.
+    - Each has a factual caption giving the series, the maturities, the date range and the ×100 scaling. The dates were read from `output/q4a_summary.csv`: June 1952–December 2024 for yields and forwards, and June 1953–December 2024 for returns.
+    - The helper would write only if the file still ended with the Q4(a) definitions sentence and none of the figures was already present.
+    - It appended 21 lines: three six-line figure blocks, each followed by a blank line. No existing line was changed; before this entry was appended, a guard checked with `git diff --numstat` that the diff was exactly 21 lines added and 0 removed.
+  - **Figure files:** the PNGs are the ones created and checked in Entry 10; they were not regenerated or changed.
+  - **Not written by AI:** no description or interpretation of the figures.
+- **Files inspected:** `Pset 1/answers.md` (its diff since `81064d9`, its end and its modification time); `Pset 1/output/q4a_summary.csv` (read by the helper); `Pset 1/AI_INTERACTIONS.md`.
+- **Files directly modified by AI:** `Pset 1/answers.md` (21 lines appended); `Pset 1/AI_INTERACTIONS.md` (this entry). The helper and finalize scripts are in the session scratchpad, outside the repository, and are not committed.
+- **Errors / omissions / ambiguities identified:** none. The request raised no empirical or econometric question. Where the figures go (end of the Q4(a) section, after the table) and how the captions are worded are formatting choices.
+- **Substantive math / economic / econometric suggestions made:** none. AI's only choices were mechanical: figure placement, labels, width and caption wording.
+- **Type(s) of assistance:** formatting/translation.
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q4(a) - add Q4(a) figures`). It is staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` and `Research Ideas/CreativeDestruction.md` stay out.
