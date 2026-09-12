@@ -302,3 +302,16 @@ errors, plotted at each window's last month from December 1990 to December 2021 
 sample mean of $xR_{e,t+1}$ within each window.
 :::
 
+
+
+
+
+
+
+## Question 3
+
+
+
+
+##  Question 4
+
