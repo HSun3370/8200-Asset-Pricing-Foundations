@@ -371,3 +371,21 @@ estimated by OLS on overlapping monthly observations, where $t+h$ is the same mo
 | 4 | 0.4141 | 2.52 | 
 | 5 | 0.3453 | 2.30 |
 
+
+### 
+
+Regressions of the one-year excess log return on the excess log forward rate,
+
+$$
+xr^{(H)}_{b,t+1} = a^{(H)} + b^{(H)}\, xf^{(H)}_{b,t} + \varepsilon^{(H)}_{t+1},
+$$
+
+estimated by OLS on overlapping monthly observations, where $t+1$ is the same month one year later, using the 859 months with $t$ from June 1952 to December 2023 for every $H$. The $t$-statistics use Newey and West (1987, 1994) standard errors: Bartlett weights with the lag length chosen by the Newey and West (1994) rule, as in Question 2(b) ($L = 23, 23, 24, 23$ for $H = 2, 3, 4, 5$).
+
+| $H$ | $b^{(H)}$ | $t$-statistic (Newey-West) |
+|---|---|---|
+| 2 | 0.6774 | 3.23 |
+| 3 | 0.8887 | 3.35 |
+| 4 | 1.1163 | 3.62 |
+| 5 | 0.9641 | 2.91 |
+

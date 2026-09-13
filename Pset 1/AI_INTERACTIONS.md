@@ -634,3 +634,81 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** empirical coding; code debugging (AI's own implementation error); formatting/translation (table in `answers.md`).
 - **Grouped minor follow-ups:** none were requested by the student. The bug fix and table correction were AI's own corrections, made within this same interaction before the entry was written.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q4(b)`). It is staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` and `Research Ideas/CreativeDestruction.md` stay out.
+
+---
+
+### Entry 13 — 2026-09-13 — Pset 1, Q4(c)
+
+- **Problem-set item:** Pset 1, Question 4(c) — regressions of the one-year excess log return `xr^(H)_{b,t+1}` on the excess log forward rate `xf^(H)_{b,t}` for `H = 2, 3, 4, 5`, reporting `b^(H)` with Newey–West t-statistics.
+- **Student's substantive prompt:** `/tp` "work on question 4c for H = 2,3,4,5, do regresison xr^{(H)}_{b,t+1} = a^{(H)} + b^{(H)} xf^{(H)}_{b,t} +\epsilon report slopes with Newey West t statistics"
+  - The student sent this on 2026-09-12 while the Q4(b) interaction (Entry 12) was still open. AI finished and committed the Q4(b) record (`1d1155e`) before starting this interaction.
+- **Purpose:** Run the Q4(c) regressions and report the slopes with Newey–West t-statistics in `Pset 1/answers.md`.
+- **Git commit before interaction:** `1ef4b3753d2bc6bfbdc5166c8ddac7344f3512eb`. This is an empty commit, made immediately after Q4(b)'s post-work commit, after AI confirmed there were no untracked files inside `Pset 1/` and no tracked changes. `Pset 2/` and `Research Ideas/CreativeDestruction.md` were again left untracked.
+- **Assistance provided:**
+  - **Read-only run before asking.** It used a script in the session scratchpad and wrote no project files.
+    - It used the Q4(a) series, with the `r^(1)_t` benchmark, pairing `xr^(H)` in the same month one year later with `xf^(H)_t`.
+    - It estimated the OLS regression for each `H` and computed t-statistics under both readings of "Newey West" (see ambiguity 1).
+    - Every `H` uses the same 859 months (`t` from June 1952 to December 2023), so no sample question arose.
+    - **Footnote-13 check:** `b^(2)` = 0.677403, identical to Q4(b)'s `b^(2)` on the same 859 months.
+    - It showed the student this table:
+
+    | H | b | t, NW (1987, 1994), automatic lag | t, NW (1987), L = 11 |
+    |---|---|---|---|
+    | 2 | 0.6774 | 3.23 (L = 23) | 3.37 |
+    | 3 | 0.8887 | 3.35 (L = 23) | 3.55 |
+    | 4 | 1.1163 | 3.62 (L = 24) | 3.87 |
+    | 5 | 0.9641 | 2.91 (L = 23) | 3.11 |
+
+  - **While the question was pending,** AI wrote `Pset 1/code/q4c.py` with `NW_METHOD = None`; the script raises an error until the method is set. AI also wrote two helper scripts in the session scratchpad, outside the repository.
+  - **Script run after the decision.** The student chose NW (1987, 1994). AI set `NW_METHOD = "nw1987_1994"` with `sed`, checked with `grep` that it was set exactly once, and ran `q4c.py`. The script works in four steps:
+    1. It imports `build_series` from `q4a.py`, so the series and the `r^(1)_t` benchmark are those of Q4(a). It also imports `s_hac` and `sandwich` from `q2b.py`, so the HAC formula is the one used in Q2(b).
+    2. For each `H`, it regresses `xr^(H)` in the same month one year later on a constant and `xf^(H)_t` by OLS.
+    3. It chooses `L` with `linearmodels.kernel_optimal_bandwidth` applied to the slope's score `e_t · xf_t`, the same Newey–West (1994) rule and convention as Q2(b) method (v). It then computes the Bartlett-weighted variance, and `t = b/se(b)`.
+    4. It stops unless `b^(2)` equals Q4(b)'s `b^(2)` to within 1e-10, as footnote 13 requires.
+  - **Results.** They match the read-only values for the chosen method; no debugging was needed. Each `Var(θ̂)` is positive definite.
+
+    | H | b^(H) | t (Newey–West 1987, 1994) | L | months | t from | t to |
+    |---|---|---|---|---|---|---|
+    | 2 | 0.6774 | 3.23 | 23 | 859 | June 1952 | December 2023 |
+    | 3 | 0.8887 | 3.35 | 23 | 859 | June 1952 | December 2023 |
+    | 4 | 1.1163 | 3.62 | 24 | 859 | June 1952 | December 2023 |
+    | 5 | 0.9641 | 2.91 | 23 | 859 | June 1952 | December 2023 |
+
+  - **Output:** `output/q4c_regressions.csv`, with one row per `H`: `a`, `b`, standard error, t, `L`, sample, positive-definiteness checks, and the method.
+  - **Added the table to `answers.md`.** A scratchpad helper read every number and the method from `q4c_regressions.csv`. It would write only if the file still ended with the corrected Q4(b) table. There was no `###` heading for 4(c), so the helper added `### `; it would have skipped the heading had the student already added one. It appended 18 lines:
+    - the regression equation;
+    - one sentence on the estimation: OLS on overlapping monthly data, `t+1` as the same month one year later, 859 months from June 1952 to December 2023 for every `H`, and Newey–West (1987, 1994) standard errors with the lag rule and the chosen `L` values;
+    - a three-column table (`H`, `b^(H)`, Newey–West t), matching the layout the student chose for the Q4(b) table.
+
+    Before this entry was appended, a guard checked that the diff was 18 lines added and 0 removed, and that the results match the values above.
+  - **Not written by AI:** no interpretation of the estimates. The problem set asks for a table "analogous to the second panel of the first table on slide 5.5". AI did not have the lecture slides, so the table follows the student's request for slopes and t-statistics and the student's Q4(b) layout.
+- **Files inspected:**
+  - `Pset 1/answers.md`: its end and modification time;
+  - `Pset 1/code/q4a.py` and `Pset 1/code/q2b.py` (imported);
+  - `Pset 1/output/q4b_regressions.csv` (for the footnote-13 check);
+  - `Pset 1/Bond Dataset.csv` (read through `q4a.py`);
+  - `Pset 1/AI_INTERACTIONS.md`.
+
+  AI relied on the Q4(c) text of `Pset 1/problem_set_1.md`, including footnote 13, as read during Entry 10 in the same conversation; that file was not reopened.
+- **Files directly modified by AI:**
+  - created `Pset 1/code/q4c.py`, then set `NW_METHOD` after the student decided;
+  - created `Pset 1/output/q4c_regressions.csv`;
+  - appended 18 lines, including a `### ` heading, to `Pset 1/answers.md` (addition only);
+  - `Pset 1/AI_INTERACTIONS.md` (this entry).
+
+  The helper scripts are in the session scratchpad, outside the repository, and are not committed.
+- **Errors / omissions / ambiguities identified:**
+  1. **Which Newey–West estimator (flagged; the student decided).** The prompt asks for "Newey West t statistics". Q2(b) used two Newey–West variants: (iii) NW (1987) with 11 lags, and (v) NW (1987, 1994) with the lag set by the Newey–West (1994) rule. The problem set names NW (1987, 1994) for Q4(c). AI gave both options with their t-statistics, noted the problem set's wording, and recommended neither. **The student chose NW (1987, 1994) with the automatic lag** (`NW_METHOD = "nw1987_1994"`).
+  2. **Score used in the NW (1994) lag rule (carried over; not asked again).** The lag rule is applied to the slope's score `e_t · xf_t`. This is the `linearmodels` convention used in Q2(b) method (v), which Entry 6 flagged for the student. AI stated it to the student when presenting the choice.
+  3. **Sample and timing (checked; no question needed).** `t+1` is the same month one year later, as in Q4(a). `xr` exists from June 1953 and `xf` in every month, so every `H` uses the same 859 months.
+  4. **Slide 5.5 unavailable.** See "Not written by AI" above.
+- **Substantive math / economic / econometric suggestions made:** none adopted from AI. The regression and the reported statistics came from the student and the problem set. The one open point, which Newey–West estimator to use, was put to the student, who decided it. AI's mechanical and formatting choices:
+  - reusing the `q4a.py` and `q2b.py` functions;
+  - `statsmodels` OLS;
+  - the footnote-13 check;
+  - the three-column table following the student's Q4(b) layout;
+  - the `### ` heading;
+  - `b` to 4 decimals and t to 2.
+- **Type(s) of assistance:** empirical coding; formatting/translation (table in `answers.md`).
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q4(c)`). It is staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` and `Research Ideas/CreativeDestruction.md` stay out. The `git add -u` also picks up `HW1.pdf`. It was unchanged at the pre-work commit and was rebuilt during this interaction outside AI's actions.
