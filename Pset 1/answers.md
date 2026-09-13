@@ -410,3 +410,21 @@ by OLS on overlapping monthly observations, where $t+1$ is the same month one ye
 The figure plots the fitted value $\hat{\theta}_0 + cp_t$ of $\frac{1}{4}\sum_{H=2}^{5} xr^{(H)}_{b,t+1}$ (shown $\times 100$) for $t$ from June 1952 to December 2024; grey areas mark NBER recession months (FRED USREC = 1). Months after December 2023 use the coefficients estimated through December 2023.
 :::
 
+
+### 
+
+Regressions of the one-year excess log return on the Cochrane-Piazzesi factor,
+
+$$
+xr^{(H)}_{b,t+1} = a^{(H)} + b^{(H)}\, (\hat{\theta}_0 + cp_t) + \varepsilon^{(H)}_{t+1},
+$$
+
+estimated by OLS on overlapping monthly observations, where $t+1$ is the same month one year later, using the 859 months with $t$ from June 1952 to December 2023 for every $H$. The regressor is the fitted value $\hat{\theta}_0 + cp_t$ plotted in Question 4(d). The $t$-statistics use Newey and West (1987, 1994) standard errors: Bartlett weights with the lag length chosen by the Newey and West (1994) rule, as in Question 2(b) ($L = 23, 23, 23, 23$ for $H = 2, 3, 4, 5$).
+
+| $H$ | $b^{(H)}$ | $t$-statistic (Newey-West) |
+|---|---|---|
+| 2 | 0.4418 | 4.16 |
+| 3 | 0.8274 | 4.18 |
+| 4 | 1.2517 | 4.45 |
+| 5 | 1.4791 | 4.25 |
+
