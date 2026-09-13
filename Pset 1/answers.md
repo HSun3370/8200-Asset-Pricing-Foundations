@@ -5,6 +5,9 @@
 This is my abstract!
 +++
 
+```{raw:typst}
+#set page(margin: auto)
+```
 
 ## Question 1
 
@@ -402,7 +405,7 @@ by OLS on overlapping monthly observations, where $t+1$ is the same month one ye
 
 :::{figure} output/q4d_cp_nber.png
 :label: fig-q4d-cp
-:width: 60%
+:width: 80%
 
 The figure plots the fitted value $\hat{\theta}_0 + cp_t$ of $\frac{1}{4}\sum_{H=2}^{5} xr^{(H)}_{b,t+1}$ (shown $\times 100$) for $t$ from June 1952 to December 2024; grey areas mark NBER recession months (FRED USREC = 1). Months after December 2023 use the coefficients estimated through December 2023.
 :::
