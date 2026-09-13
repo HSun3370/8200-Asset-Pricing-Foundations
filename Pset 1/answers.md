@@ -389,3 +389,21 @@ estimated by OLS on overlapping monthly observations, where $t+1$ is the same mo
 | 4 | 1.1163 | 3.62 |
 | 5 | 0.9641 | 2.91 |
 
+
+### 
+
+Cochrane and Piazzesi (2005) factor, estimated from
+
+$$
+\frac{1}{4}\sum_{H=2}^{5} xr^{(H)}_{b,t+1} = \theta_0 + cp_t + u_t, \qquad cp_t = \sum_{H=1}^{5} \theta_H\, f^{(H)}_{b,t},
+$$
+
+by OLS on overlapping monthly observations, where $t+1$ is the same month one year later and $f^{(1)}_{b,t} = y^{(1)}_{b,t}$, using the 859 months with $t$ from June 1952 to December 2023.
+
+:::{figure} output/q4d_cp_nber.png
+:label: fig-q4d-cp
+:width: 60%
+
+The figure plots the fitted value $\hat{\theta}_0 + cp_t$ of $\frac{1}{4}\sum_{H=2}^{5} xr^{(H)}_{b,t+1}$ (shown $\times 100$) for $t$ from June 1952 to December 2024; grey areas mark NBER recession months (FRED USREC = 1). Months after December 2023 use the coefficients estimated through December 2023.
+:::
+

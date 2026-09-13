@@ -1,0 +1,15 @@
+parameter,value
+cp_series,fitted
+plot_range,all_forwards
+n_regression,859
+regression_first,1952-06
+regression_last,2023-12
+r_squared,0.15750945779275904
+n_plot,871
+plot_first,1952-06
+plot_last,2024-12
+recession_months_plotted,113
+recession_spans_plotted,11
+shown_mean,0.006297561414281584
+shown_min,-0.03979122844015142
+shown_max,0.049356923565820075
