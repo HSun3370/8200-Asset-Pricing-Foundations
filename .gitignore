@@ -7,3 +7,10 @@ __pycache__/
 
 # Python virtual environment (see requirements.txt to recreate)
 .venv/
+
+# Licensed CRSP extract - too large for GitHub and not redistributable.
+# Regenerate from Pset 1/Data.ipynb, then run Pset 1/code/q3a_filter_crsp.py.
+Pset 1/CRSP.csv
+
+# Cached Chen-Zimmermann download (regenerate by running Pset 1/code/q3a.py)
+Pset 1/data_cache/
