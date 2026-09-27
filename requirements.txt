@@ -1,0 +1,54 @@
+# Python environment for this repository.
+#
+# wrds pins pandas<2.3, which has no prebuilt wheel for Python 3.14 (would require
+# building pandas from source with MSVC). Use Python 3.12 instead:
+#
+#   py -3.12 -m venv .venv
+#   .venv\Scripts\python.exe -m pip install -r requirements.txt
+#
+# .venv/ is gitignored; recreate it from this file rather than committing it.
+
+asttokens==3.0.2
+colorama==0.4.6
+contourpy==1.4.0
+cycler==0.12.1
+decorator==5.3.1
+executing==2.2.1
+fonttools==4.66.0
+formulaic==1.2.2
+greenlet==3.5.6
+interface_meta==2.0.1
+ipython==9.8.0
+ipython_pygments_lexers==1.1.1
+jedi==0.20.0
+kiwisolver==1.5.1
+linearmodels==7.0
+matplotlib==3.11.2
+matplotlib-inline==0.2.2
+mypy_extensions==1.1.0
+narwhals==2.26.0
+numpy==2.5.3
+packaging==26.3
+pandas==2.2.3
+parso==0.8.7
+patsy==1.0.3
+pillow==12.3.0
+prompt_toolkit==3.0.53
+psycopg2-binary==2.9.13
+pure_eval==0.2.4
+Pygments==2.21.0
+pyhdfe==0.2.0
+pyparsing==3.3.3
+python-dateutil==2.9.0.post0
+pytz==2026.4
+scipy==1.18.1
+six==1.17.0
+SQLAlchemy==2.0.54
+stack-data==0.6.3
+statsmodels==0.15.0
+traitlets==5.16.1
+typing_extensions==4.16.0
+tzdata==2026.4
+wcwidth==0.9.1
+wrapt==2.5.0
+wrds==3.5.0

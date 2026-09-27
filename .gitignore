@@ -4,3 +4,6 @@ _build
 # Python bytecode cache
 __pycache__/
 *.pyc
+
+# Python virtual environment (see requirements.txt to recreate)
+.venv/
