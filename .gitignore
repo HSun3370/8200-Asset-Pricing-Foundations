@@ -14,3 +14,9 @@ Pset 1/CRSP.csv
 
 # Cached Chen-Zimmermann download (regenerate by running Pset 1/code/q3a.py)
 Pset 1/data_cache/
+
+# Chen-Zimmermann per-signal CSVs, downloaded by hand from the project's Google Drive
+# (~100 MB each, over GitHub's file limit). See Pset 1/code/q3a_build_cz_cache.py.
+Pset 1/Mom12m.csv
+Pset 1/BMdec.csv
+Pset 1/GP.csv
