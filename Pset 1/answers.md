@@ -347,6 +347,49 @@ Monthly $R^2_\tau$.
 
 % TODO: discuss what these three series say about the MOM construction.
 
+### 3(b)
+
+Book equity is $BE = SE + TXDITC - BVPS$ from the fiscal year ending in calendar year
+$t-1$, market equity is $ME = |PRC|\cdot SHROUT$ from December of year $t-1$, and
+$BM = BE/ME$ is assigned at the end of June of year $t$ and held fixed through May of
+year $t+1$. Firm-months with $BE \le 0$ are dropped, and a firm must already have at
+least two prior annual COMPUSTAT records before the fiscal year used. The COMPUSTAT
+extract available here carries neither `SEQ` nor `AT`/`LT`, so $SE$ is measured as
+`CEQ + PSTK` throughout rather than by the full sequence of footnote 6.
+
+For each month $\tau$ I then estimate the cross-firm regression
+$$
+\text{BM}^{CZ}_{j,\tau} = a_\tau + b_\tau \cdot \text{BM}_{j,\tau} + \varepsilon_{j,\tau}
+$$
+using $\text{BM}_{CZ} = \texttt{BMdec}$. Note that `BMdec` in the Chen and Zimmermann
+(2022) data is already a book-to-market *ratio* rather than its log: 2.72% of its values
+are negative, its quartiles ($0.36$, $0.68$, $1.17$) are ratio-scale, and exponentiating
+it overflows. It is therefore used directly.
+
+:::{figure} output/q3b_intercept.png
+:label: fig-q3b-intercept
+:width: 95%
+
+Monthly intercepts $\hat a_\tau$ from the cross-firm regression of $\text{BM}_{CZ}$ on my
+$\text{BM}$, June 1964 – December 2024 (727 months, on average 2,478 firms per month).
+:::
+
+:::{figure} output/q3b_slope.png
+:label: fig-q3b-slope
+:width: 95%
+
+Monthly slopes $\hat b_\tau$.
+:::
+
+:::{figure} output/q3b_r2.png
+:label: fig-q3b-r2
+:width: 95%
+
+Monthly $R^2_\tau$.
+:::
+
+% TODO: discuss what these three series say about the BM construction.
+
 ##  Question 4
 
 
