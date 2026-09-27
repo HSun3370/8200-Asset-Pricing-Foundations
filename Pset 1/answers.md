@@ -350,7 +350,7 @@ Monthly $R^2_\tau$.
 ### 3(b)
 
 Book equity is $BE = SE + TXDITC - BVPS$ from the fiscal year ending in calendar year
-$t-1$, market equity is $ME = |PRC|\cdot SHROUT$ from December of year $t-1$, and
+$t-1$, market equity is $ME = |PRC| \cdot SHROUT$ from December of year $t-1$, and
 $BM = BE/ME$ is assigned at the end of June of year $t$ and held fixed through May of
 year $t+1$. Firm-months with $BE \le 0$ are dropped, and a firm must already have at
 least two prior annual COMPUSTAT records before the fiscal year used. The COMPUSTAT
@@ -361,7 +361,7 @@ For each month $\tau$ I then estimate the cross-firm regression
 $$
 \text{BM}^{CZ}_{j,\tau} = a_\tau + b_\tau \cdot \text{BM}_{j,\tau} + \varepsilon_{j,\tau}
 $$
-using $\text{BM}_{CZ} = \texttt{BMdec}$. Note that `BMdec` in the Chen and Zimmermann
+using $\text{BM}_{CZ} = \text{BMdec}$. Note that `BMdec` in the Chen and Zimmermann
 (2022) data is already a book-to-market *ratio* rather than its log: 2.72% of its values
 are negative, its quartiles ($0.36$, $0.68$, $1.17$) are ratio-scale, and exponentiating
 it overflows. It is therefore used directly.
