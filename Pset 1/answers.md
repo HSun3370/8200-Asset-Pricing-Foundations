@@ -353,9 +353,11 @@ Book equity is $BE = SE + TXDITC - BVPS$ from the fiscal year ending in calendar
 $t-1$, market equity is $ME = |PRC| \cdot SHROUT$ from December of year $t-1$, and
 $BM = BE/ME$ is assigned at the end of June of year $t$ and held fixed through May of
 year $t+1$. Firm-months with $BE \le 0$ are dropped, and a firm must already have at
-least two prior annual COMPUSTAT records before the fiscal year used. The COMPUSTAT
-extract available here carries neither `SEQ` nor `AT`/`LT`, so $SE$ is measured as
-`CEQ + PSTK` throughout rather than by the full sequence of footnote 6.
+least two prior annual COMPUSTAT records before the fiscal year used. Following the
+sequence in footnote 6, $SE$ is taken from `SEQ` where available (262,826 firm-years)
+and from `CEQ + PSTK` otherwise (a further 701). The extract carries no `AT` or `LT`, so
+the third route is unavailable and 20,686 firm-years are left without a book-equity
+value.
 
 For each month $\tau$ I then estimate the cross-firm regression
 $$

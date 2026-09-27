@@ -5,11 +5,10 @@ exp(BMdec) from the Chen-Zimmermann (2022) dataset.
 Construction (problem statement, footnotes 5-6, plus the student's decisions):
 
   BE  = SE + TXDITC - BVPS, from the fiscal year ending in calendar year t-1
-        SE    = CEQ + PSTK   -- the COMPUSTAT extract has no SEQ, AT or LT, so the
-                                first and third routes of footnote 6 are unavailable.
-                                STUDENT'S DECISION: proceed with CEQ + PSTK alone,
-                                accepting that ~7.8% of firm-years get no BE and that
-                                SEQ is not used even where it exists.
+        SE    = SEQ, else CEQ + PSTK -- footnote 6's sequence. The extract carries SEQ
+                                but not AT or LT, so the third route (AT - LT) is still
+                                unavailable and a firm-year with neither SEQ nor both of
+                                CEQ and PSTK gets no BE.
         TXDITC = txditc if available, else 0
         BVPS   = PSTKRV, else PSTKL, else PSTK
   ME  = |PRC| * SHROUT from CRSP, December of year t-1. SHROUT is in thousands of
@@ -78,7 +77,17 @@ def load_book_equity() -> pd.DataFrame:
     comp = comp.loc[prior >= MIN_PRIOR_RECORDS].copy()
     print(f"  after >={MIN_PRIOR_RECORDS} prior records      : {len(comp):,}")
 
-    se = comp["ceq"] + comp["pstk"]                       # SEQ / AT-LT unavailable
+    # footnote 6: SE = SEQ, else CEQ + PSTK, else AT - LT. The extract carries SEQ but
+    # not AT/LT, so the first two routes are used and the third is unavailable.
+    se_ceq_pstk = comp["ceq"] + comp["pstk"]
+    se = comp["seq"].where(comp["seq"].notna(), se_ceq_pstk)
+    n_seq = int(comp["seq"].notna().sum())
+    n_fallback = int((comp["seq"].isna() & se_ceq_pstk.notna()).sum())
+    n_none = int(se.isna().sum())
+    print(f"  SE from SEQ                  : {n_seq:,}")
+    print(f"  SE from CEQ+PSTK fallback    : {n_fallback:,}")
+    print(f"  SE unavailable (no AT/LT)    : {n_none:,}")
+
     txditc = comp["txditc"].fillna(0.0)
     bvps = comp["pstkrv"].fillna(comp["pstkl"]).fillna(comp["pstk"])
     comp["BE"] = se + txditc - bvps
