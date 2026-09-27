@@ -921,3 +921,22 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** empirical coding; code debugging.
 - **Grouped minor follow-ups:** the student's request to gitignore the three downloaded CSVs is documented here rather than as a separate interaction — same problem-set item, same work session.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(a) continuation`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.
+
+### Entry 18 — 2026-09-27 — Pset 1, Q3(a) (revision)
+
+- **Problem-set item:** Pset 1, Question 3(a). Narrows the deliverable produced in Entries 16–17 to a single momentum definition.
+- **Student's substantive prompt:** "can you keep the MOM including 12 months? delete 11 month way."
+- **Purpose:** Drop the 11-return variant that skipped month τ−1 and keep only the 12-return construction over τ−12 … τ−1, then regenerate the outputs and the answer section.
+- **Git commit before interaction:** `6e2092dcbcdcfeb21326463690674c2d50c6d884`
+- **Assistance provided:**
+  - Rewrote `Pset 1/code/q3a.py` for a single MOM definition, `MOM_{j,τ} = ∏_{k=1}^{12}(1 + r_{j,τ−k}) − 1`. Removed the `VARIANTS`/`LABELS`/`COLORS` dictionaries and the per-variant loops that existed only to carry two definitions; the regression helper now takes the single merged frame, the output columns lost their `_skip`/`_noskip` suffixes, and the three figures plot one series each with no legend. The missing-return rule is unchanged (all 12 calendar months must be present as rows; blank or letter-coded returns count as 0%).
+  - Re-ran the script. Outputs regenerated: `output/q3a_monthly_regressions.csv` and `output/q3a_{intercept,slope,r2}.png`.
+  - Verified the refactor is numerically inert: 2,460,933 valid firm-months, 2,450,551 merged firm-months, 727 monthly regressions over 1964-06 … 2024-12, intercept mean 0.0077 / median −0.0001, slope mean 0.8939, R² mean 0.8917 — identical to the `noskip` column reported in Entry 17.
+  - Edited the `### 3(a)` section of `Pset 1/answers.md`: replaced the sentence describing two plotted variants with one describing the single 12-month window. The figure directives, captions and the `% TODO` marker for the student's own discussion are unchanged.
+- **Files inspected:** `Pset 1/code/q3a.py`; `Pset 1/answers.md`; `Pset 1/output/q3a_slope.png`; `Pset 1/AI_INTERACTIONS.md`.
+- **Files directly modified by AI:** `Pset 1/code/q3a.py` (rewritten for one variant); `Pset 1/answers.md` (one sentence in the 3(a) subsection); regenerated `Pset 1/output/q3a_monthly_regressions.csv` and the three PNGs; `Pset 1/AI_INTERACTIONS.md` (this entry).
+- **Errors / omissions / ambiguities identified:** none new. The observation recorded in Entry 17 still stands and was not acted on: the slope averages 0.894 and R² averages 0.892 rather than ≈1, most plausibly because of the student's rule that blank or letter-coded returns count as 0% instead of invalidating the firm-month. Changing that rule remains the student's decision.
+- **Substantive math / economic / econometric suggestions made:** none. Choosing the 12-month window over the 11-month one was the student's decision, stated in the prompt; AI only removed the code path. All other changes were mechanical (collapsing the two-variant scaffolding, dropping column suffixes and the figure legend, rewording one sentence).
+- **Type(s) of assistance:** empirical coding.
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(a) - single 12-month MOM`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.

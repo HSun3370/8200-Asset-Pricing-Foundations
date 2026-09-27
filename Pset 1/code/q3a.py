@@ -3,30 +3,27 @@ Pset 1, Question 3(a) -- construct MOM from CRSP and validate it against the
 Chen-Zimmermann (2022) Mom12m signal.
 
 Student specification:
-  Two momentum variants are built for stock j at the end of month tau:
+  MOM for stock j at the end of month tau compounds the 12 monthly returns over
+  tau-12 ... tau-1, matching footnote 4 of the problem statement and the stated
+  definition of the CZ column:
 
-    MOM_skip    = prod_{k=2}^{12} ( 1 + r_{j,tau-k} ) - 1    (11 returns, tau-12..tau-2;
-                                                              skips the most recent month)
-    MOM_noskip  = prod_{k=1}^{12} ( 1 + r_{j,tau-k} ) - 1    (12 returns, tau-12..tau-1)
+      MOM_{j,tau} = prod_{k=1}^{12} ( 1 + r_{j,tau-k} ) - 1
 
-  MOM_noskip matches the definition in the problem statement (footnote 4) and the stated
-  definition of the CZ column; MOM_skip is the Jegadeesh-Titman 12-1 convention. Both are
-  computed so the two can be compared against MOM_CZ.
+  Missing-return handling (student's decision): all 12 calendar months must be present
+  as rows for that permno; a CRSP return that is blank or carries a letter code (e.g.
+  'C') is treated as a 0% return for that month.
 
-  Missing-return handling (student's decision): every calendar month in a variant's window
-  must be present as a row for that permno; a CRSP return that is blank or carries a letter
-  code (e.g. 'C') is treated as a 0% return for that month. Because the two windows differ,
-  the two variants have different valid samples (noskip is the stricter one).
-
-  MOM_CZ = Mom12m from openassetpricing. Merge on (permno, yyyymm), drop missing, then for
-  each month run a cross-firm OLS regression, separately for each variant,
+  MOM_CZ = Mom12m from openassetpricing. Merge on (permno, yyyymm), drop missing, then
+  for each month run a cross-firm OLS regression
 
       MOM_CZ_{j,tau} = a_tau + b_tau * MOM_{j,tau} + e_{j,tau}
 
-  and plot the time series of a_tau, b_tau and R^2_tau. Each of the three figures overlays
-  both variants.
+  and plot the time series of a_tau, b_tau and R^2_tau as three figures.
 
 Run Pset 1/code/q3a_filter_crsp.py first (applies the SIC exclusions to CRSP.csv).
+The CZ signals are downloaded on first use, or assembled by q3a_build_cz_cache.py when
+the project's Google Drive share is rate-limited.
+
 Outputs: output/q3a_monthly_regressions.csv and output/q3a_{intercept,slope,r2}.png
 """
 
@@ -47,21 +44,14 @@ OUT_DIR.mkdir(exist_ok=True)
 CACHE_DIR.mkdir(exist_ok=True)
 CZ_CACHE = CACHE_DIR / "cz_signals.parquet"
 
-# variant -> (first lag, last lag) used in the compounding window
-VARIANTS = {
-    "skip": (2, 12),    # tau-12 .. tau-2, 11 returns
-    "noskip": (1, 12),  # tau-12 .. tau-1, 12 returns
-}
-LABELS = {
-    "skip": "skip $\\tau-1$ (11 returns)",
-    "noskip": "no skip (12 returns)",
-}
-COLORS = {"skip": "tab:blue", "noskip": "tab:red"}
+WINDOW = 12  # compound returns over tau-12 ... tau-1
 
 
 def load_mom() -> pd.DataFrame:
-    """Build both MOM variants per (permno, yyyymm) from the filtered CRSP extract."""
-    df = pd.read_csv(CRSP_CSV, dtype={"RET": str}, parse_dates=["date"])
+    """Build MOM per (permno, yyyymm) from the filtered CRSP extract."""
+    df = pd.read_csv(
+        CRSP_CSV, dtype={"RET": str, "SICCD": str}, parse_dates=["date"]
+    )
     df["mi"] = df["date"].dt.year * 12 + df["date"].dt.month  # month index
     df = df.sort_values(["PERMNO", "mi"], ignore_index=True)
 
@@ -69,34 +59,24 @@ def load_mom() -> pd.DataFrame:
     ret = pd.to_numeric(df["RET"], errors="coerce").fillna(0.0)
     permno, mi = df["PERMNO"], df["mi"]
 
-    n = len(df)
-    gross = {v: np.ones(n) for v in VARIANTS}
-    ok = {v: np.ones(n, dtype=bool) for v in VARIANTS}
-
-    max_lag = max(hi for _, hi in VARIANTS.values())
-    for k in range(1, max_lag + 1):
+    gross = np.ones(len(df))
+    ok = np.ones(len(df), dtype=bool)
+    for k in range(1, WINDOW + 1):
         # rows are sorted by (PERMNO, mi), so a plain shift is the k-th previous row;
         # require it to be the same permno AND exactly k calendar months earlier
-        same = ((permno.shift(k) == permno) & (mi.shift(k) == mi - k)).to_numpy()
-        r_lag = ret.shift(k).fillna(0.0).to_numpy()
-        for v, (lo, hi) in VARIANTS.items():
-            if lo <= k <= hi:
-                ok[v] &= same
-                gross[v] *= 1.0 + r_lag
+        ok &= ((permno.shift(k) == permno) & (mi.shift(k) == mi - k)).to_numpy()
+        gross *= 1.0 + ret.shift(k).fillna(0.0).to_numpy()
 
-    print(f"CRSP rows                    : {n:,}")
-    for v in VARIANTS:
-        df[f"MOM_{v}"] = np.where(ok[v], gross[v] - 1.0, np.nan)
-        print(f"  valid MOM_{v:<7}          : {int(ok[v].sum()):,}")
-
+    df["MOM"] = np.where(ok, gross - 1.0, np.nan)
     df["yyyymm"] = df["date"].dt.year * 100 + df["date"].dt.month
-    cols = ["PERMNO", "yyyymm"] + [f"MOM_{v}" for v in VARIANTS]
-    keep = np.logical_or.reduce([ok[v] for v in VARIANTS])
-    return df.loc[keep, cols].rename(columns={"PERMNO": "permno"})
+
+    print(f"CRSP rows                    : {len(df):,}")
+    print(f"  with a valid MOM           : {int(ok.sum()):,}")
+    return df.loc[ok, ["PERMNO", "yyyymm", "MOM"]].rename(columns={"PERMNO": "permno"})
 
 
 def load_cz() -> pd.DataFrame:
-    """Download (and cache) the Chen-Zimmermann signals."""
+    """Load the Chen-Zimmermann signals, downloading them if not already cached."""
     if CZ_CACHE.exists():
         cz = pd.read_parquet(CZ_CACHE)
         print(f"CZ signals (cached)          : {len(cz):,}")
@@ -110,18 +90,16 @@ def load_cz() -> pd.DataFrame:
     return cz[["permno", "yyyymm", "Mom12m"]].rename(columns={"Mom12m": "MOM_CZ"})
 
 
-def monthly_regressions(d: pd.DataFrame, xcol: str) -> pd.DataFrame:
-    """Cross-firm OLS of MOM_CZ on `xcol`, month by month, fully vectorised.
+def monthly_regressions(d: pd.DataFrame) -> pd.DataFrame:
+    """Cross-firm OLS of MOM_CZ on MOM, month by month, fully vectorised.
 
     Per month: b = Cov(x,y)/Var(x), a = ybar - b*xbar, R^2 = Corr(x,y)^2.
     """
-    d = d.dropna(subset=[xcol, "MOM_CZ"])
-    d = d.assign(
-        xy=d[xcol] * d["MOM_CZ"], xx=d[xcol] ** 2, yy=d["MOM_CZ"] ** 2
-    )
+    d = d.dropna(subset=["MOM", "MOM_CZ"])
+    d = d.assign(xy=d["MOM"] * d["MOM_CZ"], xx=d["MOM"] ** 2, yy=d["MOM_CZ"] ** 2)
     g = d.groupby("yyyymm").agg(
-        n=(xcol, "size"),
-        sx=(xcol, "sum"),
+        n=("MOM", "size"),
+        sx=("MOM", "sum"),
         sy=("MOM_CZ", "sum"),
         sxy=("xy", "sum"),
         sxx=("xx", "sum"),
@@ -139,8 +117,11 @@ def monthly_regressions(d: pd.DataFrame, xcol: str) -> pd.DataFrame:
     keep = (n >= 3) & (var_x > 0) & (var_y > 0)
     dropped = int((~keep).sum())
     if dropped:
-        print(f"  {xcol}: months dropped (n<3 or no variation): {dropped}")
-    return res.loc[keep, ["n", "intercept", "slope", "r2"]]
+        print(f"  months dropped (n<3 or no variation): {dropped}")
+
+    res = res.loc[keep].reset_index()
+    res["date"] = pd.to_datetime(res["yyyymm"].astype(str), format="%Y%m")
+    return res[["yyyymm", "date", "n", "intercept", "slope", "r2"]]
 
 
 def make_figures(res: pd.DataFrame) -> None:
@@ -152,15 +133,10 @@ def make_figures(res: pd.DataFrame) -> None:
     for stat, ylabel, fname, ref in specs:
         fig, ax = plt.subplots(figsize=(9, 4.5))
         ax.axhline(ref, color="0.6", lw=1, ls="--", zorder=1)
-        for v in VARIANTS:
-            ax.plot(
-                res["date"], res[f"{stat}_{v}"], lw=0.9,
-                color=COLORS[v], label=LABELS[v], zorder=2,
-            )
+        ax.plot(res["date"], res[stat], lw=0.9, color="tab:blue", zorder=2)
         ax.set_xlabel("Month")
         ax.set_ylabel(ylabel)
         ax.set_title(f"Q3(a): cross-firm regression of $MOM_{{CZ}}$ on my $MOM$ - {ylabel}")
-        ax.legend(loc="best", fontsize=9)
         ax.grid(True, alpha=0.3)
         fig.tight_layout()
         fig.savefig(OUT_DIR / fname, dpi=150)
@@ -175,13 +151,7 @@ def main() -> None:
     merged = mom.merge(cz, on=["permno", "yyyymm"], how="inner")
     print(f"merged firm-months           : {len(merged):,}")
 
-    parts = []
-    for v in VARIANTS:
-        r = monthly_regressions(merged, f"MOM_{v}")
-        parts.append(r.add_suffix(f"_{v}"))
-    res = pd.concat(parts, axis=1).reset_index()
-    res["date"] = pd.to_datetime(res["yyyymm"].astype(str), format="%Y%m")
-
+    res = monthly_regressions(merged)
     csv_path = OUT_DIR / "q3a_monthly_regressions.csv"
     res.to_csv(csv_path, index=False)
     make_figures(res)
@@ -189,10 +159,9 @@ def main() -> None:
     pd.set_option("display.float_format", lambda x: f"{x:10.4f}")
     print(f"\nmonths with a regression     : {len(res):,}"
           f"  ({res['date'].min():%Y-%m} .. {res['date'].max():%Y-%m})")
-    for v in VARIANTS:
-        print(f"\n--- MOM_{v} ({LABELS[v]}) ---")
-        print(res[[f"n_{v}", f"intercept_{v}", f"slope_{v}", f"r2_{v}"]]
-              .describe().loc[["mean", "std", "min", "50%", "max"]])
+    print("\nsummary of the monthly estimates:")
+    print(res[["n", "intercept", "slope", "r2"]]
+          .describe().loc[["mean", "std", "min", "50%", "max"]])
     print(f"\nwrote {csv_path}")
 
 

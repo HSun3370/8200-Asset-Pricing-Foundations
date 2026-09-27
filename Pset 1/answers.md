@@ -319,10 +319,9 @@ For each month $\tau$ I estimate the cross-firm regression
 $$
 \text{MOM}^{CZ}_{j,\tau} = a_\tau + b_\tau \cdot \text{MOM}_{j,\tau} + \varepsilon_{j,\tau}
 $$
-and plot the resulting $\hat a_\tau$, $\hat b_\tau$ and $R^2_\tau$ below. Two versions of my
-own signal are shown: one compounding the 11 returns over $\tau-12,\dots,\tau-2$ (skipping
-the most recent month) and one compounding all 12 returns over $\tau-12,\dots,\tau-1$, which
-is the window used in the problem statement and by Chen and Zimmermann (2022).
+and plot the resulting $\hat a_\tau$, $\hat b_\tau$ and $R^2_\tau$ below. My own signal
+compounds the 12 monthly returns over $\tau-12,\dots,\tau-1$, the same window used in the
+problem statement and by Chen and Zimmermann (2022).
 
 :::{figure} output/q3a_intercept.png
 :label: fig-q3a-intercept
