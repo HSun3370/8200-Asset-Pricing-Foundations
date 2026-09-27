@@ -390,6 +390,80 @@ Monthly $R^2_\tau$.
 
 % TODO: discuss what these three series say about the BM construction.
 
+### 3(c)
+
+Using only the Chen and Zimmermann (2022) versions of the signals
+($\text{BM}_{CZ}=\text{BMdec}$, $\text{MOM}_{CZ}=\text{Mom12m}$,
+$\text{GP}_{CZ}=\text{GP}$), I form decile portfolios under the five schemes below.
+Breakpoints are the signal deciles among NYSE-listed firms (`EXCHCD` $=1$) for the NYSE
+schemes and among all sample firms for the general schemes; every firm is then assigned
+using those cut-offs. Annual schemes form deciles on the June signal of year $t$ and hold
+July of $t$ through June of $t+1$; value weights use market equity at the formation date
+and are held fixed over the holding period. A stock with no usable CRSP return in a month
+is dropped from its decile that month and the remaining weights renormalise. Excess
+returns are net of `RF` from the Ken French three-factor file, and all three signals share
+a common sample beginning June 1963 (738 months).
+
+:::{figure} output/q3c_scheme_i.png
+:label: fig-q3c-i
+:width: 85%
+
+Scheme (i): value-weighted, rebalanced annually at June, NYSE breakpoints.
+:::
+
+:::{figure} output/q3c_scheme_ii.png
+:label: fig-q3c-ii
+:width: 85%
+
+Scheme (ii): equal-weighted, rebalanced annually at June, NYSE breakpoints.
+:::
+
+:::{figure} output/q3c_scheme_iii.png
+:label: fig-q3c-iii
+:width: 85%
+
+Scheme (iii): value-weighted, rebalanced monthly, NYSE breakpoints.
+:::
+
+:::{figure} output/q3c_scheme_iv.png
+:label: fig-q3c-iv
+:width: 85%
+
+Scheme (iv): value-weighted, rebalanced annually at June, general breakpoints.
+:::
+
+:::{figure} output/q3c_scheme_v.png
+:label: fig-q3c-v
+:width: 85%
+
+Scheme (v): equal-weighted, rebalanced monthly, general breakpoints.
+:::
+
+The fifteen HML portfolios (decile 10 $-$ decile 1) have the following average excess
+returns, in percent per month, with $t$-statistics from Newey and West (1987, 1994)
+standard errors using the data-driven bandwidth $L$:
+
+| Scheme | Signal | HML (%/month) | $t$-stat | $L$ |
+|---|---|---:|---:|---:|
+| (i) VW, annual, NYSE | $\text{BM}_{CZ}$ | 0.370 | 1.66 | 7 |
+| (i) VW, annual, NYSE | $\text{MOM}_{CZ}$ | 0.354 | 1.46 | 3 |
+| (i) VW, annual, NYSE | $\text{GP}_{CZ}$ | 0.359 | 2.09 | 11 |
+| (ii) EW, annual, NYSE | $\text{BM}_{CZ}$ | 0.999 | 5.13 | 14 |
+| (ii) EW, annual, NYSE | $\text{MOM}_{CZ}$ | −0.215 | −0.97 | 11 |
+| (ii) EW, annual, NYSE | $\text{GP}_{CZ}$ | 0.533 | 3.16 | 13 |
+| (iii) VW, monthly, NYSE | $\text{BM}_{CZ}$ | 0.319 | 1.54 | 6 |
+| (iii) VW, monthly, NYSE | $\text{MOM}_{CZ}$ | 1.237 | 4.56 | 5 |
+| (iii) VW, monthly, NYSE | $\text{GP}_{CZ}$ | 0.343 | 2.01 | 11 |
+| (iv) VW, annual, general | $\text{BM}_{CZ}$ | 0.446 | 1.75 | 12 |
+| (iv) VW, annual, general | $\text{MOM}_{CZ}$ | 0.437 | 1.41 | 4 |
+| (iv) VW, annual, general | $\text{GP}_{CZ}$ | 0.424 | 1.90 | 10 |
+| (v) EW, monthly, general | $\text{BM}_{CZ}$ | 0.939 | 4.78 | 14 |
+| (v) EW, monthly, general | $\text{MOM}_{CZ}$ | 0.594 | 1.88 | 10 |
+| (v) EW, monthly, general | $\text{GP}_{CZ}$ | 0.593 | 2.85 | 13 |
+
+% TODO: discuss the scatterplots and the HML table -- in particular how the weighting
+% scheme and the rebalancing frequency change each signal's premium.
+
 ##  Question 4
 
 
