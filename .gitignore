@@ -24,3 +24,6 @@ Pset 1/GP.csv
 # Raw WRDS download carrying PRC/SHROUT, merged into CRSP.csv by
 # Pset 1/code/crsp_add_prc_shrout.py (~135 MB).
 Pset 1/n7kuxmiirhelss1l.csv
+
+# Licensed Compustat (CCM) annual extract used for book equity in Q3(b).
+Pset 1/COMPUSTATS.csv
