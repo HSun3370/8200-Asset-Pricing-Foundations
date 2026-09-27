@@ -940,3 +940,23 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** empirical coding.
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(a) - single 12-month MOM`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.
+
+### Entry 19 — 2026-09-27 — Pset 1, Q3(b) preparation
+
+- **Problem-set item:** Pset 1, Question 3(b) — data preparation. Adds the CRSP price and shares-outstanding fields needed for market equity, `ME = |PRC| · SHROUT`.
+- **Student's substantive prompt:** "merge C:\\…\\Pset 1\\n7kuxmiirhelss1l.csv to C:\\…\\Pset 1\\CRSP.csv based on permono and date, follow the key of CRSP.csv, whcih means ti add PRC and SHROUT columns to CRSP.csv."
+- **Purpose:** Append `PRC` and `SHROUT` to `CRSP.csv` by a left join on `(PERMNO, date)` that preserves the existing rows.
+- **Git commit before interaction:** `9f28ea11367bdd5e37a662fc4c8c465d3d099f08`
+- **Assistance provided:**
+  - Inspected the source file (134.8 MB, 3,435,060 rows, columns `PERMNO, date, SHRCD, EXCHCD, SICCD, PRC, SHROUT`). It is the same WRDS extract as `CRSP.csv` but unfiltered — 3,435,060 rows against the 2,734,812 left after the SIC exclusions of Entry 16 — and carries `PRC`/`SHROUT` in place of `PERMCO`/`RET`. Date and PERMNO formats match `CRSP.csv` exactly.
+  - Ran a read-only pre-merge check before modifying anything: zero duplicate `(PERMNO, date)` keys on either side, and a left join returning 2,734,812 rows with **zero** `left_only` — so the join adds columns without adding or dropping a row. Also counted 32,726 missing `PRC`, 500,022 negative `PRC` (CRSP's bid/ask-midpoint convention), 2,455 missing `SHROUT` and 76 zero `SHROUT`.
+  - Added `Pset 1/n7kuxmiirhelss1l.csv` to `.gitignore` **before** any staging, as with the earlier ~100 MB downloads.
+  - Wrote `Pset 1/code/crsp_add_prc_shrout.py` and ran it. It reads every column as text so the existing columns stay byte-identical, refuses to proceed if the source has duplicate keys or if the row count changes, writes to a temp file and atomically replaces `CRSP.csv`, and is idempotent (no-op when `PRC`/`SHROUT` are already present). Result: 2,734,812 rows unchanged, columns now `PERMNO, date, SHRCD, EXCHCD, SICCD, PERMCO, RET, PRC, SHROUT`.
+  - Verified the change was non-destructive to existing work: spot-checked that the original `RET` values (including the letter code `C`) are preserved verbatim, and re-ran `Pset 1/code/q3a.py`, which reproduced the Q3(a) results exactly — 727 regressions, intercept median −0.0001, slope mean 0.8939, R² mean 0.8917.
+- **Files inspected:** `Pset 1/n7kuxmiirhelss1l.csv` (header, row count, key uniqueness, `PRC`/`SHROUT` missing and sign counts); `Pset 1/CRSP.csv`; `.gitignore`; `Pset 1/AI_INTERACTIONS.md`.
+- **Files directly modified by AI:** `Pset 1/CRSP.csv` (**destructive** — two columns appended in place, rows untouched); created `Pset 1/code/crsp_add_prc_shrout.py`; `.gitignore` (one ignore rule); regenerated `Pset 1/output/q3a_*` from the verification re-run; `Pset 1/AI_INTERACTIONS.md` (this entry). `answers.md` untouched.
+- **Errors / omissions / ambiguities identified:** none blocking — the join is unambiguous given unique keys and full coverage. Noted for the student, and deliberately **not** acted on: `PRC` is carried across with CRSP's sign convention intact, so 500,022 rows hold a negative bid/ask midpoint rather than a trade price, and missing/zero `PRC` and `SHROUT` are preserved as-is. Taking the absolute value and deciding how to treat missing or zero entries are part of the `ME` construction in Q3(b) and remain the student's decisions.
+- **Substantive math / economic / econometric suggestions made:** none. No filtering, transformation, or imputation was applied to the incoming columns. Mechanical choices only: text-mode read/write to preserve formatting, temp-file-then-atomic-replace, the duplicate-key and row-count guards, idempotency, and placing the two new columns at the end of the header.
+- **Type(s) of assistance:** empirical coding.
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(b) prep`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.
