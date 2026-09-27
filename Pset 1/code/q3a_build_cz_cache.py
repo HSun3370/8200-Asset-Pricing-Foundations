@@ -28,25 +28,31 @@ from pathlib import Path
 import polars as pl
 
 PSET_DIR = Path(__file__).resolve().parents[1]
-RAW_DIR = PSET_DIR / "data_cache" / "raw"
 CACHE = PSET_DIR / "data_cache" / "cz_signals.parquet"
 
+# the downloaded CSVs may sit either directly in "Pset 1" or in data_cache/raw
+SEARCH_DIRS = [PSET_DIR, PSET_DIR / "data_cache" / "raw"]
 SIGNALS = ["BMdec", "Mom12m", "GP"]
 
 
-def main() -> None:
-    RAW_DIR.mkdir(parents=True, exist_ok=True)
+def locate(signal: str) -> Path:
+    for d in SEARCH_DIRS:
+        p = d / f"{signal}.csv"
+        if p.exists():
+            return p
+    raise SystemExit(
+        f"{signal}.csv not found in any of: {', '.join(str(d) for d in SEARCH_DIRS)}\n"
+        "See the module docstring for the download links."
+    )
 
-    missing = [s for s in SIGNALS if not (RAW_DIR / f"{s}.csv").exists()]
-    if missing:
-        raise SystemExit(
-            f"missing {', '.join(f'{s}.csv' for s in missing)} in {RAW_DIR}\n"
-            "See the module docstring for the download links."
-        )
+
+def main() -> None:
+    CACHE.parent.mkdir(parents=True, exist_ok=True)
+    paths = {s: locate(s) for s in SIGNALS}
 
     df = pl.DataFrame(schema={"permno": pl.Int32, "yyyymm": pl.Int32})
     for s in SIGNALS:
-        t = pl.read_csv(RAW_DIR / f"{s}.csv").with_columns(
+        t = pl.read_csv(paths[s]).with_columns(
             pl.col("permno", "yyyymm").cast(pl.Int32)
         )
         print(f"{s:8s} rows={len(t):,}")

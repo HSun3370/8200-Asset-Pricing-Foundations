@@ -313,8 +313,40 @@ sample mean of $xR_{e,t+1}$ within each window.
 
 ## Question 3
 
+### 3(a)
 
+For each month $\tau$ I estimate the cross-firm regression
+$$
+\text{MOM}^{CZ}_{j,\tau} = a_\tau + b_\tau \cdot \text{MOM}_{j,\tau} + \varepsilon_{j,\tau}
+$$
+and plot the resulting $\hat a_\tau$, $\hat b_\tau$ and $R^2_\tau$ below. Two versions of my
+own signal are shown: one compounding the 11 returns over $\tau-12,\dots,\tau-2$ (skipping
+the most recent month) and one compounding all 12 returns over $\tau-12,\dots,\tau-1$, which
+is the window used in the problem statement and by Chen and Zimmermann (2022).
 
+:::{figure} output/q3a_intercept.png
+:label: fig-q3a-intercept
+:width: 95%
+
+Monthly intercepts $\hat a_\tau$ from the cross-firm regression of $\text{MOM}_{CZ}$ on my
+$\text{MOM}$, June 1964 – December 2024 (727 months, on average 3,351 firms per month).
+:::
+
+:::{figure} output/q3a_slope.png
+:label: fig-q3a-slope
+:width: 95%
+
+Monthly slopes $\hat b_\tau$.
+:::
+
+:::{figure} output/q3a_r2.png
+:label: fig-q3a-r2
+:width: 95%
+
+Monthly $R^2_\tau$.
+:::
+
+% TODO: discuss what these three series say about the MOM construction.
 
 ##  Question 4
 
