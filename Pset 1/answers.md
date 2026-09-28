@@ -501,6 +501,49 @@ percent per month, with Newey and West (1987, 1994) $t$-statistics in parenthese
 % TODO: discuss the Fama-MacBeth table -- the sign on Dur, what happens to BM and GP
 % once Dur is included, and how the OLS and WLS results differ.
 
+### 3(e)
+
+Decile portfolios are formed on $\text{BM}_{CZ}$, $\text{GP}_{CZ}$ and $Dur$, rebalanced
+annually at June with NYSE breakpoints, both value-weighted and equal-weighted. Formation
+at June of year $t$ uses the Chen and Zimmermann signals of that month together with the
+duration observation carrying `FF.YEAR` $=t$, which Gonçalves documents as public at the
+end of June of $t$; membership and weights are then held over July of $t$ through June of
+$t+1$. $\text{Dec}^X_{p,\tau}$ is the average decile of signal $X$ among the firms in
+portfolio $p$, weighted by the weight each firm carries in that portfolio, and is fixed at
+the June formation month. A specification containing $k$ signals is estimated on the union
+of those signals' decile portfolios, so 10 portfolios for a univariate specification, 20
+for a bivariate one and 30 for (vii). Estimation is pooled OLS with Driscoll and Kraay
+(1998) standard errors, over 618 months from July 1973 to December 2024, on the same
+common sample of firms used in 3(d).
+
+Coefficients are in percent per month **per decile**, with Driscoll–Kraay $t$-statistics
+in parentheses.
+
+| Spec | Weighting | $a$ | $b_{BM}$ | $b_{GP}$ | $b_{Dur}$ |
+|---|---|---:|---:|---:|---:|
+| (i) | VW | 0.61 (3.02) | 0.035 (1.43) |  |  |
+| (ii) | VW | 0.55 (2.25) |  | 0.025 (1.18) |  |
+| (iii) | VW | 1.20 (6.01) |  |  | −0.065 (−3.18) |
+| (iv) | VW | −0.23 (−0.58) | 0.102 (2.86) | 0.095 (2.83) |  |
+| (v) | VW | 1.26 (5.26) | 0.003 (0.11) |  | −0.081 (−3.35) |
+| (vi) | VW | 1.45 (4.43) |  | −0.013 (−0.53) | −0.100 (−3.65) |
+| (vii) | VW | 1.77 (2.33) | −0.025 (−0.46) | −0.027 (−0.57) | −0.122 (−2.64) |
+| (i) | EW | 0.53 (2.07) | 0.091 (4.18) |  |  |
+| (ii) | EW | 0.74 (2.49) |  | 0.052 (3.63) |  |
+| (iii) | EW | 1.55 (6.37) |  |  | −0.097 (−6.12) |
+| (iv) | EW | −0.21 (−0.66) | 0.125 (5.31) | 0.094 (5.99) |  |
+| (v) | EW | 1.15 (4.07) | 0.055 (1.62) |  | −0.078 (−2.69) |
+| (vi) | EW | 1.69 (5.07) |  | −0.008 (−0.40) | −0.114 (−5.08) |
+| (vii) | EW | 0.66 (0.95) | 0.079 (1.56) | 0.045 (1.23) | −0.061 (−1.23) |
+
+Consistent with footnote 10, the univariate slopes reproduce the corresponding HML
+averages of 3(c) once scaled by the nine decile steps: the value-weighted $b_{BM}$ of
+$0.035$ implies $0.32\%$ per month against the $0.370\%$ HML reported in scheme (i).
+
+% TODO: discuss the panel table -- the sign and robustness of Dec^Dur, what happens to
+% Dec^BM and Dec^GP once duration is included, the VW/EW contrast, and how these results
+% compare with the firm-level Fama-MacBeth estimates of 3(d).
+
 ##  Question 4
 
 
