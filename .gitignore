@@ -20,6 +20,7 @@ Pset 1/data_cache/
 Pset 1/Mom12m.csv
 Pset 1/BMdec.csv
 Pset 1/GP.csv
+Pset 1/FirmLevel Dur.csv
 
 # Raw WRDS download carrying PRC/SHROUT, merged into CRSP.csv by
 # Pset 1/code/crsp_add_prc_shrout.py (~135 MB).
