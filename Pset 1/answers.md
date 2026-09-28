@@ -466,6 +466,41 @@ standard errors using the data-driven bandwidth $L$:
 % TODO: discuss the scatterplots and the HML table -- in particular how the weighting
 % scheme and the rebalancing frequency change each signal's premium.
 
+### 3(d)
+
+$Q^X_{j,\tau}$ is the cross-firm percentile rank of signal $X$ within month $\tau$, on
+$[0,1]$, so a slope is the excess return earned by moving a stock from the bottom to the
+top of that month's distribution. $BM$ and $GP$ are the Chen and Zimmermann (2022)
+signals; $Dur$ is the firm-level equity duration of Gonçalves (2021b), whose
+`FF.YEAR` $=t$ observation is public at the end of June of year $t$ and is therefore
+carried across July of $t$ through June of $t+1$. All seven specifications are estimated
+on the common sample of firm-months for which $BM$, $GP$ and $Dur$ are all available and
+market equity is positive, so the specifications are directly comparable: 617 months from
+July 1973 to November 2024, averaging 2,279 firms per cross-section. Each month's
+cross-sectional regression is run by OLS and by WLS with month-$\tau$ market-equity
+weights; the reported coefficients are time-series means of the monthly slopes, in
+percent per month, with Newey and West (1987, 1994) $t$-statistics in parentheses.
+
+| Spec | Method | $a$ | $b_{BM}$ | $b_{GP}$ | $b_{Dur}$ |
+|---|---|---:|---:|---:|---:|
+| (i) | OLS | 0.56 (2.27) | 0.93 (3.71) | | |
+| (i) | WLS | 0.64 (2.96) | 0.21 (0.68) | | |
+| (ii) | OLS | 0.73 (2.48) | | 0.57 (3.50) | |
+| (ii) | WLS | 0.49 (2.16) | | 0.34 (1.50) | |
+| (iii) | OLS | 1.60 (6.98) | | | −1.15 (−5.95) |
+| (iii) | WLS | 1.30 (6.77) | | | −0.87 (−2.84) |
+| (iv) | OLS | 0.09 (0.32) | 1.08 (4.31) | 0.78 (5.01) | |
+| (iv) | WLS | 0.23 (0.79) | 0.57 (1.76) | 0.56 (2.78) | |
+| (v) | OLS | 1.35 (5.71) | 0.32 (1.13) | | −0.99 (−3.72) |
+| (v) | WLS | 1.32 (3.97) | −0.21 (−0.56) | | −0.84 (−2.09) |
+| (vi) | OLS | 1.40 (4.98) | | 0.27 (1.59) | −1.04 (−4.77) |
+| (vi) | WLS | 0.84 (2.39) | | 0.49 (1.70) | −0.54 (−1.30) |
+| (vii) | OLS | 0.72 (2.78) | 0.63 (1.95) | 0.56 (2.77) | −0.58 (−1.93) |
+| (vii) | WLS | 0.47 (1.23) | 0.33 (1.27) | 0.60 (2.32) | −0.22 (−0.55) |
+
+% TODO: discuss the Fama-MacBeth table -- the sign on Dur, what happens to BM and GP
+% once Dur is included, and how the OLS and WLS results differ.
+
 ##  Question 4
 
 
