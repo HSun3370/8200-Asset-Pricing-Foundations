@@ -1077,3 +1077,18 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** empirical coding.
 - **Grouped minor follow-ups:** none; the run succeeded first time.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(e)`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.
+
+### Entry 25 — 2026-09-28 — Pset 1, Q3(e) (presentation)
+
+- **Problem-set item:** Pset 1, Question 3(e) — presentation of the results table.
+- **Student's substantive prompt:** "for aesthetical purpose, you should make equal weight one table, and one for value weights."
+- **Purpose:** Split the single fourteen-row results table into two seven-row tables, one per weighting scheme.
+- **Git commit before interaction:** `bcb4da23b973f6298882e8f7dc2f5fc1aebefe45`
+- **Assistance provided:** Split the `### 3(e)` table in `Pset 1/answers.md` into a value-weighted table and an equal-weighted table, each keeping the seven specifications and dropping the now-redundant `Weighting` column. Initially used the Pandoc-style `: Caption` line to label each table, then replaced it with bold text labels, because that caption syntax is not part of MyST and the Typst build had already broken once this session on an unsupported construct. No number, t-statistic or surrounding sentence was changed.
+- **Files inspected:** `Pset 1/answers.md`; `Pset 1/AI_INTERACTIONS.md`.
+- **Files directly modified by AI:** `Pset 1/answers.md` (the 3(e) results table only).
+- **Errors / omissions / ambiguities identified:** none. AI noted for the student that the 3(d) table interleaves OLS and WLS rows in the same way and could be split on the same principle if wanted, but made no such change.
+- **Substantive math / economic / econometric suggestions made:** none. This was a presentation change only; all estimates are unchanged.
+- **Type(s) of assistance:** formatting/translation.
+- **Grouped minor follow-ups:** the caption-syntax correction is documented here as part of the same edit.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(e) presentation`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.
