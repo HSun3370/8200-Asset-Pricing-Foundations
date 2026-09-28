@@ -1092,3 +1092,23 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** formatting/translation.
 - **Grouped minor follow-ups:** the caption-syntax correction is documented here as part of the same edit.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(e) presentation`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.
+
+### Entry 26 — 2026-09-28 — Pset 1, Q3(e) (build diagnosis)
+
+- **Problem-set item:** Pset 1, Question 3(e) — diagnosis of Typst build warnings, no change to the answer document.
+- **Student's substantive prompt:** the student pasted a block of Typst warnings ("document did not converge within five attempts", "a measured element did not stabilize", "value of `state(\"tablex_tablex_header_pages__(5,)\")` did not converge") and wrote "debug".
+- **Purpose:** Explain the warnings and determine whether the PDF output is wrong.
+- **Git commit before interaction:** `c0f7ff4fdbece3c98aa8ac1d895e342ab13cfa5c`
+- **Assistance provided:**
+  - Established that these are warnings rather than errors: `HW1.pdf` had been produced, 21 pages, 2.7 MB. The warnings come from `tablex` 0.0.9, the third-party table package the `lapreprint-typst` template uses, whose introspection-based repeated-header logic needs more than Typst's five layout passes to settle when a table straddles a page boundary. The reported state moves from `(17,)` to `(17, 18)`, identifying a table that begins on page 17 and continues onto page 18.
+  - Located the nine markdown tables in `answers.md` and, using `pypdf` to extract the rendered text, confirmed exactly what the layout does: the equal-weighted 3(e) table places its header and rows (i) through (vi) on page 17, then repeats the header on page 18 for row (vii) alone. **No rows are lost and the header repetition is correct**, so the PDF is accurate; the defect is purely cosmetic, an orphan final row on its own page.
+  - Identified the root cause as a consequence of the table split made in Entry 25: separating one fourteen-row table into two seven-row tables, each preceded by a bold label, pushed the equal-weighted table across the page boundary.
+  - Recommended **not** applying a fix yet. The natural remedy is a forced page break before the 3(e) section, written as a `{raw:typst}` block containing `#pagebreak()` — a construct already proven to work in this document, which uses one at the top for `#set page(margin: auto)`. However, five `% TODO` discussions remain unwritten across 3(a) to 3(e), and any prose added there reflows all subsequent pages, so a page break hardcoded now would very likely end up misplaced. Pagination adjustments belong after the prose is final. AI made no change to `answers.md` and left the decision with the student.
+  - Noted that `myst` is not available on this machine (no `node`/`npx`, no local install), so AI cannot rebuild the PDF to verify a pagination change; the student builds through the VS Code MyST extension.
+- **Files inspected:** `Pset 1/answers.md` (table locations); `HW1.pdf` (page count and the extracted text of pages 17 and 18); the shell environment, checking for `myst`, `node` and `npx`.
+- **Files directly modified by AI:** `Pset 1/AI_INTERACTIONS.md` (this entry) only. `answers.md`, the code and the outputs were all left untouched. `pypdf` was added to the virtual environment to read the rendered PDF.
+- **Errors / omissions / ambiguities identified:** the orphan row described above, reported to the student with a recommended fix and an explicit reason for deferring it. No error in the estimates, the tables or the underlying data was found.
+- **Substantive math / economic / econometric suggestions made:** none. This was a build and layout diagnosis; no number, specification or piece of text changed.
+- **Type(s) of assistance:** other (build diagnosis); formatting/translation in advisory form only.
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(e) build diagnosis`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.
