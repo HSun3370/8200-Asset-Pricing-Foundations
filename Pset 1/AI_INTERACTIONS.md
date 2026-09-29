@@ -1145,3 +1145,46 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** formatting/translation.
 - **Grouped minor follow-ups:** none. The two read-only questions that preceded this request changed no file and are noted above for context rather than logged as separate interactions.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 - cite statistical packages`). Staged with `git add -A -- "Pset 1"` plus `git add -u`.
+
+---
+
+### Entry 28 — 2026-09-29 — Pset 1, Q2(d) and Q2(e)
+
+- **Problem-set item:** Pset 1, Questions 2(d) and 2(e) — verification of the `R²_OS` calculations already in the repository.
+- **Student's substantive prompt:** "Check if 2d and 2e didn right in calcualting R_OS^2". The student did not type `/tp`; checking empirical work is substantive under `AI_POLICY.md` §2(c), so AI ran the @TP workflow itself and said so.
+- **Purpose:** check whether the `R²_OS` values reported for Q2(d) and Q2(e) are computed correctly.
+- **Git commit before interaction:** `c9e80d5c011733a89182c46f82f493fc2a3400b1`, an empty commit; the working tree was clean and unchanged since `8970d7f`.
+- **Assistance provided:**
+  - **Independent recomputation.** AI wrote a scratchpad script that rebuilds the whole Q2(d) and Q2(e) construction from the raw `EQ Dataset.csv` using closed-form OLS, without importing `q2d.py` or `q2e.py`, so the check does not simply re-run the code under test. It follows the decisions recorded in Entries 8 and 9: pairs 12 rows apart; forecasts for `t+1` from December 1940; the expanding window ending one month before the forecast origin; `x̄R` as the mean of that window's targets; `E_IS` from the full-sample Equation 2.2 fit; `G` as the mean of `exp(dg)` over the window's regressor months; `R²_OS = 1 − SSE/SST` with SST around the sample mean of the evaluated months; and 600-month rolling windows reported at their last month with SST around each window's own mean.
+  - **Result: the calculations reproduce exactly.** 973 forecasts, December 1940 to December 2021; first window 144 pairs; first `G` = 1.000023; in-sample `â = −0.031411`, `b̂ = 2.803803`.
+
+    | Quantity | Q2(d) | Q2(e) |
+    |---|---|---|
+    | SSE | 26.783784 | 26.779663 |
+    | SST | 26.832745 | 26.832745 |
+    | `R²_OS` recomputed | 0.001825 | 0.001978 |
+    | `R²_OS` in the committed summary | 0.001825 | 0.001978 |
+    | difference | 0.00e+00 | 0.00e+00 |
+
+    Comparing series rather than just the headline number, the largest absolute difference between AI's independent values and the committed CSVs was 3.89e-16 for `E_OS`, 8.33e-17 for `E_IS`, 9.71e-17 for `x̄R`, 9.89e-17 for the realised returns and 4.74e-16 across all 373 rolling values. The rolling series match on count and range as well: 373 windows, December 1990 to December 2021, running −0.0604 to 0.1583 for Q2(d) and 0.0018 to 0.0503 for Q2(e).
+  - **Internal consistency.** SST is identical in Q2(d) and Q2(e), as it must be when the same months and the same realised returns are evaluated, and only the forecast changes. Q2(e)'s `x̄R` and `E_IS` columns are identical to Q2(d)'s, which is what reusing the Q2(d) frame is supposed to guarantee.
+  - **Arithmetic printed in `answers.md`.** The displayed fractions use SSE and SST rounded to four decimals, so recomputing from the printed numbers gives 0.001822 for Q2(d) and 0.001975 for Q2(e) against the full-precision 0.001825 and 0.001978. Both round to the 0.0018 and 0.0020 shown, so the displayed values are consistent; only the intermediate numerator and denominator are rounded.
+  - **No defect was found, and no file was changed.** The verification script lives in the session scratchpad, outside the repository.
+- **Files inspected:** `Pset 1/EQ Dataset.csv`; `Pset 1/output/q2d_forecasts.csv`, `q2d_rolling_r2os.csv`, `q2d_summary.csv`; `Pset 1/output/q2e_forecasts.csv`, `q2e_rolling_r2os.csv`, `q2e_summary.csv`; `Pset 1/answers.md`; `Pset 1/AI_INTERACTIONS.md`.
+- **Files directly modified by AI:** `Pset 1/AI_INTERACTIONS.md` (this entry) only.
+- **Errors / omissions / ambiguities identified:**
+  1. **No computational error.** Every number checked reproduces to machine precision.
+  2. **The SST benchmark remains a definitional choice, restated with numbers.** Entry 8 records that AI put this to the student and that the student chose SST around the sample mean of `xR_{e,t+1}` over the evaluated months. The alternative, SST around the expanding historical mean `x̄R_{e,t}`, is what the problem set labels and what Q2(d) constructs alongside the forecasts. On the committed forecasts the two give:
+
+     | | SSE | SST | `R²_OS` |
+     |---|---|---|---|
+     | Q2(d), SST around the sample mean (current) | 26.7838 | 26.8327 | +0.0018 |
+     | Q2(d), SST around `x̄R_{e,t}` | 26.7838 | 27.1329 | +0.0129 |
+     | Q2(e), SST around the sample mean (current) | 26.7797 | 26.8327 | +0.0020 |
+     | Q2(e), SST around `x̄R_{e,t}` | 26.7797 | 27.1329 | +0.0130 |
+
+     The two benchmarks differ because the historical mean averages 0.080051 over the evaluated months while their sample mean is 0.087448. AI reported both and changed nothing; the choice remains the student's.
+- **Substantive math / economic / econometric suggestions made:** none. AI verified arithmetic and implementation only, and did not alter any definition, sample, estimate or piece of text. The benchmark comparison above restates a decision the student already made, with the numbers attached.
+- **Type(s) of assistance:** empirical coding (verification only); other (checking existing results).
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q2(d)/Q2(e) - R2_OS check`).
