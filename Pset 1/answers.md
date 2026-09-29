@@ -2,12 +2,10 @@
 # Homework 1
 
 +++ {"part": "abstract"}
-This is my abstract!
+ 
 +++
 
-```{raw:typst}
-#set page(margin: auto)
-```
+
 
 ## Question 1
 
@@ -41,6 +39,11 @@ $$\begin{aligned}
 % \\
 % p_t& = \kappa_0 \frac{1- \kappa^H}{1- \kappa} + \sum_{h=1}^H \kappa^{h-1} d_{t+h} - \sum_{h=1}^H \kappa^{h-1} r_{e,t+h} + \kappa^H p_{t+H}
 \end{aligned}$$
+
+
+```{raw:typst}
+#set page(margin: auto)
+```
 
 The log dividend-price ratio $dp_t$ can then be written as
  
@@ -315,7 +318,7 @@ sample mean of $xR_{e,t+1}$ within each window.
 
 ### 3(a)
 
-For each month $\tau$ I estimate the cross-firm regression
+For each month $\tau$, I estimate the cross-firm regression
 $$
 \text{MOM}^{CZ}_{j,\tau} = a_\tau + b_\tau \cdot \text{MOM}_{j,\tau} + \varepsilon_{j,\tau}
 $$
