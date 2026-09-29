@@ -218,6 +218,8 @@ The lag length in (v) is data-driven: the Newey and West (1994, Eq. 2.2) rule gi
 $L = a \cdot T^{1/3}$ with $a = 2.31$, hence $L = 24$. The Hansen-Hodrick estimate in
 (iv) is positive definite in this sample, so no truncation was needed.
 
+Computed with `statsmodels` 0.15.0 (`OLS`, `cov_hc0`, and the Bartlett and uniform kernel weights) and `linearmodels` 7.0 (`kernel_optimal_bandwidth`, which supplies the Newey and West (1994) lag). $\hat{S}$ and the sandwich above are coded directly from the formulas; the `statsmodels` HAC routines are computed alongside only as a cross-check.
+
 ###
 I report Amihud and Hurvich (2004) estimation.
 
@@ -236,6 +238,8 @@ $$
 $$
 xR_{e,t+1} = \underset{-0.0314}{\hat a} + \underset{2.3412}{\hat b}\,\frac{D_t}{P_t} + \underset{-13.4837}{\hat b_u}\,\hat u^c_{t+1} + \hat\varepsilon_{t+1}
 $$
+
+The OLS fits above are computed with `statsmodels` 0.15.0.
 
 Amihud and Hurvich estimation gives a smaller value than OLS estimation. This is because OLS estimation is upper biased in small sample as innovations of dividend-price ratio and excess return are positive correlated, and the AR(1) estimation is lower biased. 
 
@@ -466,6 +470,8 @@ standard errors using the data-driven bandwidth $L$:
 | (v) EW, monthly, general | $\text{MOM}_{CZ}$ | 0.594 | 1.88 | 10 |
 | (v) EW, monthly, general | $\text{GP}_{CZ}$ | 0.593 | 2.85 | 13 |
 
+The Newey and West (1987, 1994) bandwidth $L$ comes from `linearmodels` 7.0 (`kernel_optimal_bandwidth`); the Bartlett-weighted variance and the $t$-statistics are coded directly, as in Question 2(b).
+
 % TODO: discuss the scatterplots and the HML table -- in particular how the weighting
 % scheme and the rebalancing frequency change each signal's premium.
 
@@ -500,6 +506,8 @@ percent per month, with Newey and West (1987, 1994) $t$-statistics in parenthese
 | (vi) | WLS | 0.84 (2.39) | | 0.49 (1.70) | −0.54 (−1.30) |
 | (vii) | OLS | 0.72 (2.78) | 0.63 (1.95) | 0.56 (2.77) | −0.58 (−1.93) |
 | (vii) | WLS | 0.47 (1.23) | 0.33 (1.27) | 0.60 (2.32) | −0.22 (−0.55) |
+
+The Newey and West (1987, 1994) bandwidth comes from `linearmodels` 7.0 (`kernel_optimal_bandwidth`); the monthly cross-sectional regressions and the Bartlett-weighted variance are coded directly.
 
 % TODO: discuss the Fama-MacBeth table -- the sign on Dur, what happens to BM and GP
 % once Dur is included, and how the OLS and WLS results differ.
@@ -549,6 +557,8 @@ in parentheses.
 Consistent with footnote 10, the univariate slopes reproduce the corresponding HML
 averages of 3(c) once scaled by the nine decile steps: the value-weighted $b_{BM}$ of
 $0.035$ implies $0.32\%$ per month against the $0.370\%$ HML reported in scheme (i).
+
+Estimation uses `linearmodels` 7.0: `PooledOLS` fitted with `cov_type="driscoll-kraay"`.
 
 % TODO: discuss the panel table -- the sign and robustness of Dec^Dur, what happens to
 % Dec^BM and Dec^GP once duration is included, the VW/EW contrast, and how these results
@@ -612,6 +622,8 @@ estimated by OLS on overlapping monthly observations, where $t+h$ is the same mo
 | 4 | 0.4141 | 2.52 | 
 | 5 | 0.3453 | 2.30 |
 
+Fitted with `statsmodels` 0.15.0 (`OLS` and the uniform kernel weights); the Hansen and Hodrick (1980) variance reuses the Question 2(b) implementation.
+
 
 ### 
 
@@ -630,6 +642,8 @@ estimated by OLS on overlapping monthly observations, where $t+1$ is the same mo
 | 4 | 1.1163 | 3.62 |
 | 5 | 0.9641 | 2.91 |
 
+Fitted with `statsmodels` 0.15.0 (`OLS` and the Bartlett kernel weights), with the lag from `linearmodels` 7.0 (`kernel_optimal_bandwidth`).
+
 
 ### 
 
@@ -640,6 +654,8 @@ $$
 $$
 
 by OLS on overlapping monthly observations, where $t+1$ is the same month one year later and $f^{(1)}_{b,t} = y^{(1)}_{b,t}$, using the 859 months with $t$ from June 1952 to December 2023.
+
+Fitted with `statsmodels` 0.15.0 (`OLS`).
 
 :::{figure} output/q4d_cp_nber.png
 :label: fig-q4d-cp
@@ -665,4 +681,6 @@ estimated by OLS on overlapping monthly observations, where $t+1$ is the same mo
 | 3 | 0.8274 | 4.18 |
 | 4 | 1.2517 | 4.45 |
 | 5 | 1.4791 | 4.25 |
+
+Fitted with `statsmodels` 0.15.0 (`OLS` and the Bartlett kernel weights), with the lag from `linearmodels` 7.0 (`kernel_optimal_bandwidth`).
 

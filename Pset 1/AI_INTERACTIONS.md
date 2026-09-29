@@ -1112,3 +1112,36 @@ This file is the contemporaneous, auditable record of **substantive** AI interac
 - **Type(s) of assistance:** other (build diagnosis); formatting/translation in advisory form only.
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 Q3(e) build diagnosis`). Staged with `git add -A -- "Pset 1"` plus `git add -u`; `Pset 2/` stays out.
+
+---
+
+### Entry 27 — 2026-09-29 — Pset 1, Q2(b), Q2(c), Q3(c), Q3(d), Q3(e), Q4(b), Q4(c), Q4(d), Q4(e)
+
+- **Problem-set item:** every item whose reported numbers were produced with a statistical package. Those are Q2(b), Q2(c), Q3(c), Q3(d), Q3(e), Q4(b), Q4(c), Q4(d) and Q4(e).
+- **Student's substantive prompt:** "please cite the package to the answer where you use package". This followed two read-only questions in the same session, "for Newey West 1987 1994, how did you choose L?" and "which package did you use? did you including intercept when using the package?", which AI answered from the code and the existing record without changing any file.
+  - The student did not type `/tp`. Adding citations to the answer document is formatting assistance on problem-set content, which `AI_POLICY.md` §2(c) and `CLAUDE.md` treat as substantive, so AI ran the @TP workflow itself and said so.
+- **Purpose:** state in `Pset 1/answers.md`, at each place where a statistical package produced the reported numbers, which package and which routine was used.
+- **Git commit before interaction:** `b05e906caaff1f714365221e5634a28b9bca304a`. AI confirmed there were no untracked files inside `Pset 1/`, then staged tracked changes (`git add -u`). The snapshot contains `Research Ideas/NREE.md`, which the student had already staged in the Git index before this interaction; it is unrelated to Problem Set 1. `Pset 1/answers.md` and `HW1.pdf` were unmodified at that point.
+- **Assistance provided:**
+  - **Established where packages are actually used**, by reading the imports of all 21 scripts in `Pset 1/code/` rather than relying on memory. Nine use a statistical package:
+    - `q2b.py`: `statsmodels` (`OLS`, `cov_hc0`, `weights_bartlett`, `weights_uniform`) and `linearmodels` (`kernel_optimal_bandwidth`);
+    - `q2c.py`, `q4d.py`: `statsmodels` (`OLS`) only;
+    - `q3c.py`, `q3d.py`: `linearmodels` (`kernel_optimal_bandwidth`) only, with the Bartlett-weighted variance coded directly;
+    - `q3e.py`: `linearmodels` (`PooledOLS` with `cov_type="driscoll-kraay"`);
+    - `q4b.py`: `statsmodels` (`OLS`, `weights_uniform`);
+    - `q4c.py`, `q4e.py`: `statsmodels` (`OLS`, `weights_bartlett`) and `linearmodels` (`kernel_optimal_bandwidth`).
+
+    The other twelve scripts, covering Q1(b)–Q1(d), Q2(a), Q2(d), Q2(e), Q3(a), Q3(b) and Q4(a), use only `numpy` and `pandas` with closed-form OLS.
+  - Confirmed the installed versions in the environment that produced the results: `statsmodels` 0.15.0 and `linearmodels` 7.0, both also pinned in `requirements.txt`.
+  - **Inserted nine citation sentences into `Pset 1/answers.md`** with a guarded script in the session scratchpad. Each insertion required its anchor text to occur exactly once and the citation not to be present already; nothing would be written unless all nine guards passed. Eight were placed after the relevant table, figure or sentence, and the Q2(c) one before the student's own paragraph so it follows the equations it refers to. The diff is 18 lines added and 0 removed.
+  - The Q2(b) citation also records that `Ŝ` and the sandwich are coded directly from the formulas in the answer, with the `statsmodels` HAC routines computed alongside only as a cross-check, since those routines use a different normalisation.
+- **Files inspected:** the imports of all scripts in `Pset 1/code/`; the standard-error implementations in `q3c.py`, `q3d.py` and `q3e.py`; the relevant passages of `Pset 1/answers.md`; the installed package versions; `Pset 1/AI_INTERACTIONS.md`.
+- **Files directly modified by AI:** `Pset 1/answers.md` (nine citation sentences, addition only; no existing line changed); `Pset 1/AI_INTERACTIONS.md` (this entry). The insertion script is in the session scratchpad, outside the repository, and is not committed.
+- **Errors / omissions / ambiguities identified:**
+  1. **Scope of "package" (decided by AI as a presentational matter, and reported to the student).** AI cited the two statistical packages where they produce reported numbers, and did not add citations for `numpy`, `pandas` or `matplotlib`, which are used throughout the project. The twelve items that use closed-form OLS with `numpy`/`pandas` therefore carry no citation. AI told the student, who can extend the citations if a different scope is wanted.
+  2. **Placement and wording** of each sentence are presentational choices by AI.
+  3. **`Pset 1/AI_USAGE.md` is now one interaction out of date.** It was generated earlier in this session from the record as of commit `833204b` and documents 26 interactions; it does not include this entry. Regenerating it under `AI_POLICY.md` §2(e) would bring it current. AI reported this to the student rather than regenerating it unprompted.
+- **Substantive math / economic / econometric suggestions made:** none. No estimate, specification, sample or number changed. The interaction only records which software produced results that already existed.
+- **Type(s) of assistance:** formatting/translation.
+- **Grouped minor follow-ups:** none. The two read-only questions that preceded this request changed no file and are noted above for context rather than logged as separate interactions.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 1 - cite statistical packages`). Staged with `git add -A -- "Pset 1"` plus `git add -u`.
