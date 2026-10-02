@@ -11,11 +11,13 @@
 ###
 Solve the linear equation $X p = P$ by elimination, we got  
 
-$$ 
-[X,P] -> 
-[[1,0,0, 0.2],
-[0,1,0,0.4],
-[0,0,1,0.2]]
+$$
+[X, P] \;\rightarrow\;
+\begin{bmatrix}
+1 & 0 & 0 & 0.2 \\
+0 & 1 & 0 & 0.4 \\
+0 & 0 & 1 & 0.2
+\end{bmatrix}
 $$
 Thus, we have complete markets in this economy and the price of continguent claim for state of nature 1, 2,3 are $[0.2,0.4,0.2]'$
 
