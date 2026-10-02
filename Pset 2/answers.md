@@ -12,7 +12,7 @@
 Solve the linear equation $X p = P$ by elimination, we got  
 
 $$
-[X, P] \;\rightarrow\;
+[X, P] \;-->\;
 \begin{bmatrix}
 1 & 0 & 0 & 0.2 \\
 0 & 1 & 0 & 0.4 \\
