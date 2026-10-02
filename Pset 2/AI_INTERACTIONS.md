@@ -75,3 +75,24 @@ This log is independent of `Pset 1/AI_INTERACTIONS.md`.)
 - **Type(s) of assistance:** formatting/translation; other (setting up the Pset 2 record).
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 2 Q1(a)/Q1(b) - format elimination matrix`).
+
+### Entry 2 — 2026-10-02 — Pset 2, PDF build (submission export)
+
+- **Problem-set item:** Pset 2, building the submission PDF from `Pset 2/answers.md` (export settings in `myst.yml`; not a single question).
+- **Student's substantive prompt:** "debug", followed by pasted output of `jupyter-book build --pdf` ending in `error: unknown variable: infty` inside `HW2-answers-ai-interactions.typ`, and the warning `myst.yml multiple values for part 'abstract' found; ignoring value from Pset 1\answers.md`.
+- **Purpose:** Find and fix why the Typst PDF export of the Pset 2 answers fails.
+- **Git commit before interaction:** `49e1d34fd19ff6dce3f9d03d59cae056a8c59cdd`. This also recorded the student's own edit made after Entry 1: the arrow in the Q1(a)/Q1(b) display block of `Pset 2/answers.md` was changed from `\;\rightarrow\;` to `\;-->\;`.
+- **Assistance provided:**
+  - *Diagnosis:* in `myst.yml`, every entry under `exports[0].articles` was commented out (`Pset 1\answers.md`, `Research Ideas\NREE.md`, `Pset 2\answers.md`). With no articles listed, MyST exported every Markdown page in the project into the one PDF, including `Pset 1/answers.md` (which caused the duplicate-`abstract` warning) and `Pset 1/AI_INTERACTIONS.md` (which became `HW2-answers-ai-interactions.typ`). Entry 1 of that log contains the Unicode character `∞` ("Letting H→∞"), which the MyST Typst exporter writes as `$infty$`. `infty` is not a defined name in Typst math, so `typst compile` stopped. The error was a configuration problem in the export list, not a problem in the Pset 2 answer text.
+  - *Fix (applied to `myst.yml`):* uncommented the Pset 2 article line, writing it as `- file: Pset 2/answers.md`. It uses a forward slash instead of the original backslash so the path also resolves on macOS/Linux when the PDF is reproduced. The other two article lines were left commented out, and no other setting was changed.
+  - *Verification:* re-ran `jupyter-book build --pdf` from the repo root. It completed without errors and wrote `HW2-answers.pdf` (1 page, Question 1 only). Rendered the page and confirmed that the matrix, equations (1)–(4), and the student's `-->` arrow typeset correctly. Typst reads `-->` as its shorthand for a long right arrow.
+- **Files inspected:** `myst.yml`; `Pset 2/answers.md`; the generated `_build/temp/myst*/HW2-answers.typ` (git-ignored); the rendered output of `HW2-answers.pdf`.
+- **Files directly modified by AI:** `myst.yml` (one line uncommented and its path separator changed, as above); `Pset 2/AI_INTERACTIONS.md` (this entry). `HW2-answers.pdf` at the repo root was produced by the build that AI ran.
+- **Errors / omissions / ambiguities identified:**
+  1. The empty `articles:` list in `myst.yml` (root cause; fixed as described).
+  2. Not changed: the student's `-->` arrow works only in the Typst PDF export. In LaTeX or MathJax (e.g., the MyST web/site build or a LaTeX template), `-->` typesets as two minus signs followed by `>`. `\longrightarrow` gives the same long arrow in every renderer. The student decides.
+  3. Not changed: the exporter writes Unicode `∞` as an invalid Typst name. This would only matter again if a file containing `∞` (such as `Pset 1/AI_INTERACTIONS.md`) were added to a PDF export.
+- **Substantive math / economic / econometric suggestions made:** none. The fix was build configuration only, and no answer text was changed.
+- **Type(s) of assistance:** code debugging (build configuration); formatting/translation (render check).
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 2 PDF build - debug myst export failure`).

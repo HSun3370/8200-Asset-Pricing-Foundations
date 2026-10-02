@@ -19,7 +19,7 @@ project:
       articles:
         # - file: Pset 1\answers.md
         # - file: Research Ideas\NREE.md
-        # - file: Pset 2\answers.md
+        - file: Pset 2/answers.md
 site:
   template: book-theme
   # options:
