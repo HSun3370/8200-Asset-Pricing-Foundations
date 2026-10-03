@@ -8,7 +8,9 @@
 
 
 ### 
+Yes, see reasoning in 1b.
 ###
+Define the payoff as $X$, price vector as $P$, and price of contingent claim as $p$.
 Solve the linear equation $X p = P$ by elimination, we got  
 
 $$
@@ -30,16 +32,29 @@ $$[30,20,10] \times [0.2,0.4,0.2]' = 16$$
 ###
 SDP in this economy is calucalteed by $M(i) = \frac{p(i)}{\pi(i)}$
 $$ M = [0.8, 0.8,0.8]'. $$
-This economy satisfies no-arbitrage as all the price of contingent claims are strictly positive. 
+This economy satisfies no-arbitrage as all the prices of contingent claims are strictly positive and unique. 
 SDF remains the same accross all states, which means that agents in this economy are risk neutral. 
 
 ###
 
 $$
-P_D = \sum_i \pi(i) p(i) X(i) = \frac{1}{4} \cdot 0.8\cdot 30 + \frac{1}{2} \cdot 0.8\cdot 20 + \frac{1}{4} \cdot 0.8\cdot 10 = 16
+P_D = \sum_i \pi(i) M(i) X(i) = \frac{1}{4} \cdot 0.8\cdot 30 + \frac{1}{2} \cdot 0.8\cdot 20 + \frac{1}{4} \cdot 0.8\cdot 10 = 16
 $$
 
 
 ```{raw:typst}
 #set page(margin: auto)
 ```
+
+
+
+## Question 2
+
+### 
+nm 
+
+
+
+## Question 3
+
+###
