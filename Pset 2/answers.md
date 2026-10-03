@@ -120,3 +120,26 @@ Estimates of $M^*_t = a - b'xR_t$ on the 20 BM and MOM decile portfolios using d
 ## Question 3
 
 ###
+
+The portfolio choice problem is 
+
+$$
+\max_{\bar \omega_t} V= \frac{1}{1-\gamma} E [ (W_t R_{f,t+1} + \bar \omega_t' W_t xR_{t+1})^{1-\gamma} ] 
+$$
+FOC w.r.t $\bar \omega_t$,  
+$$
+\frac{\partial}{\partial \bar \omega_t}V =   E [ ( R_{f,t+1} + \bar \omega_t' xR_{t+1})^{ -\gamma}  W_t^{1-\gamma} xR_{t+1} ] =0 
+$$
+We can put $W_t^{1-\gamma}$ outside of expectation as it is known at time $t$ and divide it from both sides. Then the FOC becomes
+$$
+E [ R_{ \omega_t^*,t+1}  ^{ -\gamma}  xR_{t+1} ] =E [ ( R_{f,t+1} + \bar \omega_t' xR_{t+1})^{ -\gamma}  xR_{t+1} ] =0.
+$$
+Thus, it prices all excess returns.
+
+
+###
+
+
+
+
+
