@@ -46,6 +46,8 @@ Implementation (programming choices, not part of the design):
 
 Outputs (paths relative to "Pset 2"):
   output/q2a_gmm.csv, output/q2a_gmm_table.md, output/q2a_b_scatter.png
+
+load_excess_returns, estimate_sdf and save_results are reused by code/q2b.py.
 """
 
 import io
@@ -86,8 +88,9 @@ def read_french_block(path: Path, title: str) -> pd.DataFrame:
     return df
 
 
-def load_excess_returns() -> pd.DataFrame:
-    port = read_french_block(PORT_CSV, "Value Weight Returns -- Monthly")[DECILES]
+def load_excess_returns(port_csv: Path = PORT_CSV, columns: list = DECILES,
+                        block: str = "Value Weight Returns -- Monthly") -> pd.DataFrame:
+    port = read_french_block(port_csv, block)[columns]
     rf = read_french_block(FF_CSV, "")["RF"]
     port = port.loc[SAMPLE_START:SAMPLE_END]
     assert port.index[0] == SAMPLE_START and port.index[-1] == SAMPLE_END
@@ -138,8 +141,8 @@ def gmm_cov(D: np.ndarray, W: np.ndarray, S: np.ndarray, T: int) -> np.ndarray:
     return bread @ D.T @ W @ S @ W @ D @ bread / T
 
 
-def main() -> None:
-    xr = load_excess_returns()
+def estimate_sdf(xr: pd.DataFrame) -> dict:
+    """Two-step GMM for M*_t = a - b' xR_t with E[M* xR] = 0 and E[M*] = 1."""
     x = xr.to_numpy()
     T, N = x.shape
 
@@ -170,7 +173,16 @@ def main() -> None:
     S2_T = newey_west_s(g2, L2, per_lag_norm=False)
     se_T = np.sqrt(np.diag(gmm_cov(D, np.linalg.inv(S2_T), S2_T, T)))
 
-    names = ["a"] + [f"b_{k} ({p})" for k, p in enumerate(DECILES, start=1)]
+    m_star = pd.Series(theta2[0] - x @ theta2[1:], index=xr.index, name="M_star")
+    return dict(theta1=theta1, theta=theta2, se=se, se_T=se_T, L1=L1, L=L2,
+                gbar=gbar, J=J, m_star=m_star, T=T, N=N)
+
+
+def save_results(fit: dict, xr: pd.DataFrame, columns: list, prefix: str,
+                 xlabel: str, title: str) -> pd.DataFrame:
+    """Write <prefix>_gmm.csv, <prefix>_gmm_table.md and <prefix>_b_scatter.png."""
+    theta1, theta2, se, T, N = fit["theta1"], fit["theta"], fit["se"], fit["T"], fit["N"]
+    names = ["a"] + [f"b_{k} ({p})" for k, p in enumerate(columns, start=1)]
     res = pd.DataFrame(
         {
             "parameter": names,
@@ -180,7 +192,7 @@ def main() -> None:
             "t_stat": theta2 / se,
         }
     )
-    res.to_csv(OUT_DIR / "q2a_gmm.csv", index=False)
+    res.to_csv(OUT_DIR / f"{prefix}_gmm.csv", index=False)
 
     rows = ["| Parameter | Estimate | Std. error | t-stat |",
             "|---|---:|---:|---:|"]
@@ -190,30 +202,45 @@ def main() -> None:
         rows.append(f"| {label} | {r['estimate']:.4f} | {r['std_error']:.4f} | {r['t_stat']:.2f} |")
     note = (f"\nTwo-step GMM, monthly, {xr.index[0].strftime('%Y:%m')}–"
             f"{xr.index[-1].strftime('%Y:%m')} (T = {T}). Excess returns in decimals. "
-            f"Newey-West S with automatic lag L = {L2}.\n")
-    (OUT_DIR / "q2a_gmm_table.md").write_text("\n".join(rows) + "\n" + note, encoding="utf-8")
+            f"Newey-West S with automatic lag L = {fit['L']}.\n")
+    (OUT_DIR / f"{prefix}_gmm_table.md").write_text("\n".join(rows) + "\n" + note, encoding="utf-8")
 
     fig, ax = plt.subplots(figsize=(6.5, 4.0))
     deciles = np.arange(1, N + 1)
     ax.scatter(deciles, theta2[1:], color="tab:blue", zorder=3)
     ax.axhline(0.0, color="grey", linewidth=0.8)
     ax.set_xticks(deciles)
-    ax.set_xlabel("Book-to-market decile (1 = Lo 10, 10 = Hi 10)")
+    ax.set_xlabel(xlabel)
     ax.set_ylabel(r"$b$ coefficient")
-    ax.set_title(r"Q2(a): $b$ in $M^*_t = a - b'xR_t$, BM deciles")
+    ax.set_title(title)
     fig.tight_layout()
-    fig.savefig(OUT_DIR / "q2a_b_scatter.png", dpi=200)
+    fig.savefig(OUT_DIR / f"{prefix}_b_scatter.png", dpi=200)
     plt.close(fig)
+    return res
 
+
+def print_summary(fit: dict, xr: pd.DataFrame, res: pd.DataFrame) -> None:
+    theta1, theta2, se = fit["theta1"], fit["theta"], fit["se"]
     pd.set_option("display.width", 120)
-    print(f"Sample {xr.index[0]} to {xr.index[-1]}, T = {T}, N = {N}")
-    print(f"NW(1994) automatic lag: step 1 L = {L1}, step 2 L = {L2}")
+    print(f"Sample {xr.index[0]} to {xr.index[-1]}, T = {fit['T']}, N = {fit['N']}")
+    print(f"NW(1994) automatic lag: step 1 L = {fit['L1']}, step 2 L = {fit['L']}")
     print(f"max |theta_step2 - theta_step1| = {np.abs(theta2 - theta1).max():.2e}")
-    print(f"max |g_bar| at step-2 estimate = {np.abs(gbar).max():.2e};  J = {J:.2e}")
-    print(f"mean M* = {(theta2[0] - x @ theta2[1:]).mean():.6f}")
+    print(f"max |g_bar| at step-2 estimate = {np.abs(fit['gbar']).max():.2e};  J = {fit['J']:.2e}")
+    print(f"mean M* = {fit['m_star'].mean():.6f}")
     print(f"max relative change in s.e. under 1/T lag normalisation: "
-          f"{np.abs(se_T / se - 1).max():.2%}")
+          f"{np.abs(fit['se_T'] / se - 1).max():.2%}")
     print(res.to_string(index=False, float_format=lambda v: f"{v:.4f}"))
+
+
+def main() -> None:
+    xr = load_excess_returns()
+    fit = estimate_sdf(xr)
+    res = save_results(
+        fit, xr, DECILES, "q2a",
+        xlabel="Book-to-market decile (1 = Lo 10, 10 = Hi 10)",
+        title=r"Q2(a): $b$ in $M^*_t = a - b'xR_t$, BM deciles",
+    )
+    print_summary(fit, xr, res)
 
 
 if __name__ == "__main__":

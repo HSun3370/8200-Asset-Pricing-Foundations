@@ -64,6 +64,18 @@ $b$ coefficients of $M^*_t = a - b'xR_t$ by book-to-market decile (two-step GMM,
 
 ### 
 
+```{include} output/q2b_gmm_table.md
+```
+
+```{figure} output/q2b_b_scatter.png
+:label: fig-q2b-b
+:width: 80%
+
+$b$ coefficients of $M^*_t = a - b'xR_t$ by momentum decile (two-step GMM, 1927:07–2026:08).
+```
+
+The sample correlation between $M^*_t$ from Question 2(a) (BM deciles) and $M^*_t$ from Question 2(b) (MOM deciles) is $\text{Corr}(M^*_{BM,t}, M^*_{MOM,t}) = 0.3555$ (monthly, 1927:07–2026:08, $T = 1190$).
+
 
 
 
