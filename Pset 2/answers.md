@@ -44,6 +44,7 @@ $$
 
 ```{raw:typst}
 #set page(margin: auto)
+#let diff = sym.partial
 ```
 
 
