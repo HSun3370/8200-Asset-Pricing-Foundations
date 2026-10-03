@@ -50,8 +50,7 @@ $$
 
 ## Question 2
 
-### 
-nm 
+###  
 
 ```{include} output/q2a_gmm_table.md
 ```
@@ -62,6 +61,10 @@ nm
 
 $b$ coefficients of $M^*_t = a - b'xR_t$ by book-to-market decile (two-step GMM, 1927:07–2026:08).
 ```
+
+### 
+
+
 
 
 
