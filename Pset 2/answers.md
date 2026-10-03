@@ -99,6 +99,19 @@ SDF constructed using 20 portfolios has higher sharpe ratio than other two. High
 
 ###
 
+```{include} output/q2d_pricing_errors_table.md
+```
+
+### 
+
+Estimates of $M^*_t = a - b'xR_t$ on the 20 BM and MOM decile portfolios using data until December 1989:
+
+```{include} output/q2e_gmm_table.md
+```
+
+```{include} output/q2e_pricing_errors_table.md
+```
+
 
 
 
