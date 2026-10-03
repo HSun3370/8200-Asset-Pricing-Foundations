@@ -47,7 +47,7 @@ Implementation (programming choices, not part of the design):
 Outputs (paths relative to "Pset 2"):
   output/q2a_gmm.csv, output/q2a_gmm_table.md, output/q2a_b_scatter.png
 
-load_excess_returns, estimate_sdf and save_results are reused by code/q2b.py.
+load_excess_returns, estimate_sdf and save_results are reused by code/q2b.py and code/q2c.py.
 """
 
 import io
@@ -179,8 +179,8 @@ def estimate_sdf(xr: pd.DataFrame) -> dict:
 
 
 def save_results(fit: dict, xr: pd.DataFrame, columns: list, prefix: str,
-                 xlabel: str, title: str) -> pd.DataFrame:
-    """Write <prefix>_gmm.csv, <prefix>_gmm_table.md and <prefix>_b_scatter.png."""
+                 xlabel: str = "", title: str = "", plot: bool = True) -> pd.DataFrame:
+    """Write <prefix>_gmm.csv, <prefix>_gmm_table.md and (if plot) <prefix>_b_scatter.png."""
     theta1, theta2, se, T, N = fit["theta1"], fit["theta"], fit["se"], fit["T"], fit["N"]
     names = ["a"] + [f"b_{k} ({p})" for k, p in enumerate(columns, start=1)]
     res = pd.DataFrame(
@@ -204,6 +204,8 @@ def save_results(fit: dict, xr: pd.DataFrame, columns: list, prefix: str,
             f"{xr.index[-1].strftime('%Y:%m')} (T = {T}). Excess returns in decimals. "
             f"Newey-West S with automatic lag L = {fit['L']}.\n")
     (OUT_DIR / f"{prefix}_gmm_table.md").write_text("\n".join(rows) + "\n" + note, encoding="utf-8")
+    if not plot:
+        return res
 
     fig, ax = plt.subplots(figsize=(6.5, 4.0))
     deciles = np.arange(1, N + 1)

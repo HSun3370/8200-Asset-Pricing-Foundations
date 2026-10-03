@@ -1,0 +1,4 @@
+question,portfolios,sharpe_annualized
+2(a),10 BM deciles,0.6645558323727421
+2(b),10 MOM deciles,0.8937039844450525
+2(c),20 BM + MOM deciles,1.0544641708121258
