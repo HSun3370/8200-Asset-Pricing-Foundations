@@ -147,6 +147,21 @@ Thus, $M_t = R_{ \omega_t^*,t+1}  ^{ -\gamma}$ prices all excess returns.
 ```{include} output/q3b_gmm_table.md
 ```
 
+### 
+
+```{include} output/q3c_gmm_table.md
+```
+
+### 
+
+```{include} output/q3d_gmm_table.md
+```
+
+### 
+
+```{include} output/q3e_gmm_table.md
+```
+
 
 
 
