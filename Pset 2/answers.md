@@ -103,6 +103,10 @@ SDF constructed using 20 portfolios has higher sharpe ratio than other two. High
 ```{include} output/q2d_pricing_errors_table.md
 ```
 
+Every SDF perfectly prices excess returns of portfolios where SDF comes from, as in each case it is just identified. 
+However, SDF from some portfolios cannot perfectly price returns of other portfios. We can increase the portfolio number to increase pricing ability. 
+
+
 ### 
 
 Estimates of $M^*_t = a - b'xR_t$ on the 20 BM and MOM decile portfolios using data until December 1989:
@@ -114,7 +118,7 @@ Estimates of $M^*_t = a - b'xR_t$ on the 20 BM and MOM decile portfolios using d
 ```
 
 
-
+Out of sample pricing errors are non-zero for all portfolios, which means the true values for $a,b$ are time varying. 
 
 
 
@@ -133,9 +137,9 @@ $$
 $$
 We can put $W_t^{1-\gamma}$ outside of expectation as it is known at time $t$ and divide it from both sides. Then the FOC becomes
 $$
-E [ R_{ \omega_t^*,t+1}  ^{ -\gamma}  xR_{t+1} ] =E [ ( R_{f,t+1} + \bar \omega_t' xR_{t+1})^{ -\gamma}  xR_{t+1} ] =0.
+E [ R_{ \omega_t^*,t+1}  ^{ -\gamma}  xR_{t+1} ] =E [ ( R_{f,t+1} + \bar \omega_t^*' xR_{t+1})^{ -\gamma}  xR_{t+1} ] =0.
 $$
-Thus, it prices all excess returns.
+Thus, $M_t = R_{ \omega_t^*,t+1}  ^{ -\gamma}$ prices all excess returns.
 
 
 ###
