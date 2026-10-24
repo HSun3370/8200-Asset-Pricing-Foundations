@@ -199,3 +199,18 @@ The obvious disadvantage of approximation is about accuracy. Both Taylor Approxi
 
 ```{include} output/q4b_gmm_table.md
 ```
+
+
+### 
+Let the weight matrix be the inverse of the covariance matrix of pricing errors $S^{-1}$. The  minimization problem becomes 
+$$
+\min_b \hat E [(1-b(R_{w,t} - E[R_{w,t}])) R_{t+1}  ]' S^{-1} \hat E [(1-b(R_{w,t} - E[R_{w,t}])) R_{t+1}  ]
+$$
+First order condition is 
+$$
+  \hat E[(R_{w,t} - E[R_{w,t}])  R_{t+1}] ' S^{-1} \hat E [(1-b(R_{w,t} - E[R_{w,t}])) R_{t+1}  ] = 0
+$$
+Thus, the expression of $b$ can be analytically written as
+$$
+b = (\hat E[(R_{w,t} - E[R_{w,t}])  R_{t+1}] ' S^{-1} \hat E[(R_{w,t} - E[R_{w,t}])  R_{t+1}] )^{-1} \hat E[(R_{w,t} - E[R_{w,t}])  R_{t+1}] ' S^{-1}.
+$$
