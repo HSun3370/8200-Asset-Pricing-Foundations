@@ -196,3 +196,6 @@ and $a_t =  1+ b_t  E_t[    R_{w,t+1}] $.
 The obvious disadvantage of approximation is about accuracy. Both Taylor Approximation and Stein's lemma sacrifice 3 and higher order accuracy. And after linear approximation, the coefficients are time varying. So it still needs more treatment about the time varying coefficient estimation.
 
 ### 
+
+```{include} output/q4b_gmm_table.md
+```
