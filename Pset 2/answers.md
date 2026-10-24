@@ -164,5 +164,35 @@ Thus, $M_t = R_{ \omega_t^*,t+1}  ^{ -\gamma}$ prices all excess returns.
 
 
 
+## Question 4
+###
+Two ways to approximate a SDF. One way is to do Taylor Expansion, where
+$$
+\begin{aligned}
+M_{t+1} &=  ( E_t [R_{w,t+1}] )^{-\gamma} - \gamma ( E_t [R_{w,t+1}] )^{-\gamma-1}  (R_{w,t+1}-E_t [R_{w,t+1}]) \\
+&= ( E_t [R_{w,t+1}] )^{-\gamma}  (  1 + \gamma ( E_t [R_{w,t+1}] )^{ -1}E_t [R_{w,t+1}]  - \gamma ( E_t [R_{w,t+1}] )^{ -1}  R_{w,t+1}      )\\
+&= ( E_t [R_{w,t+1}] )^{-\gamma} (   a_t      -b_t   R_{w,t+1}        ),
+\end{aligned}$$
+where $b_t=\gamma ( E_t [R_{w,t+1}] )^{ -1}$  and $a_t =1 + b_t E_t [R_{w,t+1}]$.
 
+Another way is to apply Stein's lemma. Assume $R_{t+1}$ is multivariate normal, then
+$$
+\begin{aligned}
+1&=  E_t [  R_{w,t+1}^{-\gamma}    R_{j,t+1} ] = E_t [  R_{w,t+1}^{-\gamma} ]   E_t [  R_{j,t+1} ] + Cov_t (R_{w,t+1}^{-\gamma} , R_{j,t+1})\\
+&=E_t [  R_{w,t+1}^{-\gamma} ]   E_t [  R_{j,t+1} ] - E_t[ \gamma   R_{w,t+1}^{-\gamma-1} ] Cov_t (R_{w,t+1}  , R_{j,t+1}).
+\end{aligned}
+$$
+By law of iteration, we have $E_t [  R_{w,t+1}^{-\gamma} ]   E_t [  R_{j,t+1} ] =   E_t [ E_t [  R_{w,t+1}^{-\gamma} ]    R_{j,t+1} ]  $, and $$Cov_t (R_{w,t+1}  , R_{j,t+1}) = E_t[(R_{w,t+1}- E_t[R_{w,t+1}])(R_{j,t+1} - E_t[R_{j,t+1}])] = E_t[(R_{w,t+1}- E_t[R_{w,t+1}]) R_{j,t+1} ].$$
+The SDF pricing equation can be written as 
+$$
+\begin{aligned}
+1&=  E_t [ E_t [  R_{w,t+1}^{-\gamma} ] (1  + \gamma \frac{ E_t[    R_{w,t+1}^{-\gamma-1} ] }{E_t [  R_{w,t+1}^{-\gamma} ] } E_t[R_{w,t+1}]- \gamma \frac{ E_t[    R_{w,t+1}^{-\gamma-1} ] }{E_t [  R_{w,t+1}^{-\gamma} ] }  R_{w,t+1} )       R_{j,t+1} ] \\
+&=  E_t [ E_t [  R_{w,t+1}^{-\gamma} ]      (  1+ b_t  E_t[    R_{w,t+1}]        -b_t R_{w,t+1}  )   R_{j,t+1} ],
+\end{aligned}
+$$
+where $b_t = \gamma \frac{ E_t[    R_{w,t+1}^{-\gamma-1} ] }{E_t [  R_{w,t+1}^{-\gamma} ] }$
+and $a_t =  1+ b_t  E_t[    R_{w,t+1}] $. 
 
+The obvious disadvantage of approximation is about accuracy. Both Taylor Approximation and Stein's lemma sacrifice 3 and higher order accuracy. And after linear approximation, the coefficients are time varying. So it still needs more treatment about the time varying coefficient estimation.
+
+### 
