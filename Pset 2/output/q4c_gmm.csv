@@ -1,6 +1,8 @@
 quantity,estimate,std_error,t_stat,p_value
 b,6.925904477256792,0.7717031714233223,8.974829615488966,
 b_step1_identity,3.2859576966767676,,,
+b_analytical_student_expression,6.925904157103626,,,
+b_step1_analytical_student_expression_W_I,3.2859576966768262,,,
 "Pricing error: $\hat E[M_t\, xR_{w,t}]$",-0.10412478263127203,0.028658532341324185,-3.6332908256131895,
 "Pricing error: $\hat E[M_t\, xR_{p,t}]$, BM Lo 10",-0.12862796021521325,0.03582928231615004,-3.5900233524140175,
 "Pricing error: $\hat E[M_t\, xR_{p,t}]$, BM 2-Dec",-0.10186481152800798,0.0287595102395911,-3.5419522335181566,

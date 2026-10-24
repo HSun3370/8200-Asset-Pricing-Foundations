@@ -19,7 +19,10 @@ formulas and chi^2 test (K - 1 = 20 d.f.) as in code/q4b.py.
 
 Implementation: b is found numerically (grid over [-50, 50], step 0.01, then a bounded
 scalar minimisation), and D by finite differences (q4b helpers). The student's analytical
-expression is not implemented here; it can be checked against this estimate once written.
+expression from answers.md (corrected 2026-10-24),
+    b = (c' S^{-1} c)^{-1} c' S^{-1} E_T[xR],  c = E_T[(R_w - Rbar_w) xR],
+is evaluated with S = S1 (and with S = I for step 1), asserted equal to the numerical
+estimates, and written to output/q4c_gmm.csv.
 
 Outputs (paths relative to "Pset 2"): output/q4c_gmm.csv, output/q4c_gmm_table.md
 """
@@ -62,11 +65,22 @@ def main() -> None:
     S2, L2 = centered_nw_s(np.array([b2]), rw, X, moments_fixed_mu)
     res = gmm_inference(np.array([b2]), rw, X, W2, S2, moments_fixed_mu)
 
+    # Student's analytical expression (answers.md, 4(c), corrected 2026-10-24):
+    #   b = (c' W c)^{-1} c' W E_T[xR],  c = E_T[(R_w - Rbar_w) xR],  W = S^{-1}
+    # checked against the numerical estimates (W = S1^{-1} for step 2, W = I for step 1).
+    c = ((rw - rw.mean())[:, None] * X).mean(axis=0)
+    m = X.mean(axis=0)
+    b2_analytic = float(c @ W2 @ m / (c @ W2 @ c))
+    b1_analytic = float(c @ m / (c @ c))
+    assert abs(b2_analytic - b2) < 1e-6 and abs(b1_analytic - b1) < 1e-6
+
     labels = [r"Pricing error: $\hat E[M_t\, xR_{w,t}]$"]
     labels += [rf"Pricing error: $\hat E[M_t\, xR_{{p,t}}]$, {c}" for c in Xdf.columns[1:]]
     b, se = res["theta"][0], res["se"][0]
     rows = [{"quantity": "b", "estimate": b, "std_error": se, "t_stat": b / se},
-            {"quantity": "b_step1_identity", "estimate": b1}]
+            {"quantity": "b_step1_identity", "estimate": b1},
+            {"quantity": "b_analytical_student_expression", "estimate": b2_analytic},
+            {"quantity": "b_step1_analytical_student_expression_W_I", "estimate": b1_analytic}]
     rows += [{"quantity": lab, "estimate": v, "std_error": s, "t_stat": t}
              for lab, v, s, t in zip(labels, res["gbar"], res["se_g"], res["t_g"])]
     rows.append({"quantity": f"chi2({res['df']})", "estimate": res["chi2"], "p_value": res["p"]})
@@ -88,6 +102,8 @@ def main() -> None:
     (OUT_DIR / "q4c_gmm_table.md").write_text("\n".join(md) + "\n", encoding="utf-8")
 
     print(f"Rbar_w = {rw.mean():.6f}; step 1 b = {b1:.6f} (L = {L1}); step 2 b = {b2:.6f} (s.e. {se:.6f}, L = {L2})")
+    print(f"student's analytical b: step 2 {b2_analytic:.9f} (numerical {b2:.9f}, diff {b2_analytic - b2:.1e}); "
+          f"step 1 (W = I) {b1_analytic:.9f} (numerical {b1:.9f}, diff {b1_analytic - b1:.1e})")
     print(f"FOC D'W g_bar = {res['foc'][0]:.2e}; chi2({res['df']}) = {res['chi2']:.4f}, p = {res['p']:.2e}; "
           f"eigen ratios = {res['eig'][0]:.1e}, {res['eig'][1]:.1e}")
 

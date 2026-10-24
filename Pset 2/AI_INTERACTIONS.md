@@ -358,3 +358,25 @@ This log is independent of `Pset 1/AI_INTERACTIONS.md`.)
 - **Type(s) of assistance:** math review; empirical coding; formatting/translation (inserting outputs into `answers.md`).
 - **Grouped minor follow-ups:** none (Q4(c)–(e) were requested together in a single prompt).
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 2 Q4(c), Q4(d), Q4(e)`).
+
+### Entry 13 — 2026-10-24 — Pset 2, Q4(c) (re-check of corrected derivation)
+
+- **Problem-set item:** Pset 2, Question 4(c): the student's corrected analytical expression for the efficient-GMM estimate of b.
+- **Student's substantive prompt:** "/tp i corrected my derviation. check if it is correct and see if it align with your numerical computation"
+- **Purpose:** Check the corrected derivation (math review) and compare the student's expression numerically with the efficient-GMM estimate computed in Entry 12.
+- **Git commit before interaction:** `bbe725021a7bf249d541c09ddf146bcd1b7e9d7f`. This recorded the student's own correction to `Pset 2/answers.md` made after Entry 12: the final line of the 4(c) derivation changed from `b = (c′S⁻¹c)⁻¹ c′S⁻¹` to `b = (c′S⁻¹c)⁻¹ c′S⁻¹ Ê[R_{t+1}]` (in the student's notation, c = Ê[(R_{w,t} − E[R_{w,t}]) R_{t+1}]). The student made this correction after Entry 12's item 1; AI did not write it.
+- **Math review result:**
+  1. The error flagged in Entry 12 (item 1) is fixed. The expression now ends in a K-vector, so b is a scalar, and it follows from the student's FOC c′S⁻¹ḡ(b) = 0 with ḡ(b) = Ê[R_{t+1}] − b·c. AI found no remaining algebraic error.
+  2. Still present from Entry 12 (notation only, not changed): R_{t+1} next to R_{w,t}, whereas the 4(b)/(c) moment uses the excess return xR dated the same period as R_w. AI's numerical check reads Ê[R_{t+1}] as Ê[xR_t].
+  3. Conditions under which the closed form holds, already consistent with the student's 4(c) choice: E[R_w] fixed at the sample mean, and S fixed at the first-step estimate. The text calls S "the covariance matrix of pricing errors" and does not say that S is the first-step estimate; this is a wording point only.
+- **Numerical alignment check:** AI implemented the student's expression in `Pset 2/code/q4c.py` with c = Ê[(R_w − R̄_w)·xR] and Ê[xR] over the 4(c) sample.
+  - With S = S₁ (the efficient step): 6.925904157, versus 6.925904477 from the numerical minimization (difference −3.2e-7, within the optimizer's tolerance; the closed form is exact).
+  - With S = I (the identity first step): 3.285957697 from both (difference 5.9e-14).
+  - The script asserts both agreements (tolerance 1e-6) and writes both analytical values to `output/q4c_gmm.csv`. The reported 4(c) table (`output/q4c_gmm_table.md`, b̂ = 6.9259, s.e. 0.7717) is unchanged, so `answers.md` and the PDF were not modified or rebuilt.
+- **Files inspected:** `Pset 2/answers.md` (corrected 4(c) derivation; diff against the previous commit); `Pset 2/code/q4c.py`; `Pset 2/AI_INTERACTIONS.md`.
+- **Files directly modified by AI:** `Pset 2/code/q4c.py` (adds the evaluation of the student's expression, the assertions, two CSV rows, a console line, and a docstring note; the estimation method and reported table are unchanged); `Pset 2/output/q4c_gmm.csv` (two added rows: `b_analytical_student_expression`, `b_step1_analytical_student_expression_W_I`); `Pset 2/AI_INTERACTIONS.md` (this entry).
+- **Errors / omissions / ambiguities identified:** none in the algebra. The notation point (item 2) and the wording point about S (item 3) remain for the student to decide.
+- **Substantive math / economic / econometric suggestions made:** none. AI confirmed the student's correction and implemented the student's own expression as a check.
+- **Type(s) of assistance:** math review; empirical coding (implementing the student's expression as a numerical check).
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 2 Q4(c) - corrected derivation check`).
