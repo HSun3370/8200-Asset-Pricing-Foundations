@@ -30,6 +30,9 @@ local Nelder-Mead / BFGS polish), and the Jacobian D is computed by central fini
 differences. The script checks the first-order condition D' W g_bar = 0 at the estimate.
 
 Outputs (paths relative to "Pset 2"): output/q4b_gmm.csv, output/q4b_gmm_table.md
+
+The GMM helpers take an optional moment function `mom` (default: the 4(b) moments);
+code/q4c.py reuses them with its own moments.
 """
 
 import numpy as np
@@ -60,15 +63,15 @@ def moments(theta: np.ndarray, rw: np.ndarray, X: np.ndarray) -> np.ndarray:
     return np.column_stack([m[:, None] * X, rw - mu])
 
 
-def g_bar(theta, rw, X):
-    return moments(np.asarray(theta, float), rw, X).mean(axis=0)
+def g_bar(theta, rw, X, mom=None):
+    return (mom or moments)(np.asarray(theta, float), rw, X).mean(axis=0)
 
 
-def jacobian(theta, rw, X, h=1e-6) -> np.ndarray:
+def jacobian(theta, rw, X, h=1e-6, mom=None) -> np.ndarray:
     cols = []
     for k in range(len(theta)):
         e = np.zeros(len(theta)); e[k] = h
-        cols.append((g_bar(theta + e, rw, X) - g_bar(theta - e, rw, X)) / (2 * h))
+        cols.append((g_bar(theta + e, rw, X, mom) - g_bar(theta - e, rw, X, mom)) / (2 * h))
     return np.column_stack(cols)
 
 
@@ -84,18 +87,18 @@ def gmm_estimate(rw, X, W) -> np.ndarray:
     return r2.x if r2.fun <= r1.fun else r1.x
 
 
-def centered_nw_s(theta, rw, X):
-    g = moments(theta, rw, X)
+def centered_nw_s(theta, rw, X, mom=None):
+    g = (mom or moments)(np.asarray(theta, float), rw, X)
     gc = g - g.mean(axis=0)
     L = nw1994_lag(gc)
     return newey_west_s(gc, L), L
 
 
-def gmm_inference(theta, rw, X, W, S) -> dict:
+def gmm_inference(theta, rw, X, W, S, mom=None) -> dict:
     T = len(rw)
-    gb = g_bar(theta, rw, X)
+    gb = g_bar(theta, rw, X, mom)
     K, P = len(gb), len(theta)
-    D = jacobian(theta, rw, X)
+    D = jacobian(theta, rw, X, mom=mom)
     a = D.T @ W
     ad_inv = np.linalg.inv(a @ D)
     V = ad_inv @ a @ S @ a.T @ ad_inv.T / T

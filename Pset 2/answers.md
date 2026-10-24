@@ -214,3 +214,16 @@ Thus, the expression of $b$ can be analytically written as
 $$
 b = (\hat E[(R_{w,t} - E[R_{w,t}])  R_{t+1}] ' S^{-1} \hat E[(R_{w,t} - E[R_{w,t}])  R_{t+1}] )^{-1} \hat E[(R_{w,t} - E[R_{w,t}])  R_{t+1}] ' S^{-1}.
 $$
+
+```{include} output/q4c_gmm_table.md
+```
+
+### 
+
+```{include} output/q4d_ts_table.md
+```
+
+### 
+
+```{include} output/q4e_fm_table.md
+```
