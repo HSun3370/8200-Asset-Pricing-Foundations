@@ -136,3 +136,33 @@ For the investor, the portfolio weigth is
 $$
 \bar \omega_{\gamma,t} = \frac {\mathbb{Var}_t[  xR_{max}  ]}{\mathbb{E}_t[  xR_{max}  ]}  \Sigma_{xR }^{-1}\mathbb{E}_t[  xR   ] =  \frac{\mathbb{E}_t[  xR  ] \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}{(\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] )^2}  \frac {\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] }{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}  \Sigma_{xR }^{-1}\mathbb{E}_t[  xR   ] =  \bar \omega_t^*.
 $$
+
+
+###
+Let us stack the excess return into a vector, and define 
+$$
+xR_{t+1} = [xR_{m,t+1},xR_{1,t+1}^H,...,xR_{J,t+1}^H]'
+$$
+The covariance matrix of this excess return vector is 
+$$
+\Sigma_{xR} =  diag~\{ \sigma^2_{m,t},\sigma^2_{\epsilon,1,y},...,\sigma^2_{\epsilon,J,y}     \}
+$$,
+and the expected return is 
+$$
+\mathbb{E}_t[  xR  ] = [ \mu_{m,t}, \alpha_{1,t},..., \alpha_{J,t} ]'
+$$
+
+The maximum sharpe ratio portfolio weight is thus
+$$
+\bar \omega_{max,t}  =\frac{\Sigma_{xR,t}^{-1}\mathbb{E}_t[  xR  ]}{\mathbb{1}' \Sigma_{xR,t}^{-1}\mathbb{E}_t[  xR  ]}
+=\frac{[\frac{\mu_{m,t}}{\sigma^2_{m,t}}, \frac{\alpha_{1,t}}{\sigma^2_{\epsilon,1,y}},..., \frac{\alpha_{J,t} }{\sigma^2_{\epsilon,J,y}}]' }{\frac{\mu_{m,t}}{\sigma^2_{m,t}}+ \frac{\alpha_{1,t}}{\sigma^2_{\epsilon,1,y}}+...+ \frac{\alpha_{J,t} }{\sigma^2_{\epsilon,J,y}}}
+$$
+Thus, 
+$$
+\bar \omega_{m,t} = \frac{    \mu_{m,t} / \sigma^2_{m,t} }{\mu_{m,t} / \sigma^2_{m,t}  + \sum_j^J  \alpha_{j,t}  \sigma^2_{\epsilon,j,y}   }
+$$
+and 
+$$
+\bar \omega_{j,t} = \frac{   \alpha_{j,t}  \sigma^2_{\epsilon,j,y} }{\mu_{m,t} / \sigma^2_{m,t}  + \sum_j^J  \alpha_{j,t}  \sigma^2_{\epsilon,j,y}   }
+$$
+ 
