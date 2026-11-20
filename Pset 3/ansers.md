@@ -211,3 +211,13 @@ Reduced-form multifactor models are looking for high $\alpha_H/ \sigma_{\epsilon
 
 
 ### 
+
+**(ii) Regressions of each PC on Mkt-RF**
+
+```{include} output/q1e_table_mkt.md
+```
+
+**(iii) Regressions of each PC on Mkt-RF, HML and SMB**
+
+```{include} output/q1e_table_ff3.md
+```
