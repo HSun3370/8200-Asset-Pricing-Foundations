@@ -159,10 +159,55 @@ $$
 $$
 Thus, 
 $$
-\bar \omega_{m,t} = \frac{    \mu_{m,t} / \sigma^2_{m,t} }{\mu_{m,t} / \sigma^2_{m,t}  + \sum_j^J  \alpha_{j,t}  \sigma^2_{\epsilon,j,y}   }
+\bar \omega_{m,t} = \frac{    \mu_{m,t} / \sigma^2_{m,t} }{\mu_{m,t} / \sigma^2_{m,t}  + \sum_j^J  \alpha_{j,t} / \sigma^2_{\epsilon,j,y}   }
 $$
 and 
 $$
-\bar \omega_{j,t} = \frac{   \alpha_{j,t}  \sigma^2_{\epsilon,j,y} }{\mu_{m,t} / \sigma^2_{m,t}  + \sum_j^J  \alpha_{j,t}  \sigma^2_{\epsilon,j,y}   }
+\bar \omega_{j,t} = \frac{   \alpha_{j,t}  \sigma^2_{\epsilon,j,y} }{\mu_{m,t} / \sigma^2_{m,t}  + \sum_j^J  \alpha_{j,t} / \sigma^2_{\epsilon,j,y}   }
 $$
- 
+
+<!-- The expected return for maximum sharpe ratio portfolio is 
+$$
+\mathbb{E}_t[  xR_{max} ] =  \mathbb{E}_t[   \omega_{m,t} xR_{m,t+1} + \sum_j \omega_{j,t}^H xR^H_{j,t+1}   ] = \omega_{m,t} \mu_{m,t} + \alpha_{H,t}
+$$
+and the variance of that portfolio is 
+$$
+\mathbb{Var}_t[  xR_{max} ] = \omega_{m,t}^2 \sigma_{m,t}^2 + \sigma_{\epsilon,t}^2
+$$ -->
+
+
+The sharpe ratio square of market portfolio is $\mathbb{SR}[ xR_m]^2 = \frac{\mu_{m,t}^2}{\sigma_{m,t}^2}$, and the sharpe ratio square for the single hedge portfolio is 
+$$
+\begin{align}
+\mathbb{SR}[ xR_{max}]^2 &=  \frac{[(1-\pi_{H,t} )\mu_{m,t} + \pi_{H,t} \alpha_{H,t}]^2}{(1-\pi_{H,t} )^2 \sigma_{m,t}^2 + \pi_{H,t}^2 \sigma^2_{\epsilon,t} } \\
+ &= \frac{ (1-\pi_{H,t} )^2\mu_{m,t}^2 + \pi_{H,t}^2 \alpha_{H,t}^2 + 2  \pi_{H,t}(1-\pi_{H,t} )\mu_{m,t}  \alpha_{H,t}  }{(1-\pi_{H,t} )^2 \sigma_{m,t}^2 + \pi_{H,t}^2 \sigma^2_{\epsilon,t} }
+\end{align}
+$$
+
+From equation 1.12, we have 
+$$
+\pi_{H,t} = \frac{\alpha_H/ \sigma_{\epsilon,t}^2}{\mu_{m,t}/\sigma^2_{m,t} + \alpha_H/ \sigma_{\epsilon,t}^2}, ~~1- \pi_{H,t} = \frac{\mu_{m,t}/\sigma^2_{m,t}}{\mu_{m,t}/\sigma^2_{m,t} + \alpha_H/ \sigma_{\epsilon,t}^2}, 
+$$
+
+The, the sharpe ratio square for the single hedge portfolio is 
+$$
+\begin{align}
+\mathbb{SR}[ xR_{max}]^2 &=  \frac{[(1-\pi_{H,t} )\mu_{m,t} + \pi_{H,t} \alpha_{H,t}]^2}{(1-\pi_{H,t} )^2 \sigma_{m,t}^2 + \pi_{H,t}^2 \sigma^2_{\epsilon,t} } \\
+ &=  \frac{[\mu_{m,t}^2/\sigma^2_{m,t} + \alpha_H^2/ \sigma_{\epsilon,t}^2]^2 }{\mu_{m,t}^2/\sigma^2_{m,t} + \alpha_H^2/ \sigma_{\epsilon,t}^2}
+\end{align} = \mu_{m,t}^2/\sigma^2_{m,t} + \alpha_H^2/ \sigma_{\epsilon,t}^2
+$$
+
+The difference between two sharpe ratio is 
+$$ 
+\mathbb{SR}[ xR_{max}]^2-\mathbb{SR}[ xR_m]^2  =\alpha_H^2/ \sigma_{\epsilon,t}^2.
+$$
+and thus
+$$ 
+\alpha_H/ \sigma_{\epsilon,t}=\sqrt{\mathbb{SR}[ xR_{max}]^2-\mathbb{SR}[ xR_m]^2   }.
+$$
+
+Reduced-form multifactor models are looking for high $\alpha_H/ \sigma_{\epsilon,t}$, which is equivalent to maximize the sharpe ratio of factors. And we know that the maximium sharpe ratio portfolios is SDF which prices all assets, so multifactor models are constructing a SDF that with higher sharpe ratio to price all assets. 
+
+
+
+### 
