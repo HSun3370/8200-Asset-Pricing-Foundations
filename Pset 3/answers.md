@@ -493,5 +493,36 @@ The part $Cov_t(r_w,xr_j)$ is CAMP component measures aggregate market risk. $N_
 ```{include} output/q2e_table.md
 ```
 
+## Question 3
 
 
+## Question 4
+
+###
+
+```{include} output/q4a_summary.md
+```
+
+```{figure} output/q4a_pd.png
+:label: fig-q4a-pd
+:width: 80%
+
+$PD(s)$ against $S = e^s$ (monthly dividends; divide by 12 for the price relative to annual dividends).
+```
+
+###
+
+```{include} output/q4b_summary.md
+```
+
+```{figure} output/q4b_er.png
+:label: fig-q4b-er
+:width: 80%
+
+Expected log equity return $\mathbb{E}r_e(s)$ and risk-free rate $r_f$ against $S = e^s$, both multiplied by 12.
+```
+
+###
+
+```{include} output/q4c_table.md
+```
