@@ -69,3 +69,39 @@ This log is independent of `Pset 1/AI_INTERACTIONS.md` and `Pset 2/AI_INTERACTIO
 - **Type(s) of assistance:** empirical coding (including data download); formatting/translation (inserting outputs into `ansers.md`; reporting build issues).
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 3 Q1(e)`).
+
+### Entry 2 — 2026-11-22 — Pset 3, Q2(a), Q2(b), Q2(d)
+
+- **Problem-set item:** Pset 3, Question 2. The handwritten pages cover Q2(a) (pages 1–2), Q2(b) (pages 3–4) and part of Q2(d) (page 4).
+- **Student's substantive prompt:** "/tp can you help me read my handwritten inPset 3\+ 109 5.pdf, thats my anwsers to question 2 HW3. make sure all variables are aligned with the homework, and insert into hw3 q2"
+- **Purpose:** Translate the student's handwritten derivations into LaTeX (`AI_POLICY.md` §1(a) allows uploading a picture of handwritten work for translation), using the homework's notation, and insert them under Question 2 of `Pset 3/ansers.md`.
+- **Git commit before interaction:** `b003e760a5a905665f5caf8b2cf85763f9ecc4e3`. This also recorded the student's own work since Entry 1: the handwritten scan `Pset 3/+ 109 5.pdf` (4 pages, images only), and 48 lines added to `Pset 3/ansers.md` (a paragraph under 1(e), and a typed start of Q2(a): problem setup, definitions of vw and cw, the FOC for cw, and a guess-and-verify step ending in the unfinished sentence "The last equation is true by the definition of $vw").
+- **Assistance provided:**
+  - Rendered the scan and read it in enlarged strips, with extra zooms on ambiguous symbols. Transcribed it into LaTeX and inserted it into `Pset 3/ansers.md`: the Q2(a) part directly below the student's typed text (which was not changed); the Q2(b) part under the student's existing empty 2(b) heading; then an empty heading for 2(c), which has no handwritten work, so that the next heading is numbered 2(d); then the Q2(d) part. The Git diff is 192 lines added and 0 removed.
+  - *Not inserted a second time:* the first four lines of page 1 (the problem in terms of V/W and C/W, the definitions of vw and cw, the restated problem, and the FOC for cw), because the student had already typed these in 2(a).
+  - *Kept in the file as hidden HTML comments* (they stop mid-expression): page 1, the last three lines (a first attempt at the log-normal step); page 2, the two lines below the ruled line (vector version); page 3, the sketch of stacking over j and the line "E[r_w] + 0.5(Var(r_w) − Var(r_o)) = γ(r_w"; page 4, the first line of (2d).
+  - *Left out:* two notes-to-self in Chinese on page 2 ("split into individual ones first, then combine into a vector"; "split and look at them one by one"), the note "r_{w,t+1} log normal." on page 3, crossed-out terms, highlighter marks and arrows.
+  - No connecting sentences, steps or conclusions were added. The only words are the student's own ("FOC w.r.t.", "SDF", "Assume log returns and vw are jointly normally distributed."); the circled 1 and 2 are typed as (1) and (2). Line breaks inside long equations, one missing closing brace, and an underbrace for the underlined δ_0 are typesetting.
+- **Notation changes made to match the homework (requested by the student):**
+  1. The handwritten barred w is the homework's ϖ, typed as `\bar \omega` as in the student's Q1 and typed 2(a) (`\varpi` does not compile in this MyST/Typst setup): ω̄_t in 2(a), and ω̄_{w,t} in 2(b), as in Equations 2.6–2.7.
+  2. log M_{t+1} → m_{t+1}.
+  3. E, Var, cov → E_t, Var_t, Cov_t, and time subscripts on returns, m and vw are dropped inside these moments, as in Equations 2.5, 2.7 and 2.10. This includes four covariances on pages 3–4 written with vw_t, now vw; and m_t, r_t, r_{o,t} on page 2, now m, r_j, r_o.
+  4. Page 2: R_t − R_{o,t} → R_{j,t+1} − R_{o,t+1}, and r_t is read as the single asset j (the student's margin note says to work asset by asset).
+  5. Σ_xr and diag Σ_xr → Σ_{xr,t} and diag(Σ_{xr,t}); Var(v_{t+1}) → Var_t(v).
+- **Readings of unclear handwriting:** page 1, third fraction of ∂r_w/∂ω̄, the denominator lacks the bar and is read as ∂ω̄_t; page 1, SDF line, a single letter before the subscript "w,t+1" is read as r; page 1, the last exponent is read as xr_{t+1} − r_{w,t+1}; page 2, step (2), the overwritten term in Var(m_t + ·) is read as r_t; page 2, the overwritten first argument of the last covariance is read as vw; page 4, "(1−δ)" with a stray mark.
+- **Files inspected:** `Pset 3/+ 109 5.pdf`; `Pset 3/Problem Set 3.pdf` (Question 2 text); `Pset 3/ansers.md`; `myst.yml`; `Pset 3/AI_INTERACTIONS.md`.
+- **Files directly modified by AI:** `Pset 3/ansers.md` (192 lines inserted; nothing removed or changed); `Pset 3/AI_INTERACTIONS.md` (this entry).
+- **Errors / omissions / ambiguities identified (transcribed as written and reported to the student; AI did not correct any of them; no full math check was requested):**
+  1. 2(a), SDF line: written "− r_{w,t+1}". FOC for ω̄ has (1−γ)r_{w,t+1} in one exponent and −r_{w,t+1} in the other, and the first line of page 2 and Equation 2.4 have −γ·r_{w,t+1}; the line as written does not agree with them.
+  2. 2(a), last expression for ∂r_w/∂ω̄: exp{xr_{t+1} − r_{w,t+1}}. With the homework's xr_j = r_j − r_o, exp{xr_j} is R_j/R_o, not xR_j = R_j − R_o, so it is not equal to the fraction before it.
+  3. 2(a), step (2): Var_t(m + r_j) and ½Var_t(r_j) appear in the line about r_o, while the result below uses Var_t(r_o).
+  4. 2(b): the equation ω̄′[…] = ω̄′[…] is a single scalar equation (Equation 2.5 applied to the wealth portfolio). Cancelling ω̄′ does not follow from it, because ω̄′A = ω̄′B does not imply A = B for vectors. The substitution j = w is also not stated.
+  5. 2(b): written with "=" where the homework has "≈" (Equations 2.6, 2.7).
+  6. 2(d): uses log(W_{t+1}/W_t) = r_{w,t+1}, while page 1 has log(W_{t+1}/W_t) = r_{w,t+1} + log(1 − e^{cw_t}). The two differ by a term known at t, so the variance line is unaffected, but the equation for vw_{t+1} + r_{w,t+1} is.
+  7. 2(a): the handwritten FOC for cw is set equal to 0, while the student's typed version has ∂_cw vw_t on the left-hand side. Only the typed one is in the file.
+  8. Not in the handwriting: 2(b) explanations; 2(c); 2(d) combining Equation 2.9 with E_t[e^m R_w] = 1 (the pages substitute cw* into the value recursion instead), the assembled Equation 2.10, Equation 2.11 and the explanation; 2(e). The typed 2(a) sentence is unfinished and has an unclosed `$`.
+- **Build check:** the inserted blocks, and Question 2 as a whole, were built in a scratch folder outside the repository with `#let diff = sym.partial` added, and compiled. The FOC fraction remains slightly wider than the text column. `ansers.md` itself still has the build issues reported in Entry 1 (no `diff` definition, so `\partial` fails; `align` inside `$$`); the scratch build also shows literal `$$` around the student's typed guess-and-verify block. None of these were changed.
+- **Substantive math / economic / econometric suggestions made:** none. Items 1–7 point out inconsistencies and explain them without giving corrected steps. Notation items 3 and 4 change time or asset subscripts at the student's request to match the homework and are listed so the student can confirm them.
+- **Type(s) of assistance:** formatting/translation (handwriting to LaTeX); math review (inconsistencies noticed while transcribing).
+- **Grouped minor follow-ups:** none.
+- **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 3 Q2`).

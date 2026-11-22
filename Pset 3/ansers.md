@@ -262,8 +262,200 @@ $$
 
 The last equation is true by the definition of $vw
 
+FOC w.r.t. $\bar \omega_t$:
+$$
+\delta \frac{\mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} \exp \{ - r_{w,t+1} \} \cdot xR_{t+1} ]}{\mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} ]} = 0
+$$
+
+$$
+\begin{aligned}
+\frac{\partial r_{w,t+1}}{\partial \bar \omega_t} & = \frac{\partial \log R_{w,t+1}}{\partial \bar \omega_t} = \frac{\partial \log (R_{o,t+1} + \bar \omega_t' xR_{t+1})}{\partial \bar \omega_t} \\
+& = \frac{xR_{t+1}}{R_{o,t+1} + \bar \omega_t' xR_{t+1}} = \exp \{ xr_{t+1} - r_{w,t+1} \}
+\end{aligned}
+$$
+
+SDF:
+$$
+\begin{aligned}
+m_{t+1} = & - \log \mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} ] \\
+& + \log \delta \\
+& + (1-\gamma) \cdot vw_{t+1} - r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t})
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+& \frac{C_t}{W_t} = 1-\delta, ~~ \log \frac{C_t}{W_t} = cw_t = \log (1-\delta), \\
+& \log (1-e^{cw_t}) = \log \delta, ~~ \frac{-e^{cw_t}}{1-e^{cw_t}} = 1 - \frac{1}{\delta}
+\end{aligned}
+$$
+
+<!-- Handwritten page 1, stops mid-expression (restarted on page 2):
+$$
+1 = \mathbb{E}_t[ \exp \{ m_{t+1} + r_{t+1} \} ] = \exp \{ \mathbb{E}_t[ m_{t+1} + r_{t+1} ] + \frac{1}{2} \mathbb{Var}_t( m_{t+1} + r_{t+1} ) \}
+$$
+$$
+\mathbb{E}_t[ m_{t+1} + xr_{t+1} + r_{o,t+1} ] + \frac{1}{2} \mathbb{Var}_t( m_{t+1} + xr_{t+1} + r_{o,t+1} ) = 0
+$$
+$$
+\mathbb{E}_t[ xr_{t+1} ] + \frac{1}{2} \mathbb{Var}_t(
+$$ -->
+
+$$
+\mathbb{E}_t [ \exp \{ a_t - \gamma \cdot r_{w,t+1} - (\gamma-1) \cdot vw_{t+1} \} \cdot xR_{t+1} ] = 0
+$$
+
+Assume log returns and $vw$ are jointly normally distributed.
+$$
+\mathbb{E}_t [ \exp \{ a_t - \gamma \cdot r_{w,t+1} - (\gamma-1) \cdot vw_{t+1} \} (R_{j,t+1} - R_{o,t+1}) ] = 0
+$$
+
+(1)
+$$
+\begin{aligned}
+\mathbb{E}_t[ m + r_j ] + \frac{1}{2} \mathbb{Var}_t( m + r_j ) = ~& \mathbb{E}_t[ m ] + \mathbb{E}_t[ r_j ] + \frac{1}{2} \mathbb{Var}_t( m ) + \frac{1}{2} \mathbb{Var}_t( r_j ) \\
+& + \mathbb{Cov}_t( -\gamma \cdot r_w, r_j ) + \mathbb{Cov}_t( -(\gamma-1) vw, r_j )
+\end{aligned}
+$$
+
+(2)
+$$
+\begin{aligned}
+\mathbb{E}_t[ m + r_o ] + \frac{1}{2} \mathbb{Var}_t( m + r_j ) = ~& \mathbb{E}_t[ m ] + \mathbb{E}_t[ r_o ] + \frac{1}{2} \mathbb{Var}_t( m ) + \frac{1}{2} \mathbb{Var}_t( r_j ) \\
+& + \mathbb{Cov}_t( -\gamma \cdot r_w, r_o ) + \mathbb{Cov}_t( -(\gamma-1) vw, r_o )
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\Rightarrow ~~ & \mathbb{E}_t[ r_j ] - \mathbb{E}_t[ r_o ] + \frac{1}{2} ( \mathbb{Var}_t( r_j ) - \mathbb{Var}_t( r_o ) ) \\
+& = \gamma \cdot \mathbb{Cov}_t( r_w, r_j - r_o ) + (\gamma-1) \cdot \mathbb{Cov}_t( vw, r_j - r_o ).
+\end{aligned}
+$$
+
+<!-- Handwritten page 2, below the ruled line (vector version, not continued):
+$$
+\mathbb{E}_t [ \exp \{ a_t - \gamma \cdot r_{w,t+1} - (\gamma-1) \cdot vw_{t+1} \} [ R_{t+1} - R_{o,t+1} \cdot \mathbb{1} ] ]
+$$
+$$
+\mathbb{E}_t [ \exp \{ X \} ] = \exp \{ \mathbb{E}_t[X] + \frac{1}{2} \text{diag}( \mathbb{Var}_t(X) ) \}
+$$ -->
+
 
 ###
+
+$$
+\begin{aligned}
+r_{w,t+1} = ~& r_{o,t+1} + \bar \omega_{w,t}' xr_{t+1} + 0.5 \bar \omega_{w,t}' \text{diag}( \Sigma_{xr,t} ) \\
+& - \frac{1}{2} \bar \omega_{w,t}' \cdot \Sigma_{xr,t} \cdot \bar \omega_{w,t}
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+& \mathbb{E}_t[ xr_j ] + 0.5 [ \mathbb{Var}_t( r_j ) - \mathbb{Var}_t( r_o ) ] \\
+& = \gamma \cdot \mathbb{Cov}_t( r_w, xr_j ) + (\gamma-1) \mathbb{Cov}_t( vw, xr_j ).
+\end{aligned}
+$$
+
+<!-- Handwritten page 3, stops mid-expression:
+(sketch of stacking the equation above over j into vectors: E_t[xr_j], 0.5 [ ] - Var_t(r_o) times a vector of ones, then two column vectors on the right-hand side; left blank)
+$$
+\mathbb{E}_t[ r_w ] + 0.5 ( \mathbb{Var}_t( r_w ) - \mathbb{Var}_t( r_o ) ) = \gamma ( r_w
+$$ -->
+
+$$
+\begin{aligned}
+\mathbb{E}_t[ xr_j ] & = \mathbb{E}_t[ r_j ] - \mathbb{E}_t[ r_o ] = \mathbb{E}_t[ r_w ] - \mathbb{E}_t[ r_o ] \\
+& = \bar \omega_{w,t}' \cdot \mathbb{E}_t[ xr ] + \frac{1}{2} \bar \omega_{w,t}' \cdot \text{diag}( \Sigma_{xr,t} ) - \frac{1}{2} \bar \omega_{w,t}' \cdot \Sigma_{xr,t} \cdot \bar \omega_{w,t}.
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+0.5 ( \mathbb{Var}_t( r_w ) - \mathbb{Var}_t( r_o ) ) & = \frac{1}{2} ( \mathbb{Var}_t( r_o + \bar \omega_{w,t}' \cdot xr ) - \mathbb{Var}_t( r_o ) ) \\
+& = \frac{1}{2} \bar \omega_{w,t}' \cdot \Sigma_{xr,t} \cdot \bar \omega_{w,t} + \bar \omega_{w,t}' \cdot \mathbb{Cov}_t( xr, r_o ).
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\gamma \cdot \mathbb{Cov}_t( r_w, xr_j ) & = \gamma \mathbb{Cov}_t( r_w, xr_w ) \\
+& = \gamma \mathbb{Cov}_t( r_w, r_w - r_o ) = \gamma \mathbb{Cov}_t( r_w, r_w ) - \gamma \cdot \mathbb{Cov}_t( r_w, r_o ) \\
+& = \gamma [ \mathbb{Var}_t( r_o ) + \bar \omega_{w,t}' \cdot \Sigma_{xr,t} \bar \omega_{w,t} + 2 \bar \omega_{w,t}' \mathbb{Cov}_t( xr, r_o ) \\
+& ~~~~~~ - \mathbb{Var}_t( r_o ) - \bar \omega_{w,t}' \cdot \mathbb{Cov}_t( xr, r_o ) ] \\
+& = \gamma \cdot [ \bar \omega_{w,t}' \Sigma_{xr,t} \cdot \bar \omega_{w,t} + \bar \omega_{w,t}' \cdot \mathbb{Cov}_t( xr, r_o ) ].
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+(\gamma-1) \mathbb{Cov}_t( vw, xr_j ) & = (\gamma-1) \cdot \mathbb{Cov}_t( vw, xr_w ) \\
+& = (\gamma-1) \cdot \bar \omega_{w,t}' \mathbb{Cov}_t( vw, xr )
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+& \bar \omega_{w,t}' \left[ \mathbb{E}_t[ xr ] + \frac{1}{2} \text{diag}( \Sigma_{xr,t} ) + \mathbb{Cov}_t( xr, r_o ) \right] \\
+& = \bar \omega_{w,t}' \left[ \gamma \cdot \Sigma_{xr,t} \cdot \bar \omega_{w,t} + \gamma \mathbb{Cov}_t( xr, r_o ) + (\gamma-1) \mathbb{Cov}_t( vw, xr ) \right].
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\Rightarrow ~~ \gamma \cdot \Sigma_{xr,t} \cdot \bar \omega_{w,t} = ~& \mathbb{E}_t[ xr ] + \frac{1}{2} \text{diag}( \Sigma_{xr,t} ) \\
+& + (1-\gamma) \cdot \mathbb{Cov}_t( xr, r_o ) + (1-\gamma) \cdot \mathbb{Cov}_t( vw, xr )
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+\bar \omega_{w,t} = ~& \frac{1}{\gamma} \cdot \Sigma_{xr,t}^{-1} \left[ \mathbb{E}_t[ xr ] + \frac{1}{2} \text{diag}( \Sigma_{xr,t} ) + (1-\gamma) \mathbb{Cov}_t( xr, r_o ) \right] \\
+& + \frac{1}{\gamma} (1-\gamma) \Sigma_{xr,t}^{-1} \cdot \mathbb{Cov}_t( vw, xr )
+\end{aligned}
+$$
+
+
+###
+
+
+###
+
+<!-- Handwritten page 4, first line of (2d), stops mid-expression:
+$$
+\mathbb{E}_t [ \exp \{ \frac{\gamma-1}{\delta} [ vw_t - \delta_0 ]
+$$ -->
+
+$$
+cw_t^* = \log \left( \frac{C_t}{W_t} \right)^* = \log (1-\delta)
+$$
+
+$$
+\begin{aligned}
+vw_t = ~& (1-\delta) \log (1-\delta) \\
+& + \frac{\delta}{1-\gamma} \log \mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) \cdot r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} ] \\
+= ~& \underbrace{(1-\delta) \log (1-\delta) + \delta \log \delta}_{\delta_0} \\
+& + \frac{\delta}{1-\gamma} \log \mathbb{E}_t [ \exp \{ (1-\gamma) \cdot vw_{t+1} + (1-\gamma) \cdot r_{w,t+1} \} ]
+\end{aligned}
+$$
+
+$$
+\begin{aligned}
+vw_t = ~& \delta_0 + \frac{\delta}{1-\gamma} \log \mathbb{E}_t [ \exp \{ (1-\gamma) \cdot vw_{t+1} + (1-\gamma) r_{w,t+1} \} ] \\
+= ~& \delta_0 + \frac{\delta}{1-\gamma} \Big( \mathbb{E}_t [ (1-\gamma) vw + (1-\gamma) \cdot r_w ] \\
+& ~~~~~~ + \frac{1}{2} \mathbb{Var}_t [ (1-\gamma) vw + (1-\gamma) \cdot r_w ] \Big) \\
+= ~& \delta_0 + \delta \mathbb{E}_t[ vw ] + \delta \mathbb{E}_t[ r_w ] + \frac{\delta}{2} (1-\gamma) \left[ \mathbb{Var}_t( vw + r_w ) \right]
+\end{aligned}
+$$
+
+$$
+vw_{t+1} + r_{w,t+1} = \log \left( \frac{V_{t+1}}{W_{t+1}} \cdot \frac{W_{t+1}}{W_t} \right) = \log V_{t+1} - \log W_t.
+$$
+
+$$
+\mathbb{Var}_t( vw + r_w ) = \mathbb{Var}_t( \log V_{t+1} ) = \mathbb{Var}_t( v ).
+$$
 
 
 
