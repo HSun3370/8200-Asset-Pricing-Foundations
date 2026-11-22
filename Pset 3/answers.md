@@ -8,9 +8,10 @@
 ### 
 The porfolio allocation problem is 
 $$
-\begin{align}
-\max_{\bar \omega}~~ \mathbb{E}_t[R_{o,t+1} +\bar \omega' xR_{t+1}  ] - 0.5 \gamma_t (\bar \omega' \Sigma_{xR,t}\bar \omega +\Sigma_{R_o}+2\cdot\bar \omega' \mathbb{Cov}_t(R_{o,t+1},xR_{t+1})  ) ,
-\end{align}
+\begin{aligned}
+\max_{\bar \omega}~~ & \mathbb{E}_t[R_{o,t+1} +\bar \omega' xR_{t+1}  ] \\
+& - 0.5 \gamma_t (\bar \omega' \Sigma_{xR,t}\bar \omega +\Sigma_{R_o}+2\cdot\bar \omega' \mathbb{Cov}_t(R_{o,t+1},xR_{t+1})  ) ,
+\end{aligned}
 $$
 where $\Sigma_{xR,t}:=\mathbb{Var}_t( xR_{t+1})$ and  $\Sigma_{R_o,t}:=\mathbb{Var}_t(R_{o,t+1} )$. FOC w.r.t $\bar \omega$:
 $$ 
@@ -28,16 +29,17 @@ $$
 
 ###
 Assume representative agent $\bar \omega_{\gamma,t} =\bar\omega_{m,t} $. Then we have 
+
 $$
-\begin{align}
+\begin{aligned}
 \gamma_t \cdot \mathbb{Cov}_t(R_{w},xR ) &=\gamma_t \cdot \mathbb{Cov}_t(R_{o } +\bar \omega_{\gamma,t}' xR  ,xR ) \\
-& = \gamma_t \cdot \mathbb{Cov}_t(R_{o }  ,xR )
-+ \gamma_t \cdot \mathbb{Cov}_t( [\frac{1}{\gamma_t}  \Sigma_{xR,t}^{-1}\mathbb{E}_t[  xR   ]  - \Sigma_{xR,t}^{-1}  \mathbb{Cov}_t(R_{o },xR )]' xR  ,xR ) \\
+& = \gamma_t \cdot \mathbb{Cov}_t(R_{o }  ,xR ) \\
+& ~~~~ + \gamma_t \cdot \mathbb{Cov}_t( [\frac{1}{\gamma_t}  \Sigma_{xR,t}^{-1}\mathbb{E}_t[  xR   ]  - \Sigma_{xR,t}^{-1}  \mathbb{Cov}_t(R_{o },xR )]' xR  ,xR ) \\
 & = \gamma_t \cdot \mathbb{Cov}_t(R_{o }  ,xR )  
 + \gamma_t \cdot \Sigma_{xR,t}   [\frac{1}{\gamma_t}  \Sigma_{xR,t}^{-1}\mathbb{E}_t[  xR   ]  - \Sigma_{xR,t}^{-1}  \mathbb{Cov}_t(R_{o },xR )]   \\
 & = \mathbb{E}_t[  xR   ]   +  \gamma_t \cdot \mathbb{Cov}_t(R_{o }  ,xR )   - \gamma_t \cdot \mathbb{Cov}_t(R_{o }  ,xR )  \\
 & =\mathbb{E}_t[  xR   ] 
-\end{align} 
+\end{aligned} 
 $$
 Specifically, the SPF prices itself, which means that 
 $$
@@ -46,13 +48,18 @@ $$
 
 Thus, 
 $$ 
-\begin{align}
+\begin{aligned}
 \mathbb{E}_t[  xR_j   ]  &= \gamma_t \cdot \mathbb{Cov}_t(R_{w},xR_j ) \\
 &= \gamma_t \cdot   \frac{\mathbb{Cov}_t(R_{w},xR_j ) }{\mathbb{Var}_t(R_{w}  ) } \frac{  \mathbb{Var}_t(R_{w}  )}{ \mathbb{E}_t[  xR_w ]} \mathbb{E}_t[  xR_w ]\\
 &= \beta_{j,t} \cdot  \mathbb{E}_t[  xR_w ]
-\end{align}
+\end{aligned}
 $$
 
+
+```{raw:typst}
+#set page(margin: auto)
+#let diff = sym.partial
+```
 
 ### Sharpe Ratio
 $$
@@ -61,10 +68,12 @@ $$
 FOC w.r.t $\bar \omega_t$:
 
 $$
-\frac{\partial \mathbb{SR}_t}{\partial \bar \omega_t}  = 
-\frac{ \sqrt {\bar \omega_t' \Sigma_{xR,t} \bar \omega_t } \mathbb{E}_t[  xR  ]  }{  \bar \omega_t' \Sigma_{xR,t} \bar \omega_t } - \frac{\frac{  \Sigma_{xR,t} \bar \omega_t}{\sqrt {\bar \omega_t' \Sigma_{xR,t} \bar \omega_t }}\bar \omega_t'  \mathbb{E}_t[  xR  ]  }{  \bar \omega_t' \Sigma_{xR,t} \bar \omega_t } 
-= 
+\begin{aligned}
+\frac{\partial \mathbb{SR}_t}{\partial \bar \omega_t}  & = 
+\frac{ \sqrt {\bar \omega_t' \Sigma_{xR,t} \bar \omega_t } \mathbb{E}_t[  xR  ]  }{  \bar \omega_t' \Sigma_{xR,t} \bar \omega_t } - \frac{\frac{  \Sigma_{xR,t} \bar \omega_t}{\sqrt {\bar \omega_t' \Sigma_{xR,t} \bar \omega_t }}\bar \omega_t'  \mathbb{E}_t[  xR  ]  }{  \bar \omega_t' \Sigma_{xR,t} \bar \omega_t } \\
+& = 
 \frac{  \bar \omega_t' \Sigma_{xR,t} \bar \omega_t   \mathbb{E}_t[  xR  ]   -    \bar \omega_t'  \mathbb{E}_t[  xR  ] \Sigma_{xR,t} \bar \omega_t }{  (\bar \omega_t' \Sigma_{xR,t} \bar \omega_t )^{3/2}}  =0
+\end{aligned}
 $$
 We can get 
 $$
@@ -109,7 +118,12 @@ $$
 \mathbb{1}' \bar \omega_t^* = 1 = -\lambda ~\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] - \gamma ~\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}
 $$
 Two equation two unknown, we can solve $\lambda^*$ and $\gamma^*$ by
-$$-\lambda^* = \frac{ \mu\cdot \mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}  - \mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] }{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]\cdot\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}  - (\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ])^2 },~~-\gamma^* =  \frac{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] -\mu\cdot \mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]\cdot\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}  - (\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ])^2 } $$
+$$
+\begin{aligned}
+-\lambda^* & = \frac{ \mu\cdot \mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}  - \mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] }{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]\cdot\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}  - (\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ])^2 }, \\
+-\gamma^* & =  \frac{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] -\mu\cdot \mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]\cdot\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}  - (\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ])^2 }
+\end{aligned}
+$$
 Thus, under the optimal portfolio weights, the minimal variance is 
 $$
 (\bar \omega_t' \Sigma_{xR} \bar \omega_t)^* =  \frac{ \mu^2\cdot \mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}  - 2\mu \cdot \mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] + \mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]\cdot\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{1}  - (\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ])^2 }. 
@@ -134,7 +148,10 @@ $$
 For the investor, the portfolio weigth is 
 
 $$
-\bar \omega_{\gamma,t} = \frac {\mathbb{Var}_t[  xR_{max}  ]}{\mathbb{E}_t[  xR_{max}  ]}  \Sigma_{xR }^{-1}\mathbb{E}_t[  xR   ] =  \frac{\mathbb{E}_t[  xR  ] \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}{(\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] )^2}  \frac {\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] }{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}  \Sigma_{xR }^{-1}\mathbb{E}_t[  xR   ] =  \bar \omega_t^*.
+\begin{aligned}
+\bar \omega_{\gamma,t} & = \frac {\mathbb{Var}_t[  xR_{max}  ]}{\mathbb{E}_t[  xR_{max}  ]}  \Sigma_{xR }^{-1}\mathbb{E}_t[  xR   ] \\
+& =  \frac{\mathbb{E}_t[  xR  ] \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}{(\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] )^2}  \frac {\mathbb{1}' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ] }{\mathbb{E}_t[  xR  ]' \Sigma_{xR}^{-1} \mathbb{E}_t[  xR  ]}  \Sigma_{xR }^{-1}\mathbb{E}_t[  xR   ] =  \bar \omega_t^*.
+\end{aligned}
 $$
 
 
@@ -145,8 +162,8 @@ xR_{t+1} = [xR_{m,t+1},xR_{1,t+1}^H,...,xR_{J,t+1}^H]'
 $$
 The covariance matrix of this excess return vector is 
 $$
-\Sigma_{xR} =  diag~\{ \sigma^2_{m,t},\sigma^2_{\epsilon,1,y},...,\sigma^2_{\epsilon,J,y}     \}
-$$,
+\Sigma_{xR} =  diag~\{ \sigma^2_{m,t},\sigma^2_{\epsilon,1,y},...,\sigma^2_{\epsilon,J,y}     \},
+$$
 and the expected return is 
 $$
 \mathbb{E}_t[  xR  ] = [ \mu_{m,t}, \alpha_{1,t},..., \alpha_{J,t} ]'
@@ -178,10 +195,10 @@ $$ -->
 
 The sharpe ratio square of market portfolio is $\mathbb{SR}[ xR_m]^2 = \frac{\mu_{m,t}^2}{\sigma_{m,t}^2}$, and the sharpe ratio square for the single hedge portfolio is 
 $$
-\begin{align}
+\begin{aligned}
 \mathbb{SR}[ xR_{max}]^2 &=  \frac{[(1-\pi_{H,t} )\mu_{m,t} + \pi_{H,t} \alpha_{H,t}]^2}{(1-\pi_{H,t} )^2 \sigma_{m,t}^2 + \pi_{H,t}^2 \sigma^2_{\epsilon,t} } \\
  &= \frac{ (1-\pi_{H,t} )^2\mu_{m,t}^2 + \pi_{H,t}^2 \alpha_{H,t}^2 + 2  \pi_{H,t}(1-\pi_{H,t} )\mu_{m,t}  \alpha_{H,t}  }{(1-\pi_{H,t} )^2 \sigma_{m,t}^2 + \pi_{H,t}^2 \sigma^2_{\epsilon,t} }
-\end{align}
+\end{aligned}
 $$
 
 From equation 1.12, we have 
@@ -191,10 +208,10 @@ $$
 
 The, the sharpe ratio square for the single hedge portfolio is 
 $$
-\begin{align}
+\begin{aligned}
 \mathbb{SR}[ xR_{max}]^2 &=  \frac{[(1-\pi_{H,t} )\mu_{m,t} + \pi_{H,t} \alpha_{H,t}]^2}{(1-\pi_{H,t} )^2 \sigma_{m,t}^2 + \pi_{H,t}^2 \sigma^2_{\epsilon,t} } \\
  &=  \frac{[\mu_{m,t}^2/\sigma^2_{m,t} + \alpha_H^2/ \sigma_{\epsilon,t}^2]^2 }{\mu_{m,t}^2/\sigma^2_{m,t} + \alpha_H^2/ \sigma_{\epsilon,t}^2}
-\end{align} = \mu_{m,t}^2/\sigma^2_{m,t} + \alpha_H^2/ \sigma_{\epsilon,t}^2
+\end{aligned} = \mu_{m,t}^2/\sigma^2_{m,t} + \alpha_H^2/ \sigma_{\epsilon,t}^2
 $$
 
 The difference between two sharpe ratio is 
@@ -241,29 +258,42 @@ $$
 
 Plug in the log wealth growth $\log W_{t+1}/W_t = \log  R_{w,t+1} + \log (1-\exp (cw_t))$
 $$
- vw_t = \max_{cw_t, \bar \omega_t} ~ (1-\delta) \cdot cw_t + \frac{\delta}{1-\gamma} \log \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]
+\begin{aligned}
+ vw_t = \max_{cw_t, \bar \omega_t} ~ & (1-\delta) \cdot cw_t \\
+& + \frac{\delta}{1-\gamma} \log \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]
+\end{aligned}
 $$
 
 
 FOC w.r.t $cw_t$ we can get
 
 $$
-0 =   (1-\delta)   +  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}(\partial_{cw} vw_{t+1} +  \frac{-\exp cw_t}{1-\exp cw_t}   )]  
+\begin{aligned}
+0 =  & (1-\delta)   +  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \\
+& ~~~~ \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} \\
+& ~~~~~~ (\partial_{cw} vw_{t+1} +  \frac{-\exp cw_t}{1-\exp cw_t}   )]
+\end{aligned}
 $$
 
 Guess and verify: I guess $cw_t = \log (1-\delta)$  and thus $\partial_{cw} vw_{t+1} = \frac{\partial vw_{t+1}}{\partial cw_{t+1}} \frac {\partial cw_{t+1}} {\partial cw_{t }}=0 $ solves FOC, then verify
 $$
-\begin{align}
- &  (1-\delta)   + \delta \frac{-\exp cw_t}{1-\exp cw_t}+  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} \partial_{cw} vw_{t+1}  ]  \\
-&=   \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}  \partial_{cw} vw_{t+1}  ] -\partial_{cw} vw_t\\
+\begin{aligned}
+ &  (1-\delta)   + \delta \frac{-\exp cw_t}{1-\exp cw_t} \\
+& +  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \\
+& ~~~~ \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} \partial_{cw} vw_{t+1}  ]  \\
+&=   \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \\
+& ~~~~ \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}  \partial_{cw} vw_{t+1}  ] -\partial_{cw} vw_t\\
 &= 0
-\end{align} 
+\end{aligned} 
 $$
  
 
 FOC w.r.t. $\bar \omega_t$:
 $$
-\delta \frac{\mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} \exp \{ - r_{w,t+1} \} \cdot xR_{t+1} ]}{\mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} ]} = 0
+\begin{aligned}
+& \delta \frac{\mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} \exp \{ - r_{w,t+1} \} \cdot xR_{t+1} ]}{\mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} ]} \\
+& = 0
+\end{aligned}
 $$
 where
 $$
