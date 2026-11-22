@@ -178,3 +178,7 @@ This log is independent of `Pset 1/AI_INTERACTIONS.md` and `Pset 2/AI_INTERACTIO
 - **Type(s) of assistance:** empirical coding (numerical solution and simulation); code debugging; formatting/translation (inserting outputs).
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 3 Q4(a)-(c)`).
+
+### Correction to Entry 5 — 2026-11-22
+
+- Entry 5 says the student's commit `4e72a19` "changes two lines" of `Pset 3/answers.md`. The Git record shows 1 line added and 3 removed there (the second expression of the 2(a) guess-and-verify block was removed, with the line before it adjusted).
