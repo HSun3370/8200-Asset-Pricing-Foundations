@@ -248,25 +248,24 @@ $$
 FOC w.r.t $cw_t$ we can get
 
 $$
- \partial_{cw} vw_t =   (1-\delta)   +  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}(\partial_{cw} vw_{t+1} +  \frac{-\exp cw_t}{1-\exp cw_t}   )]  
+0 =   (1-\delta)   +  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}(\partial_{cw} vw_{t+1} +  \frac{-\exp cw_t}{1-\exp cw_t}   )]  
 $$
 
-Guess and verify: I guess $cw_t = \log (1-\delta)$ solves FOC, then verify
+Guess and verify: I guess $cw_t = \log (1-\delta)$  and thus $\partial_{cw} vw_{t+1} = \frac{\partial vw_{t+1}}{\partial cw_{t+1}} \frac {\partial cw_{t+1}} {\partial cw_{t }}=0 $ solves FOC, then verify
 $$
 \begin{align}
- &-\partial_{cw} vw_t +  (1-\delta)   + \delta \frac{-\exp cw_t}{1-\exp cw_t}+  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} \partial_{cw} vw_{t+1}  ]  \\
+ &  (1-\delta)   + \delta \frac{-\exp cw_t}{1-\exp cw_t}+  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} \partial_{cw} vw_{t+1}  ]  \\
 &=   \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}  \partial_{cw} vw_{t+1}  ] -\partial_{cw} vw_t\\
 &= 0
 \end{align} 
 $$
-
-The last equation is true by the definition of $vw
+ 
 
 FOC w.r.t. $\bar \omega_t$:
 $$
 \delta \frac{\mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} \exp \{ - r_{w,t+1} \} \cdot xR_{t+1} ]}{\mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} ]} = 0
 $$
-
+where
 $$
 \begin{aligned}
 \frac{\partial r_{w,t+1}}{\partial \bar \omega_t} & = \frac{\partial \log R_{w,t+1}}{\partial \bar \omega_t} = \frac{\partial \log (R_{o,t+1} + \bar \omega_t' xR_{t+1})}{\partial \bar \omega_t} \\
@@ -274,12 +273,12 @@ $$
 \end{aligned}
 $$
 
-SDF:
+Thus the SDF is written as:
 $$
 \begin{aligned}
 m_{t+1} = & - \log \mathbb{E}_t [ \exp \{ (1-\gamma) vw_{t+1} + (1-\gamma) r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t}) \} ] \\
 & + \log \delta \\
-& + (1-\gamma) \cdot vw_{t+1} - r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t})
+& + (1-\gamma) \cdot vw_{t+1} -\gamma r_{w,t+1} + (1-\gamma) \log (1-e^{cw_t})
 \end{aligned}
 $$
 
@@ -343,6 +342,7 @@ $$ -->
 
 
 ###
+Combine equation 2.5 with wealth portfolio approximation:
 
 $$
 \begin{aligned}
@@ -357,7 +357,7 @@ $$
 & = \gamma \cdot \mathbb{Cov}_t( r_w, xr_j ) + (\gamma-1) \mathbb{Cov}_t( vw, xr_j ).
 \end{aligned}
 $$
-
+Let the SDF price itself, which means that $r_{w,t+1}$ prices $xr_j = xr_{w,t+1} $. 
 <!-- Handwritten page 3, stops mid-expression:
 (sketch of stacking the equation above over j into vectors: E_t[xr_j], 0.5 [ ] - Var_t(r_o) times a vector of ones, then two column vectors on the right-hand side; left blank)
 $$
@@ -366,7 +366,7 @@ $$ -->
 
 $$
 \begin{aligned}
-\mathbb{E}_t[ xr_j ] & = \mathbb{E}_t[ r_j ] - \mathbb{E}_t[ r_o ] = \mathbb{E}_t[ r_w ] - \mathbb{E}_t[ r_o ] \\
+\mathbb{E}_t[ xr_j ] &  = \mathbb{E}_t[ r_w ] - \mathbb{E}_t[ r_o ] \\
 & = \bar \omega_{w,t}' \cdot \mathbb{E}_t[ xr ] + \frac{1}{2} \bar \omega_{w,t}' \cdot \text{diag}( \Sigma_{xr,t} ) - \frac{1}{2} \bar \omega_{w,t}' \cdot \Sigma_{xr,t} \cdot \bar \omega_{w,t}.
 \end{aligned}
 $$
@@ -416,9 +416,10 @@ $$
 \end{aligned}
 $$
 
+The first term is Myopic demand becasue it is the demand when we assume log utility. And the second term is the additional term besides the myoptic demand, the product of assuming Epstein-Zin recursive utility, and it goes to zero when we set $\gamma =1 $. 
 
 ###
-
+Equation 2.5 is the portfolio choice, but equation 2.8 is pricing equation. In equation 2.5, we solves agent's portfolio choice problem, given the expected return and covariance matrices. In equation 2.8, we equate demand with supply, where agent cannot adjust portfolio weights but instead adjusting the expected return through prices. This is the conceptual difference. 
 
 ###
 
@@ -430,7 +431,7 @@ $$ -->
 $$
 cw_t^* = \log \left( \frac{C_t}{W_t} \right)^* = \log (1-\delta)
 $$
-
+Plug the optimal consumption wealth ratio back to the objective function with optimal portfolio weights, we have 
 $$
 \begin{aligned}
 vw_t = ~& (1-\delta) \log (1-\delta) \\
@@ -448,15 +449,18 @@ vw_t = ~& \delta_0 + \frac{\delta}{1-\gamma} \log \mathbb{E}_t [ \exp \{ (1-\gam
 = ~& \delta_0 + \delta \mathbb{E}_t[ vw ] + \delta \mathbb{E}_t[ r_w ] + \frac{\delta}{2} (1-\gamma) \left[ \mathbb{Var}_t( vw + r_w ) \right]
 \end{aligned}
 $$
-
+where
 $$
 vw_{t+1} + r_{w,t+1} = \log \left( \frac{V_{t+1}}{W_{t+1}} \cdot \frac{W_{t+1}}{W_t} \right) = \log V_{t+1} - \log W_t.
 $$
-
+and thus
 $$
 \mathbb{Var}_t( vw + r_w ) = \mathbb{Var}_t( \log V_{t+1} ) = \mathbb{Var}_t( v ).
 $$
 
+
+
+###
 
 
 
