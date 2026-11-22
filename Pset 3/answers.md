@@ -280,9 +280,7 @@ $$
 \begin{aligned}
  &  (1-\delta)   + \delta \frac{-\exp cw_t}{1-\exp cw_t} \\
 & +  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \\
-& ~~~~ \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} \partial_{cw} vw_{t+1}  ]  \\
-&=   \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \\
-& ~~~~ \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}  \partial_{cw} vw_{t+1}  ] -\partial_{cw} vw_t\\
+& ~~~~ \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} \partial_{cw} vw_{t+1}  ]  \\ 
 &= 0
 \end{aligned} 
 $$
