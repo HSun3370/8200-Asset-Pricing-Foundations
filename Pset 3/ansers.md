@@ -221,3 +221,51 @@ Reduced-form multifactor models are looking for high $\alpha_H/ \sigma_{\epsilon
 
 ```{include} output/q1e_table_ff3.md
 ```
+ 
+3-factor tries to explain the covement of stock excess returns. They explains large parts of variations of first three components. The limitation is about economic meaning. Even through we can find factors that explains covement, we can't learn from the factor about the economic meaning and any risk-return relations. 
+
+
+##
+
+### 
+
+Subtract $\log W_t$ on both side of the equation (2.1), we have 
+$$
+\log \frac{V_t}{W_t} = \max_{C_t, \bar \omega_t} ~ (1-\delta) \cdot \log \frac{C_t}{W_t} + \frac{\delta}{1-\gamma} \log \mathbb{E}_t [(\frac{V_{t+1}}{W_{t+1} } \frac{W_{t+1}}{W_t})^{1-\gamma}]
+$$
+
+For notation simplicity, let me define 
+$$
+vw_t := \log \frac{V_t}{W_t}, ~~cw_t = \log \frac{C_t}{W_t}
+$$
+
+Plug in the log wealth growth $\log W_{t+1}/W_t = \log  R_{w,t+1} + \log (1-\exp (cw_t))$
+$$
+ vw_t = \max_{cw_t, \bar \omega_t} ~ (1-\delta) \cdot cw_t + \frac{\delta}{1-\gamma} \log \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]
+$$
+
+
+FOC w.r.t $cw_t$ we can get
+
+$$
+ \partial_{cw} vw_t =   (1-\delta)   +  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}(\partial_{cw} vw_{t+1} +  \frac{-\exp cw_t}{1-\exp cw_t}   )]  
+$$
+
+Guess and verify: I guess $cw_t = \log (1-\delta)$ solves FOC, then verify
+$$
+\begin{align}
+ &-\partial_{cw} vw_t +  (1-\delta)   + \delta \frac{-\exp cw_t}{1-\exp cw_t}+  \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} \partial_{cw} vw_{t+1}  ]  \\
+&=   \delta  \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \} ]^{-1} \mathbb{E}_t [\exp \{  ( 1 -\gamma ) vw_{t+1} +( 1 -\gamma ) r_{w,t+1}  + ( 1 -\gamma ) \log (1-\exp  cw_t )   \}  \partial_{cw} vw_{t+1}  ] -\partial_{cw} vw_t\\
+&= 0
+\end{align} 
+$$
+
+The last equation is true by the definition of $vw
+
+
+###
+
+
+
+
+
