@@ -131,3 +131,8 @@ This log is independent of `Pset 1/AI_INTERACTIONS.md` and `Pset 2/AI_INTERACTIO
 - **Type(s) of assistance:** empirical coding (including data download); code debugging; formatting/translation (inserting the output).
 - **Grouped minor follow-ups:** none.
 - **Git commit after interaction:** recorded in the Git log as the commit that adds this entry (message prefix `TP: after Pset 3 Q2(e)`).
+
+### Correction to Entry 3 — 2026-11-22
+
+- The commit after Entry 3 (`639bcd9`) also contains a two-line change to `myst.yml` (output renamed to `HW3-answers.pdf`; article changed from `Pset 2/answers.md` to `Pset 3/answers.md`). AI did not make this change. It was made in the working tree while the interaction was in progress and was included by `git add -A`. Entry 3 does not mention it.
+- AI noticed that the article path is `Pset 3/answers.md`, while the file in the repository is `Pset 3/ansers.md`, and reported this to the student without changing either.
