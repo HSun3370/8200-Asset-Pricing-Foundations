@@ -12,14 +12,14 @@ project:
     - format: pdf
       template: lapreprint-typst
       # template:  plain_latex
-      output: HW2-answers.pdf
+      output: HW3-answers.pdf
       kind: "Homework Solution"   
       open_access: false  
       date: null
       articles:
         # - file: Pset 1\answers.md
         # - file: Research Ideas\NREE.md
-        - file: Pset 2/answers.md
+        - file: Pset 3/answers.md
 site:
   template: book-theme
   # options:

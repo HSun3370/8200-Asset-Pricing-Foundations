@@ -458,10 +458,12 @@ $$
 \mathbb{Var}_t( vw + r_w ) = \mathbb{Var}_t( \log V_{t+1} ) = \mathbb{Var}_t( v ).
 $$
 
-
+The part $Cov_t(r_w,xr_j)$ is CAMP component measures aggregate market risk. $N_E$ reflects investment opportunities, because when price goes down, $N_E$ goes up. $N_v$ reflect the volatility change of future value function, which reflect future aggregate value risk.
 
 ###
 
+```{include} output/q2e_table.md
+```
 
 
 
